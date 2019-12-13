@@ -4,10 +4,11 @@ import java.math.BigInteger;
 
 public class Order {//订单
     private BigInteger order_id;//订单id
-    private BigInteger littlegoods_id;
-    private BigInteger cu_id;
-    private int order_status;
-    private String comments;
+    private BigInteger littlegoods_id;//详细商品id
+    private BigInteger cu_id;//客户id
+    private int order_status;//订单状态
+    private String comments;//客户的评价
+    private String reply;
 
     public BigInteger getOrder_id() {
         return order_id;
@@ -57,5 +58,5 @@ public class Order {//订单
         this.reply = reply;
     }
 
-    private String reply;
+
 }

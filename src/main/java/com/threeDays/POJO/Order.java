@@ -8,7 +8,7 @@ public class Order {//订单
     private BigInteger cu_id;//客户id
     private int order_status;//订单状态
     private String comments;//客户的评价
-    private String reply;
+    private String reply;//商家回复
 
     public BigInteger getOrder_id() {
         return order_id;

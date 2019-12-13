@@ -3,10 +3,10 @@ package com.threeDays.POJO;
 import java.math.BigInteger;
 
 public class Seller {
-    private BigInteger seller_id;
-    private String seller_tel;
-    private String seller_address;
-    private String seller_name;
+    private BigInteger seller_id;//卖家id
+    private String seller_tel;//卖家电话
+    private String seller_address;//卖家地址
+    private String seller_name;//卖家姓名
 
     public BigInteger getSeller_id() {
         return seller_id;

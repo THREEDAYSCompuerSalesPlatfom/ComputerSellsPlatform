@@ -3,11 +3,11 @@ package com.threeDays.POJO;
 import java.math.BigInteger;
 
 public class AfterSales {
-    private BigInteger after_id;
-    private BigInteger seller_id;
-    private BigInteger order_id;
-    private BigInteger express;
-    private int after_status;
+    private BigInteger after_id;//售后id
+    private BigInteger seller_id;//卖家id
+    private BigInteger order_id;//订单id
+    private BigInteger express;//物流单号
+    private int after_status;//售后状态
 
     public BigInteger getAfter_id() {
         return after_id;

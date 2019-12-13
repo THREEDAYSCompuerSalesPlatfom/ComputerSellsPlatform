@@ -2,7 +2,7 @@ package com.threeDays.POJO;
 
 import java.math.BigInteger;
 
-public class Order {
+public class Order {//订单
     private BigInteger order_id;
     private BigInteger littlegoods_id;
     private BigInteger cu_id;

@@ -2,15 +2,12 @@ package com.threeDays.POJO;
 
 import java.math.BigInteger;
 
-/**
- * @ClassNameLittleGoods
- * @Date2019-12-1320:52
- **/
+
 public class LittleGoods {
-    private BigInteger littleGoodsId;
-    private BigInteger bigGoodsId;
-    private String edition;
-    private BigInteger sellerId;
+    private BigInteger littleGoodsId;//详细商品id
+    private BigInteger bigGoodsId;//汇总商品id
+    private String edition;//版本
+    private BigInteger sellerId;//卖家id
 
     public BigInteger getLittleGoodsId() {
         return littleGoodsId;

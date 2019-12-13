@@ -3,10 +3,10 @@ package com.threeDays.POJO;
 import java.math.BigInteger;
 
 public class Deliver {
-    private BigInteger deliver_id;
-    private BigInteger seller_id;
-    private BigInteger order_id;
-    private BigInteger express;
+    private BigInteger deliver_id;//发货id
+    private BigInteger seller_id;//卖家id
+    private BigInteger order_id;//订单id
+    private BigInteger express;//物流单号
 
     public BigInteger getDeliver_id() {
         return deliver_id;

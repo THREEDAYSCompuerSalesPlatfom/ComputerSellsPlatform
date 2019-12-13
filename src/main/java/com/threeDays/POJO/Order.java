@@ -3,7 +3,7 @@ package com.threeDays.POJO;
 import java.math.BigInteger;
 
 public class Order {//订单
-    private BigInteger order_id;
+    private BigInteger order_id;//订单
     private BigInteger littlegoods_id;//详细商品id
     private BigInteger cu_id;
     private int order_status;

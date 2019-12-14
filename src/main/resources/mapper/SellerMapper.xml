@@ -7,7 +7,7 @@
     <select id="findSellerByName" parameterType="java.lang.String" resultMap="SellerMap" >
         select * from seller where seller_id=#{seller_name}
     </select>
-    <insert id="insertSeller" parameterType="com.threeDays.POJO.Seller" >
+    <insert id="insertSeller" parameterType="com.threeDays.POJO.Seller" useGeneratedKeys="true" keyProperty="seller_id" >
         insert into seller(seller_tel,seller_address,seller_name) values (#{seller_tel},#{seller_address},#{seller_name})
     </insert>
     <update id="updateSeller" parameterType="com.threeDays.POJO.Seller">

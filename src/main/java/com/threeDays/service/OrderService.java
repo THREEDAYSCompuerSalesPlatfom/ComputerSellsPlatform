@@ -11,6 +11,8 @@ import java.math.BigInteger;
 public class OrderService {
     @Autowired
     private OrderMapper orderMapper;
+    @Autowired
+    private DeliverService deliverService;
 
     /**
      * 根据order_id返回Order对象
@@ -95,6 +97,7 @@ public class OrderService {
         if(orderMapper.deleteOrder(order_id)==0){
             return "失败，数据库错误";
         }else {
+            deliverService.deleteExpress(order_id);//删除发货单号
             return "删除成功";
         }
 

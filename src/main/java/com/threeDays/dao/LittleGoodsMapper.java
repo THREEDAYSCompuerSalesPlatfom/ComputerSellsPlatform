@@ -3,6 +3,7 @@ package com.threeDays.dao;
 
 import com.threeDays.POJO.LittleGoods;
 
+import java.math.BigInteger;
 import java.util.List;
 
 /**
@@ -11,4 +12,5 @@ import java.util.List;
  **/
 public interface LittleGoodsMapper {
     List<LittleGoods> findAll();
+     BigInteger findSellerById(BigInteger littlegoods_id);
 }

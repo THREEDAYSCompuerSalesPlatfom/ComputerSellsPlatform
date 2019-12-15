@@ -8,7 +8,7 @@
         insert into deliver(express) values (#{1}) where order_id=#{0}
     </insert>
     <update id="updateExpress">
-        update deliver SET express=#{1} where order_id=#{0}
+        update deliver SET express=#{1},seller_id=#{2} where order_id=#{0}
     </update>
     <delete id="deleteExpress" parameterType="java.math.BigInteger">
          delete from deliver where order_id=#{order_id}

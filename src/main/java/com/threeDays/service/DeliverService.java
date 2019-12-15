@@ -1,6 +1,7 @@
 package com.threeDays.service;
 
 import com.threeDays.POJO.Deliver;
+import com.threeDays.POJO.Seller;
 import com.threeDays.dao.DeliverMapper;
 import com.threeDays.dao.OrderMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +15,8 @@ public class DeliverService {
     private DeliverMapper deliverMapper;
     @Autowired
     private OrderService orderService;
+    @Autowired
+    private LittlegoodsService littlegoodsService;
 
     /**
      * 根据order_id返回deliver对象
@@ -32,7 +35,8 @@ public class DeliverService {
         if (express.equals("")) {
             return "物流单号不能为空";
         }
-        if (deliverMapper.insertExpress(order_id, express) == 0) {
+        BigInteger seller_id=littlegoodsService.findSellerById(orderService.findOrderById(order_id).getLittlegoods_id());//zwx mmp!
+        if (deliverMapper.insertExpress(order_id, express,seller_id) == 0) {
             return "插入失败，数据库错误";
         } else {
             orderService.changeStatus(order_id, 1);//更改订单状态为卖家已经发货

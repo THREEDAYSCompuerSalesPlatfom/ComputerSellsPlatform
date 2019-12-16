@@ -13,15 +13,15 @@
         select * from AfterSales where after_id=#{after_id}
     </select>
 
-    <insert id="insertAfterSales" parameterType="java.math.BigInteger" useGeneratedKeys="true" keyProperty="after_id">
+    <insert id="insertAfterSales" parameterType="com.threeDays.POJO.AfterSales" useGeneratedKeys="true" keyProperty="after_id">
           insert into AfterSales(after_status,seller_id,express,order_id) values (#{after_status},#{seller_id},#{express},#{order_id})
     </insert>
 
     <update id="updateExpress" >
-         update AfterSales SET express=#{1} where order_id=#{0}
+         update AfterSales SET express=#{express} where order_id=#{order_id}
     </update>
 
     <update id="changeAfterSalesStatus">
-         update AfterSales SET after_status=#{1} where after_id=#{0}
+         update AfterSales SET after_status=#{status} where after_id=#{order_id}
     </update>
 </mapper>

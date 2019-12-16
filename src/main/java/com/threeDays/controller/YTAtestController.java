@@ -1,16 +1,14 @@
 package com.threeDays.controller;
 
+import com.threeDays.POJO.AfterSales;
 import com.threeDays.POJO.Order;
 import com.threeDays.POJO.Seller;
 import com.threeDays.dao.OrderMapper;
 import com.threeDays.dao.SellerMapper;
-import com.threeDays.service.YTATestservice;
+import com.threeDays.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.math.BigInteger;
 
@@ -18,6 +16,14 @@ import java.math.BigInteger;
 public class YTAtestController {
     @Autowired
     private YTATestservice testservice;
+    @Autowired
+    private AfterSalesService afterSalesService;
+    @Autowired
+    private DeliverService deliverService;
+    @Autowired
+    private OrderService orderService;
+    @Autowired
+    private Sellerservice sellerservice;
     @Autowired
     private SellerMapper sellerMapper;
     @Autowired
@@ -43,6 +49,64 @@ public class YTAtestController {
         else
             System.out.println("ok");
         return order;
+    }
+
+    /**
+     * AfterSalesService
+     */
+    @GetMapping("/findAfterSalesById/{aftersales_id}")
+    @ResponseBody
+    public AfterSales findAfterSalesById(@PathVariable("aftersales_id") BigInteger aftersales_id) {
+        return afterSalesService.findAfterSalesById(aftersales_id);
+    }
+
+    @GetMapping("insertAfterSales")
+    @ResponseBody
+    public BigInteger insertAfterSales(AfterSales afterSales){
+//        System.out.println(afterSales.getExpress());
+//        System.out.println(afterSales.getAfter_id());
+        return afterSalesService.insertAfterSales(afterSales);
+    }
+
+    @GetMapping("updateExpress")
+    @ResponseBody
+    public String updateExpress(@RequestParam("order_id") BigInteger order_id, @RequestParam("express")String express){
+        return afterSalesService.updateExpress(order_id,express);
+    }
+    @GetMapping("changeAfterSalesStatus")
+    @ResponseBody
+    public String changeAfterSalesStatus(BigInteger order_id,int status){
+        return afterSalesService.changeAfterSalesStatus(order_id,status);
+    }
+
+
+    /**
+     * Sellerservice
+    */
+
+    @PostMapping("Sellerlogin")
+    @ResponseBody
+    public BigInteger login(@RequestParam("name") String name,@RequestParam("password") String password){
+        System.out.println(name+"  "+password);
+        return sellerservice.login(name,password);
+    }
+
+    @PostMapping("SellerRegister")
+    @ResponseBody
+    public BigInteger register(Seller seller, String password){
+        return sellerservice.register(seller,password);
+    }
+
+    @GetMapping("updateSellerInfo")
+    @ResponseBody
+    public int updateSellerInfo(Seller seller){
+        return sellerservice.updateSellerInfo(seller);
+    }
+
+    @PostMapping("updateSellerPassword")
+    @ResponseBody
+    public int updateSellerPassword(BigInteger seller_id,String password){
+        return sellerservice.updateSellerPassword(seller_id, password);
     }
 
 

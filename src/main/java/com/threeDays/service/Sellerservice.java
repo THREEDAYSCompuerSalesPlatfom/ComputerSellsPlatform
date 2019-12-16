@@ -37,15 +37,15 @@ public class Sellerservice {
 
     /**
      * 注册业务
-     * 返回-1：姓名已存在
+     * 返回-1：用户名已存在
      **/
     public BigInteger register(Seller seller, String password) {
         String name = seller.getSeller_name();
         if (sellerMapper.findSellerByName(name) != null) {
             return new BigInteger("-1");
         }
-
-        BigInteger seller_id = sellerMapper.insertSeller(seller);
+        sellerMapper.insertSeller(seller);
+        BigInteger seller_id = seller.getSeller_id();
         sellerPasswordMapper.insertPassword(seller_id, password);
         return seller_id;
 
@@ -54,8 +54,20 @@ public class Sellerservice {
     /**
      * 更新seller信息
      * 返回1标识成功，0失败
+     * 返回-1：id未在seller对象中标明
+     * 返回-2：不存在此id
+     * 返回-3：用户名重复
      * **/
     public int updateSellerInfo(Seller seller) {
+        if (seller.getSeller_id()== null) {
+            return -1;
+        }
+        if(sellerMapper.findSellerById(seller.getSeller_id())==null){
+            return -2;
+        }
+        if(sellerMapper.findSellerByName(seller.getSeller_name())!=null){
+            return -3;
+        }
         return sellerMapper.updateSeller(seller);
     }
     /**

@@ -9,6 +9,9 @@ public class LittleGoods {
     private String edition;//版本
     private BigInteger sellerId;//卖家id
 
+
+
+
     public BigInteger getLittleGoodsId() {
         return littleGoodsId;
     }

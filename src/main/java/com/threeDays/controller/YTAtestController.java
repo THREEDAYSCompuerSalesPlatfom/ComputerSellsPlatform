@@ -1,6 +1,7 @@
 package com.threeDays.controller;
 
 import com.threeDays.POJO.AfterSales;
+import com.threeDays.POJO.Deliver;
 import com.threeDays.POJO.Order;
 import com.threeDays.POJO.Seller;
 import com.threeDays.dao.OrderMapper;
@@ -68,11 +69,7 @@ public class YTAtestController {
         return afterSalesService.insertAfterSales(afterSales);
     }
 
-    @GetMapping("updateExpress")
-    @ResponseBody
-    public String updateExpress(@RequestParam("order_id") BigInteger order_id, @RequestParam("express")String express){
-        return afterSalesService.updateExpress(order_id,express);
-    }
+
     @GetMapping("changeAfterSalesStatus")
     @ResponseBody
     public String changeAfterSalesStatus(BigInteger order_id,int status){
@@ -107,6 +104,35 @@ public class YTAtestController {
     @ResponseBody
     public int updateSellerPassword(BigInteger seller_id,String password){
         return sellerservice.updateSellerPassword(seller_id, password);
+    }
+
+
+
+    /**
+     * DeliverService
+     * */
+    @GetMapping("findDeliverById")
+    @ResponseBody
+    public Deliver findDeliverById(BigInteger order_id){
+        return deliverService.findDeliverById(order_id);
+    }
+
+    @GetMapping("insertExpress")
+    @ResponseBody
+    public String insertExpress(BigInteger order_id,String express){
+        return deliverService.insertExpress(order_id, express);
+    }
+
+    @GetMapping("updateExpress")
+    @ResponseBody
+    public String updateExpress(@RequestParam("order_id") BigInteger order_id, @RequestParam("express")String express){
+        return deliverService.updateExpress(order_id,express);
+    }
+
+    @GetMapping("deleteExpress")
+    @ResponseBody
+    public String deleteExpress(BigInteger order_id){
+        return deliverService.deleteExpress(order_id);
     }
 
 

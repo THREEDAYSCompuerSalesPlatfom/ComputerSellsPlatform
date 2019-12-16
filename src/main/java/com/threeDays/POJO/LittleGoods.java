@@ -18,6 +18,9 @@ public class LittleGoods {
         this.goodsPrice = goodsPrice;
     }
 
+
+
+
     public BigInteger getLittleGoodsId() {
         return littleGoodsId;
     }

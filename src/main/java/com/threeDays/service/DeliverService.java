@@ -1,9 +1,7 @@
 package com.threeDays.service;
 
 import com.threeDays.POJO.Deliver;
-import com.threeDays.POJO.Seller;
 import com.threeDays.dao.DeliverMapper;
-import com.threeDays.dao.OrderMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,11 +20,11 @@ public class DeliverService {
      * 根据order_id返回deliver对象
      */
     public Deliver findDeliverById(BigInteger order_id) {
-        return deliverMapper.findDeliverById(order_id);
+        return deliverMapper.findDeliverByOrderId(order_id);
     }
 
     /**
-     * 插入物流单号
+     * 插入物流单
      */
     public String insertExpress(BigInteger order_id, String express) {
         if (orderService.findOrderById(order_id) == null) {
@@ -35,8 +33,12 @@ public class DeliverService {
         if (express.equals("")) {
             return "物流单号不能为空";
         }
-        BigInteger seller_id=littlegoodsService.findSellerById(orderService.findOrderById(order_id).getLittlegoods_id());//zwx mmp!
-        if (deliverMapper.insertExpress(order_id, express,seller_id) == 0) {
+        BigInteger seller_id = littlegoodsService.findSellerById(orderService.findOrderById(order_id).getLittlegoods_id());//zwx mmp!
+        if (seller_id == null) {
+            return "未知错误，可能order所对的详细商品或者seller已经不存在";
+        }
+        System.out.println(seller_id);
+        if (deliverMapper.insertExpress(order_id, express, seller_id) == 0) {
             return "插入失败，数据库错误";
         } else {
             orderService.changeStatus(order_id, 1);//更改订单状态为卖家已经发货

@@ -7,13 +7,13 @@
     <insert id="insertOrder" parameterType="com.threeDays.POJO.Order" useGeneratedKeys="true" keyProperty="order_id">
          insert into [order](littlegoods_id,cu_id,order_status) values (#{littlegoods_id},#{cu_id},#{order_status})
     </insert>
-    <insert id="insertComment" >
-        insert into [order](comments) values (#{1}) where order_id=#{0}
-    </insert>
+    <update id="insertComment" >
+        update [order] SET comments=#{comment} where order_id=#{order_id}
+    </update>
 
-    <insert id="insertReply">
-        insert into [order](reply) values (#{1}) where order_id=#{0}
-    </insert>
+    <update id="insertReply">
+        update [order] SET reply=#{reply} where order_id=#{order_id}
+    </update>
     <update id="updateOrder" parameterType="com.threeDays.POJO.Order">
          update [order] SET littlegoods_id=#{littlegoods_id},cu_id=#{cu_id},order_status=#{order_status},comments=#{comments},reply=#{reply} where order_id=#{order_id}
     </update>
@@ -21,7 +21,7 @@
         delete from [order] where order_id=#{order_id}
     </delete>
     <update id="changeStatus">
-        update [order] SET order_status=#{1} where order_id=#{0}
+        update [order] SET order_status=#{order_status} where order_id=#{order_id}
     </update>
 
     <resultMap type="com.threeDays.POJO.Order" id="OrderMap">

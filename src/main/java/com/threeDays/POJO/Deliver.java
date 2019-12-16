@@ -6,7 +6,7 @@ public class Deliver {
     private BigInteger deliver_id;//发货id
     private BigInteger seller_id;//卖家id
     private BigInteger order_id;//订单id
-    private BigInteger express;//物流单号
+    private String express;//物流单号
 
     public BigInteger getDeliver_id() {
         return deliver_id;
@@ -32,11 +32,11 @@ public class Deliver {
         this.order_id = order_id;
     }
 
-    public BigInteger getExpress() {
+    public String getExpress() {
         return express;
     }
 
-    public void setExpress(BigInteger express) {
+    public void setExpress(String express) {
         this.express = express;
     }
 }

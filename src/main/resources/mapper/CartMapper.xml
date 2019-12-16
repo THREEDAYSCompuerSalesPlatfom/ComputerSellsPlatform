@@ -2,20 +2,24 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.threeDays.dao.CartMapper">
     <resultMap type="com.threeDays.POJO.Cart" id="CartMap">
-        <id property="cartId" column="cart_id" javaType="java.math.BigInteger"/>
+        <id property="Id" column="cart_id" javaType="java.math.BigInteger"/>
         <result property="customerId" column="cu_id" javaType="java.math.BigInteger"/>
         <result property="littleGoodsId" column="littlegoods_id" javaType="java.math.BigInteger"/>
-        <result property="number" column="littlegoods_num" javaType="int"/>
+        <result property="littleGoodsNum" column="littlegoods_num" javaType="int"/>
         <result property="goodsStatus" column="goods_status" javaType="int"/>
     </resultMap>
+
+    <select id="findAll" parameterType="com.threeDays.POJO.BigGoods" resultMap="BigGoodsMap">
+        select *
+        from cart
+    </select>
+
 
     <!--  <insert id="save" parameterType="com.threeDays.POJO.Cart">
         insert into THREEDAYS values()
     </insert> <select id="findAll" parameterType="com.threeDays.POJO.Cart" resultType="CartMap">
         select *from cart
     </select>-->
-
-
 
 
     <!--<update id="modify" parameterType="com.threeDays.POJO.Cart">

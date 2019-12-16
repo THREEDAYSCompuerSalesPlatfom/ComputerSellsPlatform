@@ -8,6 +8,15 @@ public class LittleGoods {
     private BigInteger bigGoodsId;//汇总商品id
     private String edition;//版本
     private BigInteger sellerId;//卖家id
+    private float goodsPrice;//价格
+
+    public float getGoodsPrice() {
+        return goodsPrice;
+    }
+
+    public void setGoodsPrice(float goodsPrice) {
+        this.goodsPrice = goodsPrice;
+    }
 
     public BigInteger getLittleGoodsId() {
         return littleGoodsId;

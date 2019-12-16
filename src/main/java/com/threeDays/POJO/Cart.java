@@ -7,11 +7,19 @@ import java.math.BigInteger;
  * @Date2019-12-1320:40
  **/
 public class Cart {
-    private BigInteger cartId;//购物车Id
+    private BigInteger Id;//（主键）购物车Id
     private BigInteger customerId;//买家Id
     private BigInteger littleGoodsId;//具体商品Id
-    int number;//商品数量
-    int goodsStatus;//状态
+    private int littleGoodsNum;//商品数量
+    private int goodsStatus;//状态
+
+    public BigInteger getId() {
+        return Id;
+    }
+
+    public void setId(BigInteger Id) {
+        this.Id = Id;
+    }
 
     public BigInteger getCustomerId() {
         return customerId;
@@ -19,17 +27,6 @@ public class Cart {
 
     public void setCustomerId(BigInteger customerId) {
         this.customerId = customerId;
-    }
-
-
-
-
-    public BigInteger getCartId() {
-        return cartId;
-    }
-
-    public void setCartId(BigInteger cartId) {
-        this.cartId = cartId;
     }
 
     public BigInteger getLittleGoodsId() {
@@ -40,14 +37,13 @@ public class Cart {
         this.littleGoodsId = littleGoodsId;
     }
 
-    public int getNumber() {
-        return number;
+    public int getLittleGoodsNum() {
+        return littleGoodsNum;
     }
 
-    public void setNumber(int number) {
-        this.number = number;
+    public void setLittleGoodsNum(int littleGoodsNum) {
+        this.littleGoodsNum = littleGoodsNum;
     }
-
 
     public int getGoodsStatus() {
         return goodsStatus;
@@ -56,6 +52,4 @@ public class Cart {
     public void setGoodsStatus(int goodsStatus) {
         this.goodsStatus = goodsStatus;
     }
-
-
 }

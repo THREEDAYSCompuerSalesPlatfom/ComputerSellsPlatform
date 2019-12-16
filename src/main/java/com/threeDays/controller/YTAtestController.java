@@ -69,7 +69,11 @@ public class YTAtestController {
         return afterSalesService.insertAfterSales(afterSales);
     }
 
-
+    @GetMapping("updateAfterSalesExpress")
+    @ResponseBody
+    public String updateAfterSalesExpress(@RequestParam("order_id") BigInteger order_id, @RequestParam("express")String express){
+        return afterSalesService.updateExpress(order_id,express);
+    }
     @GetMapping("changeAfterSalesStatus")
     @ResponseBody
     public String changeAfterSalesStatus(BigInteger order_id,int status){
@@ -123,9 +127,9 @@ public class YTAtestController {
         return deliverService.insertExpress(order_id, express);
     }
 
-    @GetMapping("updateExpress")
+    @GetMapping("updateDeliverExpress")
     @ResponseBody
-    public String updateExpress(@RequestParam("order_id") BigInteger order_id, @RequestParam("express")String express){
+    public String updateDeliverExpress(@RequestParam("order_id") BigInteger order_id, @RequestParam("express")String express){
         return deliverService.updateExpress(order_id,express);
     }
 
@@ -135,6 +139,46 @@ public class YTAtestController {
         return deliverService.deleteExpress(order_id);
     }
 
+    /**
+     * OrderService
+     **/
 
+    @GetMapping("findOrderById")
+    @ResponseBody
+    public Order findOrderById(BigInteger order_id) {
+        return orderService.findOrderById(order_id);
+    }
+
+    @GetMapping("insertOrder")
+    @ResponseBody
+    public BigInteger insertOrder(Order order){
+        return orderService.insertOrder(order);
+    }
+    @GetMapping("updateOrder")
+    @ResponseBody
+    public String updateOrder(Order order){
+        return orderService.updateOrder(order);
+    }
+
+    @GetMapping("insertComment")
+    @ResponseBody
+    public String insertComment(BigInteger order_id, String commment){
+        return orderService.insertComment(order_id, commment);
+    }
+    @GetMapping("insertReply")
+    @ResponseBody
+    public String insertReply(BigInteger order_id, String reply){
+        return orderService.insertReply(order_id, reply);
+    }
+    @GetMapping("deleteOrder")
+    @ResponseBody
+    public String deleteOrder(BigInteger order_id){
+        return orderService.deleteOrder(order_id);
+    }
+    @GetMapping("changeStatus")
+    @ResponseBody
+    public String changeStatus(BigInteger order_id, int order_status){
+        return orderService.changeStatus(order_id,order_status);
+    }
 
 }

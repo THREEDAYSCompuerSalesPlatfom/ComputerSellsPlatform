@@ -5,12 +5,12 @@
         <id property="bigGoodsId" column="biggoods_id" javaType="java.math.BigInteger" jdbcType="bigint"/>
         <result property="goodsName" column="goods_name" javaType="java.lang.String" jdbcType="varchar"/>
         <result property="sellerId" column="seller_id" javaType="java.math.BigInteger" jdbcType="bigint"/>
-        <collection property="littleGoods" ofType="com.threeDays.POJO.LittleGoods">
+        <!--<collection property="littleGoods" ofType="com.threeDays.POJO.LittleGoods">
             <id property="littleGoodsId" column="littlegoods_id"/>
             <result property="bigGoodsId" column="biggoods_id"/>
             <result property="edition" column="edition"/>
             <result property="sellerId" column="seller_id"/>
-        </collection>
+        </collection>-->
     </resultMap>
     <select id="findAll" parameterType="com.threeDays.POJO.BigGoods" resultMap="BigGoodsMap">
         select *
@@ -21,14 +21,39 @@
         insert into biggoods(goods_name, seller_id)
         values (#{goodsName}, #{sellerId})
     </insert>
-
-    <update id="modifyNewBigGoods" parameterType="com.threeDays.POJO.BigGoods">
-
+    <delete id="deleteBigGoods" parameterType="java.math.BigInteger">
+        delete
+        from biggoods
+        where biggoods_id = #{bigGoodsId}
+    </delete>
+    <update id="updateNewBigGoods" parameterType="com.threeDays.POJO.BigGoods">
+        update biggoods
+        set goods_name=#{goodsName}
+        where biggoods_id = #{bigGoodsId}
+          and seller_id = #{sellerId}
     </update>
 
-    <delete id="deleteBigGoods" parameterType="com.threeDays.POJO.BigGoods">
-
-    </delete>
-
+    <select id="findBigGoodsById" resultMap="BigGoodsMap" parameterType="com.threeDays.POJO.BigGoods">
+        select *
+        from biggoods
+        where biggoods_id = #{bigGoodsId}
+    </select>
+    <select id="findBigGoodsByName" resultMap="BigGoodsMap" parameterType="com.threeDays.POJO.BigGoods">
+        select *
+        from biggoods
+        where goods_name = #{goodsName}
+    </select>
+    <select id="getBigGoodsId" resultMap="BigGoodsMap" parameterType="com.threeDays.POJO.BigGoods">
+        select *
+        from biggoods
+        where goods_name = #{goodsName}
+          and seller_id = #{sellerId}
+    </select>
+    <select id="getSellerId" resultMap="BigGoodsMap" parameterType="com.threeDays.POJO.BigGoods">
+        select *
+        from biggoods
+        where biggoods_id = #{bigGoodsId}
+          and goods_name = #{goodsName}
+    </select>
 
 </mapper>

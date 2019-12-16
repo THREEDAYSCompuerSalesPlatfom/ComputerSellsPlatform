@@ -9,28 +9,41 @@
         <result property="goodsStatus" column="goods_status" javaType="int"/>
     </resultMap>
 
-    <select id="findAll" parameterType="com.threeDays.POJO.BigGoods" resultMap="BigGoodsMap">
+    <select id="findAll" parameterType="com.threeDays.POJO.Cart" resultMap="CartMap">
         select *
         from cart
     </select>
 
-
-    <!--  <insert id="save" parameterType="com.threeDays.POJO.Cart">
-        insert into THREEDAYS values()
-    </insert> <select id="findAll" parameterType="com.threeDays.POJO.Cart" resultType="CartMap">
-        select *from cart
-    </select>-->
-
-
-    <!--<update id="modify" parameterType="com.threeDays.POJO.Cart">
-
+    <insert id="addLittleGoods" parameterType="com.threeDays.POJO.Cart" useGeneratedKeys="true"
+            keyProperty="cart_id">
+        insert into cart(cu_id, littlegoods_id, littlegoods_num)
+        values (#{customerId}, #{littleGoodsId}, #{littleGoodsNum})
+    </insert>
+    <delete id="deleteLittleGoods" parameterType="com.threeDays.POJO.Cart">
+        delete
+        from cart
+        where cu_id = #{customerId}
+          and littlegoods_id = #{littleGoodsId}
+    </delete>
+    <update id="removeLittleGoods" parameterType="com.threeDays.POJO.Cart">
+        update cart
+        set littlegoods_num=#{littleGoodsNum}
+        where littlegoods_id = #{littleGoodsId}
+          and cu_id = #{customerId}
     </update>
 
-    <delete id="delete" parameterType="com.threeDays.POJO.Cart">
+    <update id="updateLittleGoods" parameterType="com.threeDays.POJO.Cart">
+        update cart
+        set littlegoods_id=#{littleGoodsId}
+        where littlegoods_id = #{littleGoodsId}
+          and cu_id = #{customerId}
+    </update>
+    <select id="selectLittleGoods" parameterType="com.threeDays.POJO.Cart" resultType="CartMap">
+        select *
+        from cart
+        where cu_id = #{customerId}
+          and littlegoods_id = #{littleGoodsId}
+    </select>
 
-    </delete>-->
-
-
-    <!-- 使用resultMap解决表的字段名与实体类的属性名不一致的情况 -->
 
 </mapper>

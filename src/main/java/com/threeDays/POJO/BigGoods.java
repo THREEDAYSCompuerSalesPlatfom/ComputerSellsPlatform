@@ -9,8 +9,8 @@ import java.math.BigInteger;
 public class BigGoods {
     private BigInteger bigGoodsId;//汇总商品Id
     private String goodsName;//商品名称
-
     private BigInteger sellerId;//卖家Id
+
     public BigInteger getBigGoodsId() {
         return bigGoodsId;
     }
@@ -26,7 +26,6 @@ public class BigGoods {
     public void setGoodsName(String goodsName) {
         this.goodsName = goodsName;
     }
-
 
 
     public BigInteger getSellerId() {

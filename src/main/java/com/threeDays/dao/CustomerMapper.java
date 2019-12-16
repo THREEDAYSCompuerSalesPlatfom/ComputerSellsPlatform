@@ -20,15 +20,15 @@ public interface CustomerMapper {
                     @Param("cu_Name") String cu_Name);
 
     //注销买家
-    int deleteCustomer(@Param("customerId")BigInteger customerId);
+    int deleteCustomer(@Param("customerId") BigInteger customerId);
 
     //修改买家信息
-    int updateCustomer(@Param("customerId")BigInteger customerId,
+    int updateCustomer(@Param("customerId") BigInteger customerId,
                        @Param("cu_Telephone") String cu_Telephone,
                        @Param("cu_Address") String cu_Address,
                        @Param("cu_Name") String cu_Name);
 
     //查询买家
-    Customer getCustomerAddress(@Param("customerId")BigInteger customerId);
+    Customer getCustomerAddress(@Param("customerId") BigInteger customerId);
 
 }

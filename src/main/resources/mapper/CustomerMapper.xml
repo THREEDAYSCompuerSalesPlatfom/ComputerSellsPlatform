@@ -1,31 +1,39 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.threeDays.dao.CustomerMapper">
-    <!-- parameterType:参数类型,填写实体类的完整名字 -->
-    <!--<insert id="save" parameterType="com.threeDays.POJO.Customer">
-        insert into net_t_emp values(net_t_emp_seq.nextval,#{name},#{age})
-    </insert>
-
-
-
-    <update id="modify" parameterType="com.threeDays.POJO.Customer">
-
-    </update>
-
-    <delete id="delete" parameterType="com.threeDays.POJO.Customer">
-
-    </delete>   <select id="findAll" parameterType="com.threeDays.POJO.Customer" resultMap="CustomerMap">
-          select *from customer
-    </select>-->
-
-
-    <!-- 使用resultMap解决表的字段名与实体类的属性名不一致的情况 -->
     <resultMap type="com.threeDays.POJO.Customer" id="CustomerMap">
         <id property="customerId" column="cu_id" javaType="java.math.BigInteger"/>
         <result property="cu_Telephone" column="cu_tel" javaType="java.lang.String"/>
         <result property="cu_Address" column="cu_address" javaType="java.lang.String"/>
         <result property="cu_Name" column="cu_name" javaType="java.lang.String"/>
-
     </resultMap>
+    <select id="findAll" parameterType="com.threeDays.POJO.Customer" resultMap="CustomerMap">
+        select *
+        from customer
+    </select>
+    <insert id="addCustomer" parameterType="com.threeDays.POJO.Customer" useGeneratedKeys="true"
+            keyProperty="cu_id">
+        insert into customer (cu_tel, cu_address, cu_name)
+        values (#{cu_Telephone}, #{cu_Address}, #{cu_Name})
+    </insert>
+    <delete id="deleteCustomer" parameterType="com.threeDays.POJO.Customer">
+        delete
+        from customer
+        where cu_id = #{customerId}
+    </delete>
+    <update id="updateCustomer" parameterType="com.threeDays.POJO.Customer">
+        update customer
+        set (cu_tel=
+             #{cu_Telephone},
+             cu_address=
+             #{cu_Address},
+             cu_name=
+             #{cu_Name})
+        where cu_id=#{customerId}
+    </update>
+    <select id="getCustomerAddress" resultMap="com.threeDays.POJO.Customer">
+      select * from customer where cu_id=#{customerId}
+    </select>
+
 
 </mapper>

@@ -28,4 +28,5 @@ public interface LittleGoodsMapper {
 
     //获取商品最高价格
     int maxPrice(@Param("bigGoodsId") BigInteger bigGoodsId);
+     BigInteger findSellerById(@Param("littlegoodId") BigInteger littlegoodsId);
 }

@@ -10,6 +10,8 @@ public class Order {//订单
     private String comments;//客户的评价
     private String reply;//商家回复
 
+
+
     public BigInteger getOrder_id() {
         return order_id;
     }

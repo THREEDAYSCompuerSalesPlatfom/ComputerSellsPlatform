@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.threeDays.dao.AfterSalesMapper">
+    <resultMap type="com.threeDays.POJO.AfterSales" id="AfterSalesMap">
+        <id property="after_id" column="after_id" javaType="java.math.BigInteger"/>
+        <result property="after_status" column="after_status" javaType="java.lang.Integer"/>
+        <result property="seller_id" column="seller_id" javaType="java.math.BigInteger"/>
+        <result property="express" column="express" javaType="java.lang.String"/>
+        <result property="order_id" column="order_id" javaType="java.math.BigInteger"/>
+    </resultMap>
+
+    <select id="findAfterSalesById" parameterType="java.math.BigInteger" resultMap="AfterSalesMap">
+        select * from AfterSales where after_id=#{after_id}
+    </select>
+
+    <insert id="insertAfterSales" parameterType="java.math.BigInteger" useGeneratedKeys="true" keyProperty="after_id">
+          insert into AfterSales(after_status,seller_id,express,order_id) values (#{after_status},#{seller_id},#{express},#{order_id})
+    </insert>
+
+    <update id="updateExpress" >
+         update AfterSales SET express=#{1} where order_id=#{0}
+    </update>
+
+    <update id="changeAfterSalesStatus">
+         update AfterSales SET after_status=#{1} where after_id=#{0}
+    </update>
+</mapper>

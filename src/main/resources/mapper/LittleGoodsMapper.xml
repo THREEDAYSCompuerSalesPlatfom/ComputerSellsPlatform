@@ -18,6 +18,7 @@
         set (littlegoods_id=
              #{littleGoodsId})
         where littlegoods_id = #{littleGoodsId}
+            and seller_id={sellerId}
     </update>
     <insert id="addNewLittleGoods" parameterType="com.threeDays.POJO.LittleGoods" useGeneratedKeys="true"
             keyProperty="cu_id">
@@ -25,10 +26,16 @@
         values (#{bigGoodsId}, #{edition}, #{sellerId}, #{goodsPrice})
     </insert>
 
-    <delete id="deleteLittleGoods" parameterType="com.threeDays.POJO.LittleGoods">
+    <delete id="deleteBigGoods" parameterType="com.threeDays.POJO.LittleGoods">
         delete
         from littlegoods
         where biggoods_id = #{bigGoodsId}
+    </delete>
+
+    <delete id="deleteLittleGoods" parameterType="com.threeDays.POJO.LittleGoods">
+        delete
+        from littlegoods
+        where littlegoods_id = #{littleGoodsId}
     </delete>
 
     <update id="updatePrice" parameterType="com.threeDays.POJO.LittleGoods">
@@ -36,18 +43,41 @@
         set (goodsprice=
              #{goodsPrice})
         where littlegoods_id = #{littleGoodsId}
+            and seller_id = #{sellerId}
     </update>
 
     <select id="minPrice" parameterType="com.threeDays.POJO.LittleGoods" resultMap="LittleGoodsMap">
         select min(goodsprice)
         from LittleGoods
         where biggoods_id = #{bigGoodsId}
+          and seller_id = #{sellerId}
     </select>
 
     <select id="maxPrice" parameterType="com.threeDays.POJO.LittleGoods" resultMap="LittleGoodsMap">
         select max(goodsprice)
         from LittleGoods
         where biggoods_id = #{bigGoodsId}
+          and seller_id = #{sellerId}
+    </select>
+    <select id="LittleGoods" resultMap="LittleGoodsMap">
+        select *
+        from LittleGoods
+        where biggoods_id = #{bigGoodsId}
+    </select>
+    <select id="getEdition" resultMap="LittleGoodsMap">
+        select edition
+        from LittleGoods
+        where biggoods_id = #{bigGoodsId}
+    </select>
+    <select id="findSellerById" parameterType="java.math.BigInteger" resultType="java.math.BigInteger">
+        select seller_id
+        from littleGoods
+        where littlegoods_id = #{littleGoodId}
+    </select>
+    <select id="findLittleGoodsById" parameterType="java.math.BigInteger" resultMap="LittleGoodsMap">
+        select *
+        from littleGoods
+        where littlegoods_id = #{littleGoodId}
     </select>
 
 

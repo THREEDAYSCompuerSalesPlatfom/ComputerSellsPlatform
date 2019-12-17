@@ -29,6 +29,6 @@ public interface CustomerMapper {
                        @Param("cu_Name") String cu_Name);
 
     //查询买家
-    Customer getCustomerAddress(@Param("customerId") BigInteger customerId);
+    Customer getCustomer(@Param("customerId") BigInteger customerId);
 
 }

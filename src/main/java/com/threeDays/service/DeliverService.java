@@ -14,7 +14,7 @@ public class DeliverService {
     @Autowired
     private OrderService orderService;
     @Autowired
-    private LittlegoodsService littlegoodsService;
+    private LittleGoodsService littlegoodsService;
 
     /**
      * 根据order_id返回deliver对象

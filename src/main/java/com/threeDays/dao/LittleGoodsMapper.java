@@ -14,7 +14,8 @@ public interface LittleGoodsMapper {
 
     //修改配置信息
     int updateEdition(@Param("littleGoodsId") BigInteger littleGoodsId,
-                      @Param("edition") String edition);
+                      @Param("edition") String edition,
+                      @Param("sellerId") BigInteger sellerId);
 
     //新增具体商品
     int addNewLittleGoods(@Param("bigGoodsId") BigInteger bigGoodsId,
@@ -22,19 +23,36 @@ public interface LittleGoodsMapper {
                           @Param("sellerId") BigInteger sellerId,
                           @Param("goodsPrice") float goodsPrice);
 
-    //删除具体商品
-    int deleteLittleGoods(@Param("bigGoodsId") BigInteger bigGoodsId);
+    //删除商品
+    int deleteBigGoods(@Param("bigGoodsId") BigInteger bigGoodsId);
+
+    //删除具体商品（配置）
+    int deleteLittleGoods(@Param("littleGoodsId") BigInteger littleGoodsId);
 
     //修改价格
     int updatePrice(@Param("littleGoodsId") BigInteger littleGoodsId,
-                    @Param("goodsPrice") float goodsPrice);
+                    @Param("goodsPrice") float goodsPrice,
+                    @Param("sellerId") BigInteger sellerId);
 
     //获取商品最低价格
-    int minPrice(@Param("bigGoodsId") BigInteger bigGoodsId);
+    int minPrice(@Param("bigGoodsId") BigInteger bigGoodsId,
+                 @Param("sellerId") BigInteger sellerId);
 
     //获取商品最高价格
-    int maxPrice(@Param("bigGoodsId") BigInteger bigGoodsId);
+    int maxPrice(@Param("bigGoodsId") BigInteger bigGoodsId,
+                 @Param("sellerId") BigInteger sellerId);
+
+    //获取具体商品列表
+    List<LittleGoods> LittleGoods(@Param("bigGoodsId") BigInteger bigGoodsId);
+
+    //获取配置列表
+    List<String> getEdition(@Param("bigGoodsId") BigInteger bigGoodsId);
 
     //获取卖家Id
     BigInteger findSellerById(@Param("littleGoodId") BigInteger littleGoodsId);
+
+    //获取具体商品
+    LittleGoods findLittleGoodsById(@Param("littleGoodId") BigInteger littleGoodsId);
+
+
 }

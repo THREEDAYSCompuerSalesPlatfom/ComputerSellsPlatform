@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.ListIterator;
 
 @Service
-public class LittlegoodsService {
+public class LittleGoodsService {
     @Autowired
     private LittleGoodsMapper littleGoodsMapper;
     @Autowired
@@ -20,10 +20,16 @@ public class LittlegoodsService {
     /**
      * 根据详细商品id返回sellerid
      * 不存在返回null
-     * */
-   public BigInteger findSellerById(BigInteger littlegoods_id){
-       return littleGoodsMapper.findSellerById(littlegoods_id);
-   }
+     */
+    //test
+    public List<LittleGoods> getAllCustomer() {
+        return littleGoodsMapper.findAll();
+    }
+
+    public BigInteger findSellerById(BigInteger littlegoods_id) {
+        return littleGoodsMapper.findSellerById(littlegoods_id);
+    }
+
     //检查配置是否重复
     public Boolean edition(String edition, BigInteger bigGoodsId) {
         Boolean a = false;

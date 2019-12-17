@@ -30,7 +30,6 @@
         update biggoods
         set goods_name=#{goodsName}
         where biggoods_id = #{bigGoodsId}
-          and seller_id = #{sellerId}
     </update>
 
     <select id="findBigGoodsById" resultMap="BigGoodsMap" parameterType="com.threeDays.POJO.BigGoods">
@@ -50,10 +49,14 @@
           and seller_id = #{sellerId}
     </select>
     <select id="getSellerId" resultMap="BigGoodsMap" parameterType="com.threeDays.POJO.BigGoods">
+        select seller_id
+        from biggoods
+        where goods_name = #{goodsName}
+    </select>
+    <select id="getBigGoods" resultMap="BigGoodsMap">
         select *
         from biggoods
         where biggoods_id = #{bigGoodsId}
-          and goods_name = #{goodsName}
     </select>
 
 </mapper>

@@ -31,18 +31,34 @@
         where littlegoods_id = #{littleGoodsId}
           and cu_id = #{customerId}
     </update>
-
-    <update id="updateLittleGoods" parameterType="com.threeDays.POJO.Cart">
+    <update id="updateLittleGoodsEdition" parameterType="com.threeDays.POJO.Cart">
         update cart
         set littlegoods_id=#{littleGoodsId}
         where littlegoods_id = #{littleGoodsId}
           and cu_id = #{customerId}
     </update>
+    <update id="updateLittleGoodsNum" parameterType="com.threeDays.POJO.Cart">
+        update cart
+        set littlegoods_num=#{littleGoodsNum}
+        where littlegoods_id = #{littleGoodsId}
+          and cu_id = #{customerId}
+    </update>
+    <select id="selectLittleGoodsNum" resultMap="CartMap">
+        select littlegoods_num
+        from cart
+        where cu_id = #{customerId}
+          and littlegoods_id = #{littleGoodsId}
+    </select>
     <select id="selectLittleGoods" parameterType="com.threeDays.POJO.Cart" resultType="CartMap">
         select *
         from cart
         where cu_id = #{customerId}
           and littlegoods_id = #{littleGoodsId}
+    </select>
+    <select id="getAllLittleGoodsId" parameterType="com.threeDays.POJO.Cart" resultMap="CartMap">
+        select littlegoods_id
+        from cart
+        where cu_id = #{customerId}
     </select>
 
 

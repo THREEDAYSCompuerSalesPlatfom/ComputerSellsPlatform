@@ -19,8 +19,6 @@ public class LittleGoods {
     }
 
 
-
-
     public BigInteger getLittleGoodsId() {
         return littleGoodsId;
     }

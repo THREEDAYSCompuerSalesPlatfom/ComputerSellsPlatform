@@ -25,8 +25,7 @@ public class YTAtestController {
     private OrderService orderService;
     @Autowired
     private Sellerservice sellerservice;
-    @Autowired
-    private SellerMapper sellerMapper;
+
     @Autowired
     private OrderMapper orderMapper;
 

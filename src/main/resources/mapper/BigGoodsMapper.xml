@@ -5,12 +5,7 @@
         <id property="bigGoodsId" column="biggoods_id" javaType="java.math.BigInteger" jdbcType="bigint"/>
         <result property="goodsName" column="goods_name" javaType="java.lang.String" jdbcType="varchar"/>
         <result property="sellerId" column="seller_id" javaType="java.math.BigInteger" jdbcType="bigint"/>
-        <!--<collection property="littleGoods" ofType="com.threeDays.POJO.LittleGoods">
-            <id property="littleGoodsId" column="littlegoods_id"/>
-            <result property="bigGoodsId" column="biggoods_id"/>
-            <result property="edition" column="edition"/>
-            <result property="sellerId" column="seller_id"/>
-        </collection>-->
+
     </resultMap>
     <select id="findAll" parameterType="com.threeDays.POJO.BigGoods" resultMap="BigGoodsMap">
         select *

@@ -7,7 +7,7 @@
         <result property="bigGoodsId" column="biggoods_id" javaType="java.math.BigInteger"/>
         <result property="edition" column="edition" javaType="java.lang.String"/>
         <result property="sellerId" column="seller_id" javaType="java.math.BigInteger"/>
-        <result property="goodsPrice" column="goodsprice" jdbcType="float"/>
+        <result property="goodsPrice" column="goodsprice" javaType="float"/>
     </resultMap>
     <select id="findAll" parameterType="com.threeDays.POJO.LittleGoods" resultMap="LittleGoodsMap">
         select *
@@ -20,25 +20,25 @@
         where littlegoods_id = #{littleGoodsId}
             and seller_id={sellerId}
     </update>
-    <insert id="addNewLittleGoods" parameterType="com.threeDays.POJO.LittleGoods" useGeneratedKeys="true"
+    <insert id="addNewLittleGoods"  useGeneratedKeys="true"
             keyProperty="cu_id">
         insert into littlegoods (biggoods_id, edition, seller_id, goodsprice)
         values (#{bigGoodsId}, #{edition}, #{sellerId}, #{goodsPrice})
     </insert>
 
-    <delete id="deleteBigGoods" parameterType="com.threeDays.POJO.LittleGoods">
+    <delete id="deleteBigGoods" >
         delete
         from littlegoods
         where biggoods_id = #{bigGoodsId}
     </delete>
 
-    <delete id="deleteLittleGoods" parameterType="com.threeDays.POJO.LittleGoods">
+    <delete id="deleteLittleGoods" >
         delete
         from littlegoods
         where littlegoods_id = #{littleGoodsId}
     </delete>
 
-    <update id="updatePrice" parameterType="com.threeDays.POJO.LittleGoods">
+    <update id="updatePrice" >
         update littlegoods
         set (goodsprice=
              #{goodsPrice})
@@ -46,14 +46,14 @@
             and seller_id = #{sellerId}
     </update>
 
-    <select id="minPrice" parameterType="com.threeDays.POJO.LittleGoods" resultMap="LittleGoodsMap">
+    <select id="minPrice" resultMap="LittleGoodsMap">
         select min(goodsprice)
         from LittleGoods
         where biggoods_id = #{bigGoodsId}
           and seller_id = #{sellerId}
     </select>
 
-    <select id="maxPrice" parameterType="com.threeDays.POJO.LittleGoods" resultMap="LittleGoodsMap">
+    <select id="maxPrice"  resultMap="LittleGoodsMap">
         select max(goodsprice)
         from LittleGoods
         where biggoods_id = #{bigGoodsId}

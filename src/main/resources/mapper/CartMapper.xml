@@ -49,7 +49,7 @@
         where cu_id = #{customerId}
           and littlegoods_id = #{littleGoodsId}
     </select>
-    <select id="selectLittleGoods" parameterType="com.threeDays.POJO.Cart" resultType="CartMap">
+    <select id="selectLittleGoods" parameterType="com.threeDays.POJO.Cart" resultMap="CartMap">
         select *
         from cart
         where cu_id = #{customerId}

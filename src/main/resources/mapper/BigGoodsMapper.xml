@@ -2,15 +2,10 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.threeDays.dao.BigGoodsMapper">
     <resultMap type="com.threeDays.POJO.BigGoods" id="BigGoodsMap">
-        <id property="bigGoodsId" column="biggoods_id" javaType="java.math.BigInteger" jdbcType="bigint"/>
-        <result property="goodsName" column="goods_name" javaType="java.lang.String" jdbcType="varchar"/>
-        <result property="sellerId" column="seller_id" javaType="java.math.BigInteger" jdbcType="bigint"/>
-        <!--<collection property="littleGoods" ofType="com.threeDays.POJO.LittleGoods">
-            <id property="littleGoodsId" column="littlegoods_id"/>
-            <result property="bigGoodsId" column="biggoods_id"/>
-            <result property="edition" column="edition"/>
-            <result property="sellerId" column="seller_id"/>
-        </collection>-->
+        <id property="bigGoodsId" column="biggoods_id" javaType="java.math.BigInteger"/>
+        <result property="goodsName" column="goods_name" javaType="java.lang.String"/>
+        <result property="sellerId" column="seller_id" javaType="java.math.BigInteger"/>
+
     </resultMap>
     <select id="findAll" parameterType="com.threeDays.POJO.BigGoods" resultMap="BigGoodsMap">
         select *

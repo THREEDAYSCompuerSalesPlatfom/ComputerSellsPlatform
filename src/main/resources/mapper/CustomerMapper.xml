@@ -31,7 +31,7 @@
              #{cu_Name})
         where cu_id=#{customerId}
     </update>
-    <select id="getCustomer" resultMap="com.threeDays.POJO.Customer">
+    <select id="getCustomer" resultMap="CustomerMap">
       select * from customer where cu_id=#{customerId}
     </select>
 

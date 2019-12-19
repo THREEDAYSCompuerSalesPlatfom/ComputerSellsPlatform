@@ -8,6 +8,14 @@ public class Ordergoods {
     private BigInteger littlegoods_id;
     private int number;
 
+    public Ordergoods(){};
+
+    public Ordergoods(BigInteger order_id, BigInteger littlegoods_id, int number) {
+        this.order_id = order_id;
+        this.littlegoods_id = littlegoods_id;
+        this.number = number;
+    }
+
     public BigInteger getOrdergoods_id() {
         return ordergoods_id;
     }

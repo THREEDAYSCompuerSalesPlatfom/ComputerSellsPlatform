@@ -12,6 +12,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.math.BigInteger;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Set;
 
 @Controller
 public class YTAtestController {
@@ -150,8 +154,16 @@ public class YTAtestController {
 
     @GetMapping("insertOrder")
     @ResponseBody
-    public BigInteger insertOrder(Order order){
-        return orderService.insertOrder(order);
+    public BigInteger insertOrder(Order order,@RequestBody  Map<String,Integer> map){
+        Set keySet = map.keySet();
+        Iterator iterator = keySet.iterator();
+        Map<BigInteger,Integer> goodsmap=new HashMap<>();
+        while (iterator.hasNext()){
+            String goods_id=(String)iterator.next();
+            Integer num=map.get(goods_id);
+            goodsmap.put(new BigInteger(goods_id),num);
+        }
+        return orderService.insertOrder(order,goodsmap);
     }
     @GetMapping("updateOrder")
     @ResponseBody

@@ -19,6 +19,8 @@ public class OrderService {
     private OrdergoodsMapper ordergoodsMapper;
     @Autowired
     private DeliverService deliverService;
+    @Autowired
+    private LittleGoodsService littleGoodsService;
 
     /**
      * 根据order_id返回Order对象
@@ -57,10 +59,14 @@ public class OrderService {
         if (map.isEmpty()) {
             return new BigInteger("-2");
         }
+        float prize = 0;
+        order.setPrize(prize);
         if (orderMapper.insertOrder(order) == 0) {
             return new BigInteger("-1");
         }
+
         BigInteger order_id = order.getOrder_id();
+
 
         Set keySet = map.keySet();
         Iterator iterator = keySet.iterator();
@@ -68,12 +74,15 @@ public class OrderService {
             BigInteger littlegoods_id = (BigInteger) iterator.next();
             int number = map.get(littlegoods_id);
             Ordergoods ordergoods = new Ordergoods(order_id, littlegoods_id, number);
+            prize = prize + littleGoodsService.findLittleGoodsById(littlegoods_id).getGoodsPrice() * number;
             if (ordergoodsMapper.insertOrderGoods(ordergoods) == 0) {
                 orderMapper.deleteOrder(order_id);//删除已经插入的order
                 ordergoodsMapper.deleteOrderGoods(order_id);//删除已经插入的Ordergoods
                 return new BigInteger("-1");
             }
         }
+        orderMapper.updatePrize(order_id,prize);
+
 
         return order.getOrder_id();
     }
@@ -147,6 +156,7 @@ public class OrderService {
             return "失败，数据库错误";
         } else {
             deliverService.deleteExpress(order_id);//删除发货单号
+            ordergoodsMapper.deleteOrderGoods(order_id);//删除ordergoods
             return "删除成功";
         }
 
@@ -183,6 +193,7 @@ public class OrderService {
 
     /**
      * 返回订单中的商品id以及数量
+     * 可能前端没办法在不知道key的情况下处理map中的数据，可以结合上面的方法获得key，再通过下面方法获取value
      */
     public Map<BigInteger, Integer> findGoodsNumByOrderId(BigInteger order_id) {
         List<Ordergoods> list = ordergoodsMapper.findOrderGoodsByOrderId(order_id);

@@ -11,6 +11,16 @@ public class Order {//订单
     private String comments;//客户的评价
     private String reply;//商家回复
     private Date date;
+    private float prize;
+
+    public float getPrize() {
+        return prize;
+    }
+
+    public void setPrize(float prize) {
+        this.prize = prize;
+    }
+
 
     public Date getDate() {
         return date;

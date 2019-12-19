@@ -182,7 +182,7 @@ public class OrderService {
      * 返回订单中的商品id（不包含数量）
      */
     public List<BigInteger> findGoodsIdByOrderId(BigInteger order_id) {
-        List<Ordergoods> list = ordergoodsMapper.findOrderGoodsByOrderId(order_id);
+        Ordergoods[] list = ordergoodsMapper.findOrderGoodsByOrderId(order_id);
         List<BigInteger> goods = new ArrayList<>();
         for (Ordergoods ordergoods : list) {
             BigInteger goods_id = ordergoods.getLittlegoods_id();
@@ -196,13 +196,29 @@ public class OrderService {
      * 可能前端没办法在不知道key的情况下处理map中的数据，可以结合上面的方法获得key，再通过下面方法获取value
      */
     public Map<BigInteger, Integer> findGoodsNumByOrderId(BigInteger order_id) {
-        List<Ordergoods> list = ordergoodsMapper.findOrderGoodsByOrderId(order_id);
+        Ordergoods[] list = ordergoodsMapper.findOrderGoodsByOrderId(order_id);
         Map<BigInteger, Integer> map = new HashMap();
-        Iterator<Ordergoods> iterator = list.iterator();
-        while (iterator.hasNext()) {
-            Ordergoods ordergoods = iterator.next();
+        //Iterator<Ordergoods> iterator = list.iterator();
+        for(Ordergoods ordergoods:list) {
+           // Ordergoods ordergoods = iterator.next();
             map.put(ordergoods.getLittlegoods_id(), ordergoods.getNumber());
         }
         return map;
+    }
+    /**
+     * 通过订单返回卖家id
+     * 返回-1：无此订单
+     * */
+    public BigInteger findSellerByOrderId(BigInteger order_id){
+        if (orderMapper.findOrderById(order_id) == null) {
+            return new BigInteger("-1");
+        }
+        Ordergoods[] list=ordergoodsMapper.findOrderGoodsByOrderId(order_id);
+       // Iterator iterator=list.iterator();
+        Ordergoods ordergoods=list[0];
+        System.out.println(ordergoods.getLittlegoods_id());
+        BigInteger liitlegoods_id=ordergoods.getLittlegoods_id();
+        return littleGoodsService.findSellerById(liitlegoods_id);
+
     }
 }

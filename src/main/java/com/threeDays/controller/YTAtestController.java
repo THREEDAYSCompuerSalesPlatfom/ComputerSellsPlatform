@@ -12,10 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.math.BigInteger;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 @Controller
 public class YTAtestController {
@@ -146,6 +143,13 @@ public class YTAtestController {
     /**
      * OrderService
      **/
+
+    @GetMapping("findGoodsIdByOrderId")
+    @ResponseBody
+    public List<BigInteger> findGoodsIdByOrderId(BigInteger order_id){
+        return orderService.findGoodsIdByOrderId(order_id);
+    }
+
 
     @GetMapping("findOrderById")
     @ResponseBody

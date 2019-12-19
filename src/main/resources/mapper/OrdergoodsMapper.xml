@@ -5,7 +5,7 @@
         select * from Ordergoods where ordergoods_id=#{ordergoods_id}
     </select>
 
-    <select id="findOrderGoodsByOrderId" parameterType="java.math.BigInteger" resultType="java.util.List">
+    <select id="findOrderGoodsByOrderId" parameterType="java.math.BigInteger" resultType="com.threeDays.POJO.Ordergoods">
          select * from Ordergoods where order_id=#{order_id}
     </select>
 

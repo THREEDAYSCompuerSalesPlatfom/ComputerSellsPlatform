@@ -25,8 +25,7 @@ public class YTAtestController {
     private OrderService orderService;
     @Autowired
     private Sellerservice sellerservice;
-    @Autowired
-    private SellerMapper sellerMapper;
+
     @Autowired
     private OrderMapper orderMapper;
 
@@ -180,5 +179,7 @@ public class YTAtestController {
     public String changeStatus(BigInteger order_id, int order_status){
         return orderService.changeStatus(order_id,order_status);
     }
+
+
 
 }

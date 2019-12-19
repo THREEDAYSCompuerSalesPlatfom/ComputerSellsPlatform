@@ -23,16 +23,24 @@
     </delete>
     <update id="updateCustomer" parameterType="com.threeDays.POJO.Customer">
         update customer
-        set (cu_tel=
-             #{cu_Telephone},
-             cu_address=
-             #{cu_Address},
-             cu_name=
-             #{cu_Name})
-        where cu_id=#{customerId}
+        <set>
+            <if test="cu_Telephone !=null and cu_Telephone !=''">
+            cu_tel=#{cu_Telephone},
+            </if>
+            <if test="cu_Address !=null and cu_Address !=''">
+            cu_address=#{cu_Address},
+            </if>
+            <if test="cu_Name !=null and cu_Name !=''">
+            cu_name=#{cu_Name}
+            </if>
+        </set>
+        <where>cu_id=#{customerId}
+        </where>
     </update>
     <select id="getCustomer" resultMap="CustomerMap">
-      select * from customer where cu_id=#{customerId}
+        select *
+        from customer
+        where cu_id = #{customerId}
     </select>
 
 

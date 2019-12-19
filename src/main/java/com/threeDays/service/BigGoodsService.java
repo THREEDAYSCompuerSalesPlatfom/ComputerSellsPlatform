@@ -25,18 +25,20 @@ public class BigGoodsService {
     private SellerMapper sellerMapper;
     @Autowired
     private LittleGoodsMapper littleGoodsMapper;
+
     //购物车数据测试
-    public List<BigGoods> getAllCart() {
+    public List<BigGoods> getAllGoods() {
         return bigGoodsMapper.findAll();
     }
+
     //创建新的商品
-    public void createNewBigGoods(String goodsName, BigInteger sellerId) {
+    public void createNewBigGoods(String goodsName, BigInteger sellerId, String brand) {
         if (goodsName == null) {
             System.out.println("输入goodsName");
         } else if (sellerMapper.findSellerById(sellerId) == null) {
             System.out.println("无此商家");
         } else {
-            bigGoodsMapper.saveBigGoods(goodsName, sellerId);
+            bigGoodsMapper.saveBigGoods(goodsName, sellerId, brand);
         }
     }
 
@@ -53,8 +55,8 @@ public class BigGoodsService {
     }
 
     //更新牟商品名称
-    public void updateBigGoods(BigInteger bigGoodsId, BigInteger sellerId, String goodsName) {
-        bigGoodsMapper.updateNewBigGoods(bigGoodsId, goodsName);
+    public void updateBigGoods(BigInteger bigGoodsId, BigInteger sellerId, String goodsName, String brand) {
+        bigGoodsMapper.updateNewBigGoods(bigGoodsId, goodsName, brand);
     }
 
     //寻找某类商品
@@ -78,19 +80,26 @@ public class BigGoodsService {
         }
         return goodsName;
     }
+
     //获取某件商品名称->图片
-    public String getGoodsNameById(BigInteger bigGoodsId){
-        BigGoods bigGoods=bigGoodsMapper.findBigGoodsById(bigGoodsId);
+    public String getGoodsNameById(BigInteger bigGoodsId) {
+        BigGoods bigGoods = bigGoodsMapper.findBigGoodsById(bigGoodsId);
         return bigGoods.getGoodsName();
     }
+
     //获取商品Id通过名称
-    public List<BigInteger>getBigGoodsId( String goodsName,  BigInteger sellerId){
-        List<BigInteger>biggoodsId=bigGoodsMapper.getBigGoodsId(goodsName,sellerId);
+    public List<BigInteger> getBigGoodsId(String goodsName, BigInteger sellerId) {
+        List<BigInteger> biggoodsId = bigGoodsMapper.getBigGoodsId(goodsName, sellerId);
         return biggoodsId;
     }
+
     //获取商品
-    public BigGoods getBigGoods(BigInteger bigGoodsId){
+    public BigGoods getBigGoods(BigInteger bigGoodsId) {
         return bigGoodsMapper.getBigGoods(bigGoodsId);
     }
 
+    //获取商品列表
+    public List<BigGoods> getBigGoodsByBrand(String brand){
+        return bigGoodsMapper.getBigGoodsByBrand(brand);
+    }
 }

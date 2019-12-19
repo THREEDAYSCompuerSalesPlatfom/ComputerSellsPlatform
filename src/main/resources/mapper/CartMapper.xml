@@ -2,23 +2,33 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.threeDays.dao.CartMapper">
     <resultMap type="com.threeDays.POJO.Cart" id="CartMap">
-        <id property="Id" column="cart_id" javaType="java.math.BigInteger"/>
+        <id property="cartId" column="cart_id" javaType="java.math.BigInteger"/>
         <result property="customerId" column="cu_id" javaType="java.math.BigInteger"/>
         <result property="littleGoodsId" column="littlegoods_id" javaType="java.math.BigInteger"/>
         <result property="littleGoodsNum" column="littlegoods_num" javaType="int"/>
         <result property="goodsStatus" column="goods_status" javaType="int"/>
     </resultMap>
-
     <select id="findAll" parameterType="com.threeDays.POJO.Cart" resultMap="CartMap">
         select *
         from cart
     </select>
-
     <insert id="addLittleGoods" parameterType="com.threeDays.POJO.Cart" useGeneratedKeys="true"
             keyProperty="cart_id">
-        insert into cart(cu_id, littlegoods_id, littlegoods_num)
-        values (#{customerId}, #{littleGoodsId}, #{littleGoodsNum})
+        insert into cart(cu_id, littlegoods_id, littlegoods_num, goods_status)
+        values (#{customerId}, #{littleGoodsId}, #{littleGoodsNum}, #{goodsStatus})
     </insert>
+    <update id="updateStatus" parameterType="com.threeDays.POJO.Cart">
+        update cart
+        <set>
+            <if test="littleGoodsNum !=null and littleGoodsNum !=''">
+                goods_status=#{goodsStatus}
+            </if>
+        </set>
+        <where>
+            littlegoods_id = #{littleGoodsId}
+            and cu_id = #{customerId}
+        </where>
+    </update>
     <delete id="deleteLittleGoods" parameterType="com.threeDays.POJO.Cart">
         delete
         from cart
@@ -27,21 +37,45 @@
     </delete>
     <update id="removeLittleGoods" parameterType="com.threeDays.POJO.Cart">
         update cart
-        set littlegoods_num=#{littleGoodsNum}
-        where littlegoods_id = #{littleGoodsId}
-          and cu_id = #{customerId}
+        <set>
+            <if test="littleGoodsNum !=null and littleGoodsNum !=''">
+                littlegoods_num=#{littleGoodsNum}
+            </if>
+        </set>
+        <where>
+            littlegoods_id = #{littleGoodsId}
+            and cu_id = #{customerId}
+        </where>
     </update>
-    <update id="updateLittleGoodsEdition" parameterType="com.threeDays.POJO.Cart">
+
+    <select id="selectCartId" resultMap="CartMap">
+        select cart_id
+        from cart
+        where cu_id = #{customerId}
+          and littlegoods_id = #{littleGoodsId}
+    </select>
+    <update id="updateLittleGoodsId" parameterType="com.threeDays.POJO.Cart">
         update cart
-        set littlegoods_id=#{littleGoodsId}
-        where littlegoods_id = #{littleGoodsId}
-          and cu_id = #{customerId}
+        <set>
+            <if test="littleGoodsId !=null and littleGoodsId !=''">
+                littlegoods_id=#{littleGoodsId}
+            </if>
+        </set>
+        <where>
+            cart_id = #{cartId}
+        </where>
     </update>
     <update id="updateLittleGoodsNum" parameterType="com.threeDays.POJO.Cart">
         update cart
-        set littlegoods_num=#{littleGoodsNum}
-        where littlegoods_id = #{littleGoodsId}
-          and cu_id = #{customerId}
+        <set>
+            <if test="littleGoodsNum !=null and littleGoodsNum !=''">
+                littlegoods_num=#{littleGoodsNum}
+            </if>
+        </set>
+        <where>
+            littlegoods_id = #{littleGoodsId}
+            and cu_id = #{customerId}
+        </where>
     </update>
     <select id="selectLittleGoodsNum" resultMap="CartMap">
         select littlegoods_num

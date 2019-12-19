@@ -4,6 +4,7 @@ package com.threeDays.dao;
 import com.threeDays.POJO.LittleGoods;
 import org.apache.ibatis.annotations.Param;
 
+import javax.websocket.server.PathParam;
 import java.math.BigInteger;
 import java.util.List;
 
@@ -13,9 +14,15 @@ public interface LittleGoodsMapper {
     List<LittleGoods> findAll();
 
     //修改配置信息
-    int updateEdition(@Param("littleGoodsId") BigInteger littleGoodsId,
-                      @Param("edition") String edition,
-                      @Param("sellerId") BigInteger sellerId);
+    int updateEdition(@Param("edition") String edition,
+                      @Param("sellerId") BigInteger sellerId,
+                      @Param("bigGoodsId") BigInteger bigGoodsId);
+
+    //修改价格
+    int updatePrice(@Param("edition") BigInteger edition,
+                    @Param("goodsPrice") float goodsPrice,
+                    @Param("sellerId") BigInteger sellerId,
+                    @Param("bigGoodsId")BigInteger bigGoodsId);
 
     //新增具体商品
     int addNewLittleGoods(@Param("bigGoodsId") BigInteger bigGoodsId,
@@ -29,10 +36,6 @@ public interface LittleGoodsMapper {
     //删除具体商品（配置）
     int deleteLittleGoods(@Param("littleGoodsId") BigInteger littleGoodsId);
 
-    //修改价格
-    int updatePrice(@Param("littleGoodsId") BigInteger littleGoodsId,
-                    @Param("goodsPrice") float goodsPrice,
-                    @Param("sellerId") BigInteger sellerId);
 
     //获取商品最低价格
     int minPrice(@Param("bigGoodsId") BigInteger bigGoodsId,

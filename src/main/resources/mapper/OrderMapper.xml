@@ -5,7 +5,7 @@
         select * from [order] where order_id=#{order_id}
     </select>
     <insert id="insertOrder" parameterType="com.threeDays.POJO.Order" useGeneratedKeys="true" keyProperty="order_id">
-         insert into [order](date,cu_id,order_status) values (#{date},#{littlegoods_id},#{cu_id},#{order_status})
+         insert into [order](cu_id,order_status,prize) values (#{cu_id},#{order_status},#{prize})
     </insert>
     <update id="insertComment" >
         update [order] SET comments=#{comment} where order_id=#{order_id}
@@ -22,6 +22,9 @@
     </delete>
     <update id="changeStatus">
         update [order] SET order_status=#{order_status} where order_id=#{order_id}
+    </update>
+    <update id="updatePrize">
+         update [order] SET prize=#{prize} where order_id=#{order_id}
     </update>
 
     <resultMap type="com.threeDays.POJO.Order" id="OrderMap">

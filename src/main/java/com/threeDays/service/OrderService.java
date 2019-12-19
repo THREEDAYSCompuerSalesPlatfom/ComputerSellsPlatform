@@ -2,6 +2,7 @@ package com.threeDays.service;
 
 import com.threeDays.POJO.Order;
 import com.threeDays.dao.OrderMapper;
+import com.threeDays.dao.OrdergoodsMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,6 +12,8 @@ import java.math.BigInteger;
 public class OrderService {
     @Autowired
     private OrderMapper orderMapper;
+    @Autowired
+    private OrdergoodsMapper ordergoodsMapper;
     @Autowired
     private DeliverService deliverService;
 

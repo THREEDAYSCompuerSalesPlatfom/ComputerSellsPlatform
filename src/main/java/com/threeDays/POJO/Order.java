@@ -1,16 +1,24 @@
 package com.threeDays.POJO;
 
 import java.math.BigInteger;
+import java.util.Date;
 
 public class Order {//订单
     private BigInteger order_id;//订单id
-    private BigInteger littlegoods_id;//详细商品id
+    // private BigInteger littlegoods_id;//详细商品id
     private BigInteger cu_id;//客户id
     private int order_status;//订单状态
     private String comments;//客户的评价
     private String reply;//商家回复
+    private Date date;
 
+    public Date getDate() {
+        return date;
+    }
 
+    public void setDate(Date date) {
+        this.date = date;
+    }
 
     public BigInteger getOrder_id() {
         return order_id;
@@ -20,13 +28,6 @@ public class Order {//订单
         this.order_id = order_id;
     }
 
-    public BigInteger getLittlegoods_id() {
-        return littlegoods_id;
-    }
-
-    public void setLittlegoods_id(BigInteger littlegoods_id) {
-        this.littlegoods_id = littlegoods_id;
-    }
 
     public BigInteger getCu_id() {
         return cu_id;

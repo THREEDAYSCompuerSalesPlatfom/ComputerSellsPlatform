@@ -8,6 +8,25 @@ public class AfterSales {
     private BigInteger order_id;//订单id
     private String express;//物流单号
     private int after_status;//售后状态
+    private String cu_excuse;
+    private String seller_excuse;
+
+    public String getCu_excuse() {
+        return cu_excuse;
+    }
+
+    public void setCu_excuse(String cu_excuse) {
+        this.cu_excuse = cu_excuse;
+    }
+
+    public String getSeller_excuse() {
+        return seller_excuse;
+    }
+
+    public void setSeller_excuse(String seller_excuse) {
+        this.seller_excuse = seller_excuse;
+    }
+
 
     public BigInteger getAfter_id() {
         return after_id;

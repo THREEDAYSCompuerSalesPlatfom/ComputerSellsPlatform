@@ -7,6 +7,8 @@
         <result property="seller_id" column="seller_id" javaType="java.math.BigInteger"/>
         <result property="express" column="express" javaType="java.lang.String"/>
         <result property="order_id" column="order_id" javaType="java.math.BigInteger"/>
+        <result property="cu_excuse" column="cu_excuse" javaType="java.lang.String"/>
+        <result property="seller_excuse" column="seller_excuse" javaType="java.lang.String"/>
     </resultMap>
 
     <select id="findAfterSalesById" parameterType="java.math.BigInteger" resultMap="AfterSalesMap">
@@ -23,5 +25,11 @@
 
     <update id="changeAfterSalesStatus">
          update AfterSales SET after_status=#{status} where after_id=#{order_id}
+    </update>
+    <update id="updateSellerExcuse">
+          update AfterSales SET seller_excuse=#{seller_excuse} where order_id=#{order_id}
+    </update>
+    <update id="updateCuExcuse">
+          update AfterSales SET cu_excuse=#{cu_excuse} where order_id=#{order_id}
     </update>
 </mapper>

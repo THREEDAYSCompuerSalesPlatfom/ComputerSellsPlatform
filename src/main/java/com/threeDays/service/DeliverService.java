@@ -33,7 +33,7 @@ public class DeliverService {
         if (express.equals("")) {
             return "物流单号不能为空";
         }
-        BigInteger seller_id = littlegoodsService.findSellerById(orderService.findOrderById(order_id).getLittlegoods_id());//zwx mmp!
+        BigInteger seller_id = littlegoodsService.findSellerById(orderService.findSellerByOrderId(order_id));//zwx mmp!
         if (seller_id == null) {
             return "未知错误，可能order所对的详细商品或者seller已经不存在";
         }

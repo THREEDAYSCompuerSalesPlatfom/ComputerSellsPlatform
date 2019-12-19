@@ -5,7 +5,7 @@
         select * from [order] where order_id=#{order_id}
     </select>
     <insert id="insertOrder" parameterType="com.threeDays.POJO.Order" useGeneratedKeys="true" keyProperty="order_id">
-         insert into [order](littlegoods_id,cu_id,order_status) values (#{littlegoods_id},#{cu_id},#{order_status})
+         insert into [order](cu_id,order_status,prize) values (#{cu_id},#{order_status},#{prize})
     </insert>
     <update id="insertComment" >
         update [order] SET comments=#{comment} where order_id=#{order_id}
@@ -15,7 +15,7 @@
         update [order] SET reply=#{reply} where order_id=#{order_id}
     </update>
     <update id="updateOrder" parameterType="com.threeDays.POJO.Order">
-         update [order] SET littlegoods_id=#{littlegoods_id},cu_id=#{cu_id},order_status=#{order_status},comments=#{comments},reply=#{reply} where order_id=#{order_id}
+         update [order] SET cu_id=#{cu_id},order_status=#{order_status},comments=#{comments},reply=#{reply} where order_id=#{order_id}
     </update>
     <delete id="deleteOrder" parameterType="java.math.BigInteger">
         delete from [order] where order_id=#{order_id}
@@ -23,13 +23,16 @@
     <update id="changeStatus">
         update [order] SET order_status=#{order_status} where order_id=#{order_id}
     </update>
+    <update id="updatePrize">
+         update [order] SET prize=#{prize} where order_id=#{order_id}
+    </update>
 
     <resultMap type="com.threeDays.POJO.Order" id="OrderMap">
         <id property="order_id" column="order_id" javaType="java.math.BigInteger"/>
         <result property="cu_id" column="cu_id" javaType="java.math.BigInteger"/>
-        <result property="littlegoods_id" column="littlegoods_id" javaType="java.math.BigInteger"/>
         <result property="order_status" column="order_status" javaType="java.lang.Integer"/>
         <result property="comments" column="comments" javaType="java.lang.String"/>
         <result property="reply" column="reply" javaType="java.lang.String"/>
+        <result property="date" column="date" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
     </resultMap>
 </mapper>

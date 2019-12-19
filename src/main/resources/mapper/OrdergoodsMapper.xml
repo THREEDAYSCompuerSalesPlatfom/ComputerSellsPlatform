@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.threeDays.dao.OrdergoodsMapper">
+    <select id="findOrdergoodsByOrderGoodsId" parameterType="java.math.BigInteger" resultMap="OrdergoodsMap">
+        select * from Ordergoods where ordergoods_id=#{ordergoods_id}
+    </select>
+
+    <select id="findOrderGoodsByOrderId" parameterType="java.math.BigInteger" resultMap="OrdergoodsMap">
+         select * from Ordergoods where order_id=#{order_id}
+    </select>
+
+    <insert id="insertOrderGoods" parameterType="com.threeDays.POJO.Ordergoods" useGeneratedKeys="true" keyProperty="ordergoods_id">
+        insert into Ordergoods(order_id,littlegoods_id,number) values (#{order_id},#{littlegoods_id},#{number})
+    </insert>
+
+    <delete id="deleteOrderGoods" parameterType="java.math.BigInteger">
+        delete from Ordergoods where order_id=#{order_id}
+    </delete>
+
+
+
+
+    <resultMap type="com.threeDays.POJO.Ordergoods" id="OrdergoodsMap">
+        <id property="order_id" column="order_id" javaType="java.math.BigInteger"/>
+        <result property="ordergoods_id" column="ordergoods_id" javaType="java.math.BigInteger"/>
+        <result property="number" column="number" javaType="java.lang.Integer"/>
+        <result property="littlegoods_id" column="littlegoods_id" javaType="java.math.BigInteger"/>
+    </resultMap>
+</mapper>

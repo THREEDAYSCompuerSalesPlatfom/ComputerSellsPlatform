@@ -12,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.math.BigInteger;
+import java.util.*;
 
 @Controller
 public class YTAtestController {
@@ -28,6 +29,7 @@ public class YTAtestController {
 
     @Autowired
     private OrderMapper orderMapper;
+
 
     @RequestMapping("/findfindSellerById/{seller_id}")
     @ResponseBody
@@ -142,6 +144,16 @@ public class YTAtestController {
      * OrderService
      **/
 
+    @GetMapping("findGoodsIdByOrderId")
+    @ResponseBody
+    public List<BigInteger> findGoodsIdByOrderId(BigInteger order_id){
+        return orderService.findGoodsIdByOrderId(order_id);
+    }
+
+
+
+
+
     @GetMapping("findOrderById")
     @ResponseBody
     public Order findOrderById(BigInteger order_id) {
@@ -150,8 +162,16 @@ public class YTAtestController {
 
     @GetMapping("insertOrder")
     @ResponseBody
-    public BigInteger insertOrder(Order order){
-        return orderService.insertOrder(order);
+    public BigInteger insertOrder(Order order,@RequestBody  Map<String,Integer> map){
+        Set keySet = map.keySet();
+        Iterator iterator = keySet.iterator();
+        Map<BigInteger,Integer> goodsmap=new HashMap<>();
+        while (iterator.hasNext()){
+            String goods_id=(String)iterator.next();
+            Integer num=map.get(goods_id);
+            goodsmap.put(new BigInteger(goods_id),num);
+        }
+        return orderService.insertOrder(order,goodsmap);
     }
     @GetMapping("updateOrder")
     @ResponseBody

@@ -5,6 +5,7 @@ import com.threeDays.dao.SellerMapper;
 import com.threeDays.dao.SellerPasswordMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestParam;
 
 
 import java.math.BigInteger;
@@ -47,6 +48,8 @@ public class Sellerservice {
         sellerMapper.insertSeller(seller);
         BigInteger seller_id = seller.getSeller_id();
         sellerPasswordMapper.insertPassword(seller_id, password);
+
+        sellerMapper.updateSeller(seller);
         return seller_id;
 
     }
@@ -84,5 +87,19 @@ public class Sellerservice {
     public Seller findSellerById(BigInteger seller_id) {
         return sellerMapper.findSellerById(seller_id);
     }
+
+    /**
+     * 判断商家名是否已经存在
+     * 已经存在返回1
+     * 不存在返回0
+     * */
+    public int isNameExist( String seller_name){
+        if(sellerMapper.findSellerByName(seller_name)==null){
+            return 0;
+        }else {
+            return 1;
+        }
+    }
+
 
 }

@@ -1,7 +1,10 @@
 package com.threeDays.controller.sellerlogin;
 
 import com.threeDays.POJO.Seller;
+import com.threeDays.Utils.RegexUtils;
 import com.threeDays.service.Sellerservice;
+import com.wf.captcha.GifCaptcha;
+import com.wf.captcha.utils.CaptchaUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.math.BigInteger;
 
 @Controller
@@ -18,6 +22,24 @@ public class LoginController {
     @Autowired
     private Sellerservice sellerservice;
 
+
+    /**
+     * 获取验证码图片(项目源地址：https://github.com/whvcse/EasyCaptcha)
+     * 前端代码：<img src="/captcha" width="130px" height="48px" />
+     * 不要忘了把/captcha路径排除登录拦截
+     * */
+    @RequestMapping("/captcha")
+    public void captcha(HttpServletRequest request, HttpServletResponse response) throws Exception {
+        // 设置位数
+        CaptchaUtil.out(5, request, response);
+        // 设置宽、高、位数
+        CaptchaUtil.out(130, 48, 5, request, response);
+
+        // 使用gif验证码
+        GifCaptcha gifCaptcha = new GifCaptcha(130,48,4);
+        CaptchaUtil.out(gifCaptcha, request, response);
+
+    }
     /**
      * 从客户登录界面转到卖家登录界面
      * 卖家登录界面：selogin.html
@@ -27,6 +49,7 @@ public class LoginController {
         return "selogin";
     }
 
+
     /**
      * 商家登录表单提交
      * 表单action：/selogin/submit
@@ -34,7 +57,12 @@ public class LoginController {
      * 正确登陆时，session中存有Seller_id,作为是否登录的依据。成功后跳转seller界面
      **/
     @PostMapping("/selogin/submit")
-    public String login(@RequestParam("name") String name, @RequestParam("password") String password, Model model, HttpServletRequest Request) {
+    public String login(@RequestParam("name") String name, @RequestParam("password") String password, @RequestParam("verCode") String verCode,Model model, HttpServletRequest Request) {
+        if (!CaptchaUtil.ver(verCode, Request)) {
+            CaptchaUtil.clear(Request);  // 清除session中的验证码
+            model.addAttribute("errormsg", "验证码错误");
+            return "redirect:/selogin";
+        }
         BigInteger Sellerid = sellerservice.login(name, password);
         if (Sellerid.equals(new BigInteger("-1"))) {
             model.addAttribute("errormsg", "账号不存在");
@@ -65,13 +93,22 @@ public class LoginController {
      * 成功注册时，session中存有Seller_id,作为是否登录的依据。成功后跳转seller界面
      * */
     @PostMapping("/sellerregesiter/submit")
-    public String regesiter(Seller seller, @RequestParam("password") String password, Model model,HttpServletRequest request) {
+    public String regesiter(Seller seller, @RequestParam("password") String password, @RequestParam("verCode") String verCode,Model model,HttpServletRequest request) {
+        if (!CaptchaUtil.ver(verCode, request)) {
+            CaptchaUtil.clear(request);  // 清除session中的验证码
+            model.addAttribute("errormsg", "验证码错误");
+            return "redirect:/seregesiter";
+        }
         if (seller.getSeller_address() == null) {
             model.addAttribute("errormsg", "地址未添加");
             model.addAttribute("Seller", seller);//使得重新加载的网页不丢失用户原有填写的信息
             return "redirect:/seregesiter";
         } else if (seller.getSeller_tel() == null) {
             model.addAttribute("errormsg", "联系方式未添加");
+            model.addAttribute("Seller", seller);//使得重新加载的网页不丢失用户原有填写的信息
+            return "redirect:/seregesiter";
+        }else if(RegexUtils.checkMobile(seller.getSeller_tel())==true ||RegexUtils.checkPhone(seller.getSeller_tel())==true){
+            model.addAttribute("errormsg", "联系方式非法");
             model.addAttribute("Seller", seller);//使得重新加载的网页不丢失用户原有填写的信息
             return "redirect:/seregesiter";
         }

@@ -22,7 +22,7 @@ public class LittleGoodsService {
      * 不存在返回null
      */
     //test
-    public List<LittleGoods> getAllCustomer() {
+    public List<LittleGoods> getAllLittleGoods() {
         return littleGoodsMapper.findAll();
     }
 
@@ -67,8 +67,8 @@ public class LittleGoodsService {
     }
 
     //修改某个配置
-    public void updateLittleGoods(BigInteger littleGoodsId, String edition, BigInteger sellerId) {
-        littleGoodsMapper.updateEdition(littleGoodsId, edition, sellerId);
+    public void updateLittleGoods(String edition, BigInteger sellerId, BigInteger bigGoodsId){
+        littleGoodsMapper.updateEdition(edition, sellerId, bigGoodsId);
     }
 
     //获取某个商品价格范围
@@ -81,8 +81,8 @@ public class LittleGoodsService {
     }
 
     //修改商品价格
-    public void updateLittleGoodsPrice(BigInteger littleGoodsId, float price, BigInteger sellerId) {
-        littleGoodsMapper.updatePrice(littleGoodsId, price, sellerId);
+    public void updateLittleGoodsPrice( BigInteger edition, float goodsPrice, BigInteger sellerId, BigInteger bigGoodsId) {
+        littleGoodsMapper.updatePrice(edition, goodsPrice, sellerId,bigGoodsId);
     }
 
     //获取某个具体商品

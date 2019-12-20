@@ -1,4 +1,5 @@
 package com.threeDays.service;
+
 import com.threeDays.POJO.Cart;
 import com.threeDays.dao.BigGoodsMapper;
 import com.threeDays.dao.CartMapper;
@@ -47,12 +48,17 @@ public class CartService {
         } else if (littleGoodsMapper.findLittleGoodsById(littleGoodsId) == null) {
             System.out.println("商品不存在");
         } else if (cartMapper.selectLittleGoods(customerId, littleGoodsId) == null) {//商品原本不存在
-            cartMapper.addLittleGoods(customerId, littleGoodsId, littleGoodsNum);
+            cartMapper.addLittleGoods(customerId, littleGoodsId, littleGoodsNum, 0);
         } else {
             int num = cartMapper.selectLittleGoodsNum(customerId, littleGoodsId);//商品存在
             littleGoodsNum = num + littleGoodsNum;
             cartMapper.updateLittleGoodsNum(customerId, littleGoodsId, littleGoodsNum);
         }
+    }
+
+    //修改状态
+    public void updateStatus(BigInteger customerId, BigInteger littleGoodsId, int goodsStatus) {
+        cartMapper.updateStatus(customerId,littleGoodsId,goodsStatus);
     }
 
     //商品验证删除
@@ -99,7 +105,8 @@ public class CartService {
             System.out.println("该商品不存在");
         } else if (cartMapper.selectLittleGoodsNum(customerId, oldLittleGoodsId) == 1) {
             System.out.println("一件商品属性直接更新");
-            cartMapper.updateLittleGoodsEdition(customerId, oldLittleGoodsId, 1);
+            BigInteger cartId = cartMapper.selectCartId(customerId, oldLittleGoodsId);
+            cartMapper.updateLittleGoodsId(newLittleGoodsId, cartId);
         } else {
             System.out.println("原商品少一，新商品加一");
             removelittleGoods(customerId, oldLittleGoodsId);
@@ -109,9 +116,9 @@ public class CartService {
 
     //获取商品名称列表
     public List<String> getAllBigGoodsName(BigInteger customerId) {
-        List<BigInteger>LittleGoodsId= cartMapper.getAllLittleGoodsId(customerId);
-        List<String> goodsName=new ArrayList<>();
-        for(BigInteger i :LittleGoodsId){
+        List<BigInteger> LittleGoodsId = cartMapper.getAllLittleGoodsId(customerId);
+        List<String> goodsName = new ArrayList<>();
+        for (BigInteger i : LittleGoodsId) {
             goodsName.add(bigGoodsMapper.findBigGoodsById(littleGoodsMapper.findLittleGoodsById(i).getBigGoodsId()).getGoodsName());
         }
         return goodsName;

@@ -18,7 +18,13 @@ public interface CartMapper {
     //增加一件新的详细商品
     int addLittleGoods(@Param("customerId") BigInteger customerId,
                        @Param("littleGoodsId") BigInteger littleGoodsId,
-                       @Param("littleGoodsNum") int littleGoodsNum);
+                       @Param("littleGoodsNum") int littleGoodsNum,
+                       @Param("goodsStatus") int goodsStatus);
+
+    //修改物品状态
+    int updateStatus(@Param("customerId") BigInteger customerId,
+                     @Param("littleGoodsId") BigInteger littleGoodsId,
+                     @Param("goodsStatus") int goodsStatus);
 
     //删除一群相同的详细商品
     int deleteLittleGoods(@Param("customerId") BigInteger customerId,
@@ -29,10 +35,13 @@ public interface CartMapper {
                           @Param("littleGoodsId") BigInteger littleGoodsId,
                           @Param("littleGoodsNum") int littleGoodsNum);
 
+    //获取cart_Id(但以用户Id唯一确定实际中Id)
+    BigInteger selectCartId(@Param("customerId") BigInteger customerId,
+                            @Param("littleGoodsId") BigInteger littleGoodsId);
+
     //修改一件商品属性
-    int updateLittleGoodsEdition(@Param("customerId") BigInteger customerId,
-                                 @Param("littleGoodsId") BigInteger littleGoodsId,
-                                 @Param("littleGoodsNum") int littleGoodsNum);//oldidnum-1 newidnum=1
+    int updateLittleGoodsId(@Param("littleGoodsId") BigInteger littleGoodsId,
+                            @Param("cartId") BigInteger cartId);
 
     //修改商品数量
     int updateLittleGoodsNum(@Param("customerId") BigInteger customerId,
@@ -46,7 +55,8 @@ public interface CartMapper {
     //查询某详细商品
     LittleGoods selectLittleGoods(@Param("customerId") BigInteger customerId,
                                   @Param("littleGoodsId") BigInteger littleGoodsId);
-    //查询商品所有Id
+
+    //查询用户所有商品Id
     List<BigInteger> getAllLittleGoodsId(@Param("customerId") BigInteger customerId);
 
 }

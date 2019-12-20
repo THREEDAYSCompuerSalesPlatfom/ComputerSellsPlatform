@@ -5,7 +5,7 @@
         <id property="bigGoodsId" column="biggoods_id" javaType="java.math.BigInteger"/>
         <result property="goodsName" column="goods_name" javaType="java.lang.String"/>
         <result property="sellerId" column="seller_id" javaType="java.math.BigInteger"/>
-
+        <result property="brand" column="brand" javaType="java.lang.String"/>
     </resultMap>
     <select id="findAll" parameterType="com.threeDays.POJO.BigGoods" resultMap="BigGoodsMap">
         select *
@@ -13,8 +13,8 @@
     </select>
     <insert id="saveBigGoods" parameterType="com.threeDays.POJO.BigGoods" useGeneratedKeys="true"
             keyProperty="biggoods_id">
-        insert into biggoods(goods_name, seller_id)
-        values (#{goodsName}, #{sellerId})
+        insert into biggoods(goods_name, seller_id,brand)
+        values (#{goodsName}, #{sellerId},#{brand})
     </insert>
     <delete id="deleteBigGoods" parameterType="java.math.BigInteger">
         delete
@@ -23,10 +23,13 @@
     </delete>
     <update id="updateNewBigGoods" parameterType="com.threeDays.POJO.BigGoods">
         update biggoods
-        set goods_name=#{goodsName}
+        <set>
+            <if test="goodsName !=null and goodsName !=''">
+            goods_name=#{goodsName}
+            </if>
+        </set>
         where biggoods_id = #{bigGoodsId}
     </update>
-
     <select id="findBigGoodsById" resultMap="BigGoodsMap" parameterType="com.threeDays.POJO.BigGoods">
         select *
         from biggoods
@@ -53,5 +56,14 @@
         from biggoods
         where biggoods_id = #{bigGoodsId}
     </select>
-
+    <select id="getBigGoodsByBrand" resultMap="BigGoodsMap">
+        select *
+        from biggoods
+        where brand = #{brand}
+    </select>
+    <select id="getBigGoodsIdByBrand" resultMap="BigGoodsMap">
+        select biggoods_id
+        from biggoods
+        where brand = #{brand}
+    </select>
 </mapper>

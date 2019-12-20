@@ -15,45 +15,51 @@
     </select>
     <update id="updateEdition" parameterType="com.threeDays.POJO.LittleGoods">
         update littlegoods
-        set (littlegoods_id=
-             #{littleGoodsId})
-        where littlegoods_id = #{littleGoodsId}
-            and seller_id={sellerId}
+        <set>
+            <if test="edition !=null and edition !=''">
+                edition=#{edition}
+            </if>
+        </set>
+        <where>
+            seller_id=#{sellerId}
+            and biggoods_id=#{bigGoodsId}
+        </where>
     </update>
-    <insert id="addNewLittleGoods"  useGeneratedKeys="true"
+    <update id="updatePrice">
+        update littlegoods
+        <set>
+            <if test="goodsPrice !=null and goodsPrice !=''">
+                goodsprice=#{goodsPrice}
+            </if>
+        </set>
+        <where>
+            edition = #{edition}
+            and seller_id = #{sellerId}
+            and biggoods_id=#{bigGoodsId}
+        </where>
+    </update>
+    <insert id="addNewLittleGoods" useGeneratedKeys="true"
             keyProperty="cu_id">
         insert into littlegoods (biggoods_id, edition, seller_id, goodsprice)
         values (#{bigGoodsId}, #{edition}, #{sellerId}, #{goodsPrice})
     </insert>
-
-    <delete id="deleteBigGoods" >
+    <delete id="deleteBigGoods">
         delete
         from littlegoods
         where biggoods_id = #{bigGoodsId}
     </delete>
-
-    <delete id="deleteLittleGoods" >
+    <delete id="deleteLittleGoods">
         delete
         from littlegoods
         where littlegoods_id = #{littleGoodsId}
     </delete>
-
-    <update id="updatePrice" >
-        update littlegoods
-        set (goodsprice=
-             #{goodsPrice})
-        where littlegoods_id = #{littleGoodsId}
-            and seller_id = #{sellerId}
-    </update>
-
     <select id="minPrice" resultMap="LittleGoodsMap">
         select min(goodsprice)
         from LittleGoods
         where biggoods_id = #{bigGoodsId}
           and seller_id = #{sellerId}
     </select>
-
-    <select id="maxPrice"  resultMap="LittleGoodsMap">
+    <select id="maxPrice" resultMap="LittleGoodsMap">
         select max(goodsprice)
         from LittleGoods
         where biggoods_id = #{bigGoodsId}
@@ -79,6 +85,4 @@
         from littleGoods
         where littlegoods_id = #{littleGoodId}
     </select>
-
-
 </mapper>

@@ -13,8 +13,8 @@
     </select>
     <insert id="saveBigGoods" parameterType="com.threeDays.POJO.BigGoods" useGeneratedKeys="true"
             keyProperty="biggoods_id">
-        insert into biggoods(goods_name, seller_id,brand)
-        values (#{goodsName}, #{sellerId},#{brand})
+        insert into biggoods(goods_name, seller_id, brand)
+        values (#{goodsName}, #{sellerId}, #{brand})
     </insert>
     <delete id="deleteBigGoods" parameterType="java.math.BigInteger">
         delete
@@ -25,7 +25,7 @@
         update biggoods
         <set>
             <if test="goodsName !=null and goodsName !=''">
-            goods_name=#{goodsName}
+                goods_name=#{goodsName}
             </if>
         </set>
         where biggoods_id = #{bigGoodsId}
@@ -65,5 +65,10 @@
         select biggoods_id
         from biggoods
         where brand = #{brand}
+    </select>
+    <select id="getBigGoodsBySellerId" resultMap="BigGoodsMap">
+        select *
+        from biggoods
+        where seller_id = #{sellerId}
     </select>
 </mapper>

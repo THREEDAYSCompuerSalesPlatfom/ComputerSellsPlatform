@@ -110,9 +110,9 @@ public class BigGoodsService {
      * 分页通过商家id获取商品列表
      * 用PageNum控制返回第几页
      * 一页中有pagesize个商品
-     * 通过map.get("list")获取到返回的表
-     * 通过map.get("total")获取总页数
-     * 通过map.get("PageNum")获取当前页数
+     * 通过返回的map.get("list")获取到返回的表
+     * 通过返回的map.get("Total")获取总页数
+     * 通过返回的map.get("PageNum")获取当前页数
      * */
     public Map<String,Object> getPAGEBigGoodsBySellerId(BigInteger seller_id,int PageNum,int pagesize){
         PageHelper.startPage(PageNum, pagesize);
@@ -121,7 +121,7 @@ public class BigGoodsService {
         long totalPageNum=pageInfo.getTotal();
         Map<String,Object> map=new HashMap<>();
         map.put("list",list);//表本身
-        map.put("total",totalPageNum);//加入总页数
+        map.put("Total",totalPageNum);//加入总页数
         map.put("PageNum",pageInfo.getPageNum());//当前页数
         return map;
     }

@@ -33,20 +33,21 @@ public class YTAtestController {
 
     @RequestMapping("/findfindSellerById/{seller_id}")
     @ResponseBody
-    public Seller findSellerById(@PathVariable("seller_id") BigInteger seller_id){
+    public Seller findSellerById(@PathVariable("seller_id") BigInteger seller_id) {
         return testservice.findSellerById(seller_id);
     }
+
     @GetMapping("/test")
     @ResponseBody
-    public String testC(Seller seller){
+    public String testC(Seller seller) {
         return seller.getSeller_name();
     }
 
     @RequestMapping("/findorder/{order_id}")
     @ResponseBody
-    public Order findOrder(@PathVariable("order_id")BigInteger order_id){
-        Order order=orderMapper.findOrderById(order_id);
-        if(order==null)
+    public Order findOrder(@PathVariable("order_id") BigInteger order_id) {
+        Order order = orderMapper.findOrderById(order_id);
+        if (order == null)
             System.out.println("null");
         else
             System.out.println("ok");
@@ -64,7 +65,7 @@ public class YTAtestController {
 
     @GetMapping("insertAfterSales")
     @ResponseBody
-    public BigInteger insertAfterSales(AfterSales afterSales){
+    public BigInteger insertAfterSales(AfterSales afterSales) {
 //        System.out.println(afterSales.getExpress());
 //        System.out.println(afterSales.getAfter_id());
         return afterSalesService.insertAfterSales(afterSales);
@@ -72,71 +73,71 @@ public class YTAtestController {
 
     @GetMapping("updateAfterSalesExpress")
     @ResponseBody
-    public String updateAfterSalesExpress(@RequestParam("order_id") BigInteger order_id, @RequestParam("express")String express){
-        return afterSalesService.updateExpress(order_id,express);
+    public String updateAfterSalesExpress(@RequestParam("order_id") BigInteger order_id, @RequestParam("express") String express) {
+        return afterSalesService.updateExpress(order_id, express);
     }
+
     @GetMapping("changeAfterSalesStatus")
     @ResponseBody
-    public String changeAfterSalesStatus(BigInteger order_id,int status){
-        return afterSalesService.changeAfterSalesStatus(order_id,status);
+    public String changeAfterSalesStatus(BigInteger order_id, int status) {
+        return afterSalesService.changeAfterSalesStatus(order_id, status);
     }
 
 
     /**
      * Sellerservice
-    */
+     */
 
     @PostMapping("Sellerlogin")
     @ResponseBody
-    public BigInteger login(@RequestParam("name") String name,@RequestParam("password") String password){
-        System.out.println(name+"  "+password);
-        return sellerservice.login(name,password);
+    public BigInteger login(@RequestParam("name") String name, @RequestParam("password") String password) {
+        System.out.println(name + "  " + password);
+        return sellerservice.login(name, password);
     }
 
     @PostMapping("SellerRegister")
     @ResponseBody
-    public BigInteger register(Seller seller, String password){
-        return sellerservice.register(seller,password);
+    public BigInteger register(Seller seller, String password) {
+        return sellerservice.register(seller, password);
     }
 
     @GetMapping("updateSellerInfo")
     @ResponseBody
-    public int updateSellerInfo(Seller seller){
+    public int updateSellerInfo(Seller seller) {
         return sellerservice.updateSellerInfo(seller);
     }
 
     @PostMapping("updateSellerPassword")
     @ResponseBody
-    public int updateSellerPassword(BigInteger seller_id,String password){
+    public int updateSellerPassword(BigInteger seller_id, String password) {
         return sellerservice.updateSellerPassword(seller_id, password);
     }
 
 
-
     /**
      * DeliverService
-     * */
+     */
     @GetMapping("findDeliverById")
     @ResponseBody
-    public Deliver findDeliverById(BigInteger order_id){
+    public Deliver findDeliverById(BigInteger order_id) {
         return deliverService.findDeliverById(order_id);
     }
 
     @GetMapping("insertExpress")
     @ResponseBody
-    public String insertExpress(BigInteger order_id,String express){
+    public String insertExpress(BigInteger order_id, String express) {
         return deliverService.insertExpress(order_id, express);
     }
 
     @GetMapping("updateDeliverExpress")
     @ResponseBody
-    public String updateDeliverExpress(@RequestParam("order_id") BigInteger order_id, @RequestParam("express")String express){
-        return deliverService.updateExpress(order_id,express);
+    public String updateDeliverExpress(@RequestParam("order_id") BigInteger order_id, @RequestParam("express") String express) {
+        return deliverService.updateExpress(order_id, express);
     }
 
     @GetMapping("deleteExpress")
     @ResponseBody
-    public String deleteExpress(BigInteger order_id){
+    public String deleteExpress(BigInteger order_id) {
         return deliverService.deleteExpress(order_id);
     }
 
@@ -146,13 +147,9 @@ public class YTAtestController {
 
     @GetMapping("findGoodsIdByOrderId")
     @ResponseBody
-    public List<BigInteger> findGoodsIdByOrderId(BigInteger order_id){
+    public List<BigInteger> findGoodsIdByOrderId(BigInteger order_id) {
         return orderService.findGoodsIdByOrderId(order_id);
     }
-
-
-
-
 
     @GetMapping("findOrderById")
     @ResponseBody
@@ -162,44 +159,47 @@ public class YTAtestController {
 
     @GetMapping("insertOrder")
     @ResponseBody
-    public BigInteger insertOrder(Order order,@RequestBody  Map<String,Integer> map){
+    public BigInteger insertOrder(Order order, @RequestBody Map<String, Integer> map) {
         Set keySet = map.keySet();
         Iterator iterator = keySet.iterator();
-        Map<BigInteger,Integer> goodsmap=new HashMap<>();
-        while (iterator.hasNext()){
-            String goods_id=(String)iterator.next();
-            Integer num=map.get(goods_id);
-            goodsmap.put(new BigInteger(goods_id),num);
+        Map<BigInteger, Integer> goodsmap = new HashMap<>();
+        while (iterator.hasNext()) {
+            String goods_id = (String) iterator.next();
+            Integer num = map.get(goods_id);
+            goodsmap.put(new BigInteger(goods_id), num);
         }
-        return orderService.insertOrder(order,goodsmap);
+        return orderService.insertOrder(order, goodsmap);
     }
+
     @GetMapping("updateOrder")
     @ResponseBody
-    public String updateOrder(Order order){
+    public String updateOrder(Order order) {
         return orderService.updateOrder(order);
     }
 
     @GetMapping("insertComment")
     @ResponseBody
-    public String insertComment(BigInteger order_id, String commment){
+    public String insertComment(BigInteger order_id, String commment) {
         return orderService.insertComment(order_id, commment);
     }
+
     @GetMapping("insertReply")
     @ResponseBody
-    public String insertReply(BigInteger order_id, String reply){
+    public String insertReply(BigInteger order_id, String reply) {
         return orderService.insertReply(order_id, reply);
     }
+
     @GetMapping("deleteOrder")
     @ResponseBody
-    public String deleteOrder(BigInteger order_id){
+    public String deleteOrder(BigInteger order_id) {
         return orderService.deleteOrder(order_id);
     }
+
     @GetMapping("changeStatus")
     @ResponseBody
-    public String changeStatus(BigInteger order_id, int order_status){
-        return orderService.changeStatus(order_id,order_status);
+    public String changeStatus(BigInteger order_id, int order_status) {
+        return orderService.changeStatus(order_id, order_status);
     }
-
 
 
 }

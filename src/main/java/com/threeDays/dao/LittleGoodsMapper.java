@@ -24,11 +24,8 @@ public interface LittleGoodsMapper {
                     @Param("sellerId") BigInteger sellerId,
                     @Param("bigGoodsId")BigInteger bigGoodsId);
 
-    //新增具体商品
-    int addNewLittleGoods(@Param("bigGoodsId") BigInteger bigGoodsId,
-                          @Param("edition") String edition,
-                          @Param("sellerId") BigInteger sellerId,
-                          @Param("goodsPrice") float goodsPrice);
+    /**新增具体商品，参数中主键id可以为null*/
+    int addNewLittleGoods(LittleGoods littleGoods);
 
     //删除商品
     int deleteBigGoods(@Param("bigGoodsId") BigInteger bigGoodsId);

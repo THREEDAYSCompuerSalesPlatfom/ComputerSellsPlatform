@@ -12,10 +12,8 @@ public interface BigGoodsMapper {
     //test
     List<BigGoods> findAll();
 
-    //增加一类商品
-    int saveBigGoods(@Param("goodsName") String goodsName,
-                     @Param("sellerId") BigInteger sellerId,
-                     @Param("brand") String brand);
+    /**增加一类商品,，参数中主键id可以为null*/
+    int saveBigGoods(BigGoods bigGoods);
 
     //删除某类商品
     int deleteBigGoods(@Param("bigGoodsId") BigInteger bigGoodsId);

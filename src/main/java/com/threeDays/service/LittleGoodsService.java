@@ -44,14 +44,27 @@ public class LittleGoodsService {
         return a;
     }
 
-    //添加新的配置newLittleGoods
-    public void addNewLittleGoods(BigInteger bigGoodsId, String edition, BigInteger sellerId, float goodsPrice) {
+    /**
+     * 添加新的配置newLittleGoods
+     * 成功返回新加入的littlegoodsid
+     * 失败返回-1：无此商品请添加商品
+     * 失败返回-2：已有此配置
+     * */
+    public BigInteger addNewLittleGoods(BigInteger bigGoodsId, String edition, BigInteger sellerId, float goodsPrice) {
         if (bigGoodsMapper.findBigGoodsById(bigGoodsId) == null) {
-            System.out.println("无此商品请添加商品");
+           // System.out.println("无此商品请添加商品");
+            return new BigInteger("-1");
         } else if (edition(edition, bigGoodsId) == false) {
-            System.out.println("已有此配置");
+          //  System.out.println("已有此配置");
+            return new BigInteger("-2");
         } else {
-            littleGoodsMapper.addNewLittleGoods(bigGoodsId, edition, sellerId, goodsPrice);
+            LittleGoods littleGoods=new LittleGoods();
+            littleGoods.setBigGoodsId(bigGoodsId);
+            littleGoods.setEdition(edition);
+            littleGoods.setSellerId(sellerId);
+            littleGoods.setGoodsPrice(goodsPrice);
+            littleGoodsMapper.addNewLittleGoods(littleGoods);
+            return littleGoods.getLittleGoodsId();
         }
     }
 

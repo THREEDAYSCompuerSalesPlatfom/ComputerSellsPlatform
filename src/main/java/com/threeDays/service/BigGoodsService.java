@@ -35,32 +35,57 @@ public class BigGoodsService {
         return bigGoodsMapper.findAll();
     }
 
-    //创建新的商品
-    public void createNewBigGoods(String goodsName, BigInteger sellerId, String brand) {
+    /**
+     * 创建新的大商品
+     * 返回大商品id
+     * 返回-1：商品名字没填写
+     * 返回-2:没此商家
+     * */
+    public BigInteger createNewBigGoods(String goodsName, BigInteger sellerId, String brand) {
         if (goodsName == null) {
-            System.out.println("输入goodsName");
+          //  System.out.println("输入goodsName");
+            return new BigInteger("-1");
         } else if (sellerMapper.findSellerById(sellerId) == null) {
-            System.out.println("无此商家");
+           // System.out.println("无此商家");
+            return new BigInteger("-2");
         } else {
-            bigGoodsMapper.saveBigGoods(goodsName, sellerId, brand);
+            BigGoods bigGoods=new BigGoods();
+            bigGoods.setGoodsName(goodsName);
+            bigGoods.setSellerId(sellerId);
+            bigGoods.setBrand(brand);
+            bigGoodsMapper.saveBigGoods(bigGoods);
+            return bigGoods.getBigGoodsId();
         }
     }
 
-    //删除一类商品
-    public void deleteBigGoods(BigInteger bigGoodsId, BigInteger sellerId) {
-        if (bigGoodsId == null) {
-            System.out.println("输入bigGoodsId");
-        } else if (sellerMapper.findSellerById(sellerId) == null) {
-            System.out.println("无此商家");
-        } else {
+    /**
+     * 删除一类商品
+     * 成功返回商品id
+     * 失败返回-1：商品号非该商家号所有的商品
+     * */
+    public BigInteger deleteBigGoods(BigInteger bigGoodsId, BigInteger sellerId) {
+        if (bigGoodsMapper.getBigGoods(bigGoodsId).getSellerId().equals(sellerId)){
             bigGoodsMapper.deleteBigGoods(bigGoodsId);
             littleGoodsMapper.deleteBigGoods(bigGoodsId);
+            return bigGoodsId;
+        }else{
+            return new BigInteger("-1");
         }
     }
 
-    //更新牟商品名称
-    public void updateBigGoods(BigInteger bigGoodsId, BigInteger sellerId, String goodsName, String brand) {
-        bigGoodsMapper.updateNewBigGoods(bigGoodsId, goodsName, brand);
+    /**
+     * 更新商品名称以及品牌
+     * 成功返回商品id
+     * 失败返回-1：商品号非该商家号所有的商品
+     * */
+    public BigInteger updateBigGoods(BigInteger bigGoodsId, BigInteger sellerId, String goodsName, String brand) {
+        if(bigGoodsMapper.getBigGoods(bigGoodsId).getSellerId().equals(sellerId)){//验证商品id是否为商家自己的
+            bigGoodsMapper.updateNewBigGoods(bigGoodsId, goodsName, brand);
+            return bigGoodsId;
+        }else{
+            return new BigInteger("-1");
+        }
+
     }
 
     //寻找某类商品

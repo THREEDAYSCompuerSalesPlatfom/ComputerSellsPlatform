@@ -88,8 +88,12 @@ public class LittleGoodsService {
      * 成功返回1
      * 错误返回0
      * */
-    public int updateLittleGoods(String edition, BigInteger sellerId, BigInteger liitlegoodsid){
-        return littleGoodsMapper.updateEdition(edition,sellerId,liitlegoodsid);
+    public int updateLittleGoods(String oldEdition,String newEdition, BigInteger sellerId, BigInteger bigGoodsId){
+       BigInteger littleGoodsId=littleGoodsMapper.getLittleGoodsId(oldEdition,bigGoodsId,sellerId);
+        return littleGoodsMapper.updateEdition(newEdition,littleGoodsId);
+    }
+    public int updateLittleGoods(String newEdition,BigInteger littleGoodsId){
+        return littleGoodsMapper.updateEdition(newEdition,littleGoodsId);
     }
 
     //获取某个商品价格范围

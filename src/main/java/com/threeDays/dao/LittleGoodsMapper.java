@@ -35,11 +35,11 @@ public interface LittleGoodsMapper {
 
 
     //获取商品最低价格
-    int minPrice(@Param("bigGoodsId") BigInteger bigGoodsId,
+    float minPrice(@Param("bigGoodsId") BigInteger bigGoodsId,
                  @Param("sellerId") BigInteger sellerId);
 
     //获取商品最高价格
-    int maxPrice(@Param("bigGoodsId") BigInteger bigGoodsId,
+    float maxPrice(@Param("bigGoodsId") BigInteger bigGoodsId,
                  @Param("sellerId") BigInteger sellerId);
 
     //获取具体商品列表

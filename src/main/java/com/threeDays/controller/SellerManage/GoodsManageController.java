@@ -121,14 +121,14 @@ public class GoodsManageController {
      */
     @PostMapping("/GoodsManage/minPrice")
     @ResponseBody
-    public int minPrice(BigInteger bigGoodsId, HttpServletRequest request) {
+    public float minPrice(BigInteger bigGoodsId, HttpServletRequest request) {
         BigInteger seller_id = (BigInteger) request.getSession().getAttribute("Seller_id");
         return littleGoodsService.minPrice(bigGoodsId, seller_id);
     }
 
     @PostMapping("/GoodsManage/maxPrice")
     @ResponseBody
-    public int maxPrice(BigInteger bigGoodsId, HttpServletRequest request) {
+    public float maxPrice(BigInteger bigGoodsId, HttpServletRequest request) {
         BigInteger seller_id = (BigInteger) request.getSession().getAttribute("Seller_id");
         return littleGoodsService.maxPrice(bigGoodsId, seller_id);
     }

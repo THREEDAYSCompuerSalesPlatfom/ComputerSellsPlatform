@@ -93,11 +93,11 @@ public class LittleGoodsService {
     }
 
     //获取某个商品价格范围
-    public int minPrice(BigInteger bigGoodsId, BigInteger sellerId) {
+    public float minPrice(BigInteger bigGoodsId, BigInteger sellerId) {
         return littleGoodsMapper.minPrice(bigGoodsId, sellerId);
     }
 
-    public int maxPrice(BigInteger bigGoodsId, BigInteger sellerId) {
+    public float maxPrice(BigInteger bigGoodsId, BigInteger sellerId) {
         return littleGoodsMapper.maxPrice(bigGoodsId, sellerId);
     }
 

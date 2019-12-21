@@ -20,7 +20,7 @@ public class WebConfig implements WebMvcConfigurer {
     public void addInterceptors(InterceptorRegistry registry) {
         // 拦截路径：必须登录才可以访问
         List<String> patterns = new ArrayList<>();
-        patterns.add("/");
+        patterns.add("/**");
         // 白名单：在黑名单范围内，却不需要登录就可以访问
         List<String> excludePatterns = new ArrayList<>();
         excludePatterns.add("/Login");

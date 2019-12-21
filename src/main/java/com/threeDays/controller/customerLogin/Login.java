@@ -19,7 +19,7 @@ import javax.servlet.http.HttpSession;
 @Controller
 @RestController
 public class Login {
-    @RequestMapping("Login")
+    @RequestMapping("/Login")
     public String login(String name,String pwd,HttpServletRequest request) {
         HttpSession session = request.getSession();
         if(name.equals("root")&&pwd.equals("root")) {

@@ -22,7 +22,7 @@
         </set>
         <where>
             seller_id=#{sellerId}
-            and biggoods_id=#{bigGoodsId}
+            and littlegoods_id=#{littleGoodsId}
         </where>
     </update>
     <update id="updatePrice">

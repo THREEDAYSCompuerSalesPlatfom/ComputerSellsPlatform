@@ -49,16 +49,16 @@ public class LittleGoodsService {
      * 成功返回新加入的littlegoodsid
      * 失败返回-1：无此商品请添加商品
      * 失败返回-2：已有此配置
-     * */
+     */
     public BigInteger addNewLittleGoods(BigInteger bigGoodsId, String edition, BigInteger sellerId, float goodsPrice) {
         if (bigGoodsMapper.findBigGoodsById(bigGoodsId) == null) {
-           // System.out.println("无此商品请添加商品");
+            // System.out.println("无此商品请添加商品");
             return new BigInteger("-1");
         } else if (edition(edition, bigGoodsId) == false) {
-          //  System.out.println("已有此配置");
+            //  System.out.println("已有此配置");
             return new BigInteger("-2");
         } else {
-            LittleGoods littleGoods=new LittleGoods();
+            LittleGoods littleGoods = new LittleGoods();
             littleGoods.setBigGoodsId(bigGoodsId);
             littleGoods.setEdition(edition);
             littleGoods.setSellerId(sellerId);
@@ -75,13 +75,21 @@ public class LittleGoodsService {
     }
 
     //删除原有某个配置
-    public void deleteLittleGoodsById(BigInteger littleGoodsId) {
-        littleGoodsMapper.deleteLittleGoods(littleGoodsId);
+    public int deleteLittleGoodsById(BigInteger littleGoodsId) {
+        return littleGoodsMapper.deleteLittleGoods(littleGoodsId);
     }
 
-    //修改某个配置
-    public void updateLittleGoods(String edition, BigInteger sellerId, BigInteger bigGoodsId){
-        littleGoodsMapper.updateEdition(edition, sellerId, bigGoodsId);
+//    //修改某个配置
+//    public void updateLittleGoods(String edition, BigInteger sellerId, BigInteger bigGoodsId) {
+//        littleGoodsMapper.updateEdition(edition, sellerId, bigGoodsId);
+//    }
+    /**
+     * 修改某个配置
+     * 成功返回1
+     * 错误返回0
+     * */
+    public int updateLittleGoods(String edition, BigInteger sellerId, BigInteger liitlegoodsid){
+        return littleGoodsMapper.updateEdition(edition,sellerId,liitlegoodsid);
     }
 
     //获取某个商品价格范围
@@ -94,8 +102,8 @@ public class LittleGoodsService {
     }
 
     //修改商品价格
-    public void updateLittleGoodsPrice( BigInteger edition, float goodsPrice, BigInteger sellerId, BigInteger bigGoodsId) {
-        littleGoodsMapper.updatePrice(edition, goodsPrice, sellerId,bigGoodsId);
+    public int updateLittleGoodsPrice(String edition, float goodsPrice, BigInteger sellerId, BigInteger bigGoodsId) {
+        return littleGoodsMapper.updatePrice(edition, goodsPrice, sellerId, bigGoodsId);
     }
 
     //获取某个具体商品

@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigInteger;
+import java.util.List;
 
 @Service
 public class AfterSalesService {
@@ -61,11 +62,8 @@ public class AfterSalesService {
     /**
      * 更新售后状态，成功1，失败0
      */
-    public String changeAfterSalesStatus(BigInteger order_id, int status) {
-        if (orderService.findOrderById(order_id) == null) {
-            return "不存在此订单";
-        }
-        if (afterSalesMapper.changeAfterSalesStatus(order_id, status) == 0) {
+    public String changeAfterSalesStatus(BigInteger after_id, int status) {
+        if (afterSalesMapper.changeAfterSalesStatus(after_id, status) == 0) {
             return "fail";
         } else {
             return "success";
@@ -98,6 +96,13 @@ public class AfterSalesService {
         } else {
             return "success";
         }
+    }
+
+    /**
+     * 通过商家id返回售后表
+     * */
+    public List<AfterSales> findAftersalesBySellerId(BigInteger seller_id){
+        return afterSalesMapper.findAftersalesBySellerId(seller_id);
     }
 
 }

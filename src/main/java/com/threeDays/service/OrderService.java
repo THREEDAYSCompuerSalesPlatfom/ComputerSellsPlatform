@@ -3,6 +3,7 @@ package com.threeDays.service;
 import com.threeDays.POJO.BigGoods;
 import com.threeDays.POJO.Order;
 import com.threeDays.POJO.Ordergoods;
+import com.threeDays.Utils.SortUtils.LiitleGoodsSortBySeller;
 import com.threeDays.dao.OrderMapper;
 import com.threeDays.dao.OrdergoodsMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,13 +50,35 @@ public class OrderService {
     //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
     /**
-     * 插入新的order
-     * 返回新order的order_id
-     * 查不到返回null
-     * 插入失败返回-1
-     * map中没商品返回-2
+     * 从购物车的一切商品直接生成对应各自商家的订单
+     * 每个插入新的order（默认订单状态为0）,同时往ordergoods里插入商品
+     * 返回新order的order_id列表，因为可能存在多个商家的商品，会生成很多订单号
      */
-    public BigInteger insertOrder(Order order, Map</*商品id*/BigInteger,/*数量*/ Integer> map) {
+    public List<BigInteger> CreateNewOrder(BigInteger cu_id, Map</*商品id*/BigInteger,/*数量*/ Integer> Cartmap) {
+        Set<BigInteger> set = Cartmap.keySet();
+        BigInteger[] littlegoodsidlist = (BigInteger[]) set.toArray();
+        new LiitleGoodsSortBySeller().QuickSort(littlegoodsidlist, 0, littlegoodsidlist.length - 1);//通过排序让同一个商家的商品紧挨在一起
+        List<BigInteger> orderidlist = new ArrayList<>();//返回的新order的order_id列表
+        BigInteger sellerid = littleGoodsService.findSellerById(littlegoodsidlist[0]);
+        Map<BigInteger, Integer> ordergoodsmap = new HashMap<>();//单订单中的商品信息
+        for (BigInteger liitlegoodsid : littlegoodsidlist) {
+            if (littleGoodsService.findSellerById(liitlegoodsid).equals(sellerid)) {
+                ordergoodsmap.put(liitlegoodsid, Cartmap.get(liitlegoodsid));
+            } else {
+                Order order = new Order();
+                order.setCu_id(cu_id);
+                order.setOrder_status(0);
+                BigInteger orderid = insertOrderANDGoods(order, ordergoodsmap);//插入新的order
+                orderidlist.add(orderid);//在返回的list中加入新的orderid
+                ordergoodsmap.clear();
+            }
+
+        }
+        return orderidlist;
+    }
+
+
+    public BigInteger insertOrderANDGoods(Order order, Map</*商品id*/BigInteger,/*数量*/ Integer> map) {
         if (map.isEmpty()) {
             return new BigInteger("-2");
         }
@@ -81,7 +104,7 @@ public class OrderService {
                 return new BigInteger("-1");
             }
         }
-        orderMapper.updatePrize(order_id,prize);
+        orderMapper.updatePrize(order_id, prize);
 
 
         return order.getOrder_id();
@@ -199,26 +222,31 @@ public class OrderService {
         Ordergoods[] list = ordergoodsMapper.findOrderGoodsByOrderId(order_id);
         Map<BigInteger, Integer> map = new HashMap();
         //Iterator<Ordergoods> iterator = list.iterator();
-        for(Ordergoods ordergoods:list) {
-           // Ordergoods ordergoods = iterator.next();
+        for (Ordergoods ordergoods : list) {
+            // Ordergoods ordergoods = iterator.next();
             map.put(ordergoods.getLittlegoods_id(), ordergoods.getNumber());
         }
         return map;
     }
+
     /**
      * 通过订单返回卖家id
      * 返回-1：无此订单
-     * */
-    public BigInteger findSellerByOrderId(BigInteger order_id){
+     */
+    public BigInteger findSellerByOrderId(BigInteger order_id) {
         if (orderMapper.findOrderById(order_id) == null) {
             return new BigInteger("-1");
         }
-        Ordergoods[] list=ordergoodsMapper.findOrderGoodsByOrderId(order_id);
-       // Iterator iterator=list.iterator();
-        Ordergoods ordergoods=list[0];
+        Ordergoods[] list = ordergoodsMapper.findOrderGoodsByOrderId(order_id);
+        // Iterator iterator=list.iterator();
+        Ordergoods ordergoods = list[0];
         System.out.println(ordergoods.getLittlegoods_id());
-        BigInteger liitlegoods_id=ordergoods.getLittlegoods_id();
+        BigInteger liitlegoods_id = ordergoods.getLittlegoods_id();
         return littleGoodsService.findSellerById(liitlegoods_id);
 
+    }
+
+    public List<Order> findOrderByStatusANDSeller(int order_status,BigInteger seller_id){
+        return orderMapper.findOrderByStatusANDSeller(order_status,seller_id);
     }
 }

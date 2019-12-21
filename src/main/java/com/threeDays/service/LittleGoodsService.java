@@ -17,15 +17,16 @@ public class LittleGoodsService {
     @Autowired
     private BigGoodsMapper bigGoodsMapper;
 
-    /**
-     * 根据详细商品id返回sellerid
-     * 不存在返回null
-     */
+
     //test
     public List<LittleGoods> getAllLittleGoods() {
         return littleGoodsMapper.findAll();
     }
 
+    /**
+     * 根据详细商品id返回sellerid
+     * 不存在返回null
+     */
     public BigInteger findSellerById(BigInteger littlegoods_id) {
         return littleGoodsMapper.findSellerById(littlegoods_id);
     }

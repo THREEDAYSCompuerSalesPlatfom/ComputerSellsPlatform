@@ -5,7 +5,6 @@ import com.threeDays.POJO.Deliver;
 import com.threeDays.POJO.Order;
 import com.threeDays.POJO.Seller;
 import com.threeDays.dao.OrderMapper;
-import com.threeDays.dao.SellerMapper;
 import com.threeDays.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -168,7 +167,7 @@ public class YTAtestController {
             Integer num = map.get(goods_id);
             goodsmap.put(new BigInteger(goods_id), num);
         }
-        return orderService.insertOrder(order, goodsmap);
+        return orderService.insertOrderANDGoods(order, goodsmap);
     }
 
     @GetMapping("updateOrder")

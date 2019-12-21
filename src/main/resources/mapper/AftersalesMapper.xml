@@ -24,7 +24,7 @@
     </update>
 
     <update id="changeAfterSalesStatus">
-         update AfterSales SET after_status=#{status} where after_id=#{order_id}
+         update AfterSales SET after_status=#{status} where after_id=#{after_id}
     </update>
     <update id="updateSellerExcuse">
           update AfterSales SET seller_excuse=#{seller_excuse} where order_id=#{order_id}
@@ -32,4 +32,7 @@
     <update id="updateCuExcuse">
           update AfterSales SET cu_excuse=#{cu_excuse} where order_id=#{order_id}
     </update>
+    <select id="findAftersalesBySellerId" resultMap="AfterSalesMap">
+        select * from AfterSales where seller_id=#{seller_id}
+    </select>
 </mapper>

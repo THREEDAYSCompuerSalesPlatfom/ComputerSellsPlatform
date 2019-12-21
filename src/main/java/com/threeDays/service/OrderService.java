@@ -77,7 +77,7 @@ public class OrderService {
         return orderidlist;
     }
 
-
+   //下面这个别用，请用上面的方法
     public BigInteger insertOrderANDGoods(Order order, Map</*商品id*/BigInteger,/*数量*/ Integer> map) {
         if (map.isEmpty()) {
             return new BigInteger("-2");
@@ -246,7 +246,7 @@ public class OrderService {
 
     }
 
-    public List<Order> findOrderByStatusANDSeller(int order_status,BigInteger seller_id){
-        return orderMapper.findOrderByStatusANDSeller(order_status,seller_id);
+    public List<Order> findOrderByStatusANDSeller(int order_status, BigInteger seller_id) {
+        return orderMapper.findOrderByStatusANDSeller(order_status, seller_id);
     }
 }

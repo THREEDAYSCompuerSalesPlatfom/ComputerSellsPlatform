@@ -2,6 +2,7 @@ package com.threeDays.controller.SellerManage;
 
 import com.threeDays.POJO.Deliver;
 import com.threeDays.POJO.Order;
+import com.threeDays.Utils.Delivery.queryDelivery;
 import com.threeDays.service.DeliverService;
 import com.threeDays.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import javax.servlet.http.HttpServletRequest;
 import java.math.BigInteger;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 发货管理接口
@@ -88,5 +90,43 @@ public class DeliverManageController {
         return deliverService.deleteExpress(order_id);
     }
 
+    /**
+     * 加入卖家回复
+     * 返回失败或成功信息字符串
+     */
+    @PostMapping("/DeliverManage/insertReply")
+    @ResponseBody
+    public String insertReply(BigInteger order_id, String reply) {
+        return orderService.insertReply(order_id, reply);
+    }
 
+    /**
+     * 返回订单中的商品id（不包含数量）
+     */
+    @PostMapping("/DeliverManage/findGoodsIdByOrderId")
+    @ResponseBody
+    public List<BigInteger> findGoodsIdByOrderId(BigInteger order_id) {
+        return orderService.findGoodsIdByOrderId(order_id);
+    }
+
+    /**
+     * 返回订单中的商品id以及数量
+     * 可能前端没办法在不知道key的情况下处理map中的数据，可以结合上面的方法获得key，再通过下面方法获取value
+     */
+    @PostMapping("/DeliverManage/findGoodsNumByOrderId")
+    @ResponseBody
+    public Map<BigInteger, Integer> findGoodsNumByOrderId(BigInteger order_id) {
+        return orderService.findGoodsNumByOrderId(order_id);
+    }
+
+    /**
+     * 查快递
+     * 返回一堆json
+     *示范：com：jinguangsudikuaijian   num：5678573214
+     */
+    @PostMapping("/DeliverManage/queryDelivery")
+    @ResponseBody
+    public String query(String com, String num) {
+        return queryDelivery.query(com, num);
+    }
 }

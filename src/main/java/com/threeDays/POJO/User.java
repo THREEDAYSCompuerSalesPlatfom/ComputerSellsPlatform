@@ -4,6 +4,7 @@ package com.threeDays.POJO;
  * @ClassNameUser
  * @Date2019-12-2119:06
  **/
+//拦截器测试
 public class User {
     String name;
 

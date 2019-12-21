@@ -25,6 +25,6 @@ public class WebConfig implements WebMvcConfigurer {
         List<String> excludePatterns = new ArrayList<>();
         excludePatterns.add("/Login");
         // 注册拦截器
-        registry .addInterceptor(new SessionInterceptor()).addPathPatterns(patterns) .excludePathPatterns(excludePatterns);
+        registry .addInterceptor(new SessionInterceptor());//.addPathPatterns(patterns) .excludePathPatterns(excludePatterns);
     }
 }

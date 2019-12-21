@@ -23,3 +23,11 @@ mybatis:
     map-underscore-to-camel-case: true
   type-aliases-package: com.threeDays.POJO
   mapper-locations: mapper/*.xml
+##github登陆
+github:
+  client:
+    id:3d0fc83ea1af95ebd2fd
+    secret:a6368413a6c23a164517aae4bad6d9ed846776c3
+  Redirect:
+    url:http://localhost:8080/callback
+

@@ -111,9 +111,9 @@ public class GoodsManageController {
      */
     @PostMapping("/GoodsManage/updateLittleGoods")
     @ResponseBody
-    public int updateLittleGoods(String edition, BigInteger liitlegoodsid, HttpServletRequest request) {
+    public int updateLittleGoods(String edition, BigInteger littlegoodsid, HttpServletRequest request) {
         BigInteger seller_id = (BigInteger) request.getSession().getAttribute("Seller_id");
-        return littleGoodsService.updateLittleGoods(edition, seller_id, liitlegoodsid);
+        return littleGoodsService.updateLittleGoods(edition,  littlegoodsid);
     }
 
     /**

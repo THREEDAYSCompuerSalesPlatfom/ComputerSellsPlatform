@@ -15,9 +15,11 @@ public interface LittleGoodsMapper {
 
     //修改配置信息
     int updateEdition(@Param("edition") String edition,
-                      @Param("sellerId") BigInteger sellerId,
                       @Param("littleGoodsId") BigInteger littleGoodsId);
-
+    //寻找到某个商品ID
+    BigInteger getLittleGoodsId(@Param("edition")String edition,
+                                @Param("bigGoodsId")BigInteger bigGoodsId,
+                                @Param("sellerId")BigInteger sellerId);
     //修改价格
     int updatePrice(@Param("edition") String edition,
                     @Param("goodsPrice") float goodsPrice,

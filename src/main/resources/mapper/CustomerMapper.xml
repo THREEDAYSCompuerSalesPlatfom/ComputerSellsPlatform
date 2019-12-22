@@ -6,6 +6,7 @@
         <result property="cu_Telephone" column="cu_tel" javaType="java.lang.String"/>
         <result property="cu_Address" column="cu_address" javaType="java.lang.String"/>
         <result property="cu_Name" column="cu_name" javaType="java.lang.String"/>
+        <result property="balance" column="balance" javaType="float"/>
     </resultMap>
     <select id="findAll" parameterType="com.threeDays.POJO.Customer" resultMap="CustomerMap">
         select *

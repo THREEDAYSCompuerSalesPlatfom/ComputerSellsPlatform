@@ -12,6 +12,15 @@ public class Customer {
     private String cu_Telephone;//买家电话
     private String cu_Address;//买家地址
     private String cu_Name;//买家姓名
+    private float balance;
+
+    public float getBalance() {
+        return balance;
+    }
+
+    public void setBalance(float balance) {
+        this.balance = balance;
+    }
 
     public BigInteger getCustomerId() {
         return customerId;

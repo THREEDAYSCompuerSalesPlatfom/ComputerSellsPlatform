@@ -122,7 +122,13 @@ public class DeliverManageController {
     /**
      * 查快递
      * 返回一堆json
-     *示范：com：jinguangsudikuaijian   num：5678573214
+     *示范：
+     * com：
+     * 中通快递	ZTO
+     * 申通快递	STO
+     * 圆通速递	YTO
+     *
+     * num：单号
      */
     @PostMapping("/DeliverManage/queryDelivery")
     @ResponseBody

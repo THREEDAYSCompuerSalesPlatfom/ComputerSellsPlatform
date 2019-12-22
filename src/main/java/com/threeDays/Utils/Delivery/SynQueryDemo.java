@@ -1,5 +1,7 @@
 package com.threeDays.Utils.Delivery;
 
+import org.springframework.beans.factory.annotation.Value;
+
 import java.io.IOException;
 
 import java.net.URL;
@@ -22,9 +24,9 @@ import java.util.Map;
  */
 public class SynQueryDemo {
 
+
     public static void main(String[] args) {
-        String key = "WyUCYopu9516";				//贵司的授权key
-        String customer = "E5835B19D23E75BA51FA919DE49A7C0C";			//贵司的查询公司编号
+
         String com = "jinguangsudikuaijian";			//快递公司编码
         String num = "5678573214";	//快递单号
         String phone = "";				//手机号码后四位
@@ -32,7 +34,7 @@ public class SynQueryDemo {
         String to = "";					//目的地
         int resultv2 = 0;				//开启行政规划解析
 
-        SynQueryDemo demo = new SynQueryDemo(key, customer);
+        SynQueryDemo demo = new SynQueryDemo("WyUCYopu9516", "E5835B19D23E75BA51FA919DE49A7C0C");
         String result = demo.synQueryData(com, num, phone, from, to, resultv2);
         System.out.println(result);
     }

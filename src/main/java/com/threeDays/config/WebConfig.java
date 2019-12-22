@@ -14,7 +14,7 @@ import java.util.List;
  * @ClassNameWebConfig
  * @Date2019-12-2119:08 注册 拦截器
  **/
-@Configuration
+//@Configuration
 public class WebConfig implements WebMvcConfigurer {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
@@ -25,6 +25,6 @@ public class WebConfig implements WebMvcConfigurer {
         List<String> excludePatterns = new ArrayList<>();
         excludePatterns.add("/Login");
         // 注册拦截器
-        registry .addInterceptor(new SessionInterceptor());//.addPathPatterns(patterns) .excludePathPatterns(excludePatterns);
+        registry .addInterceptor(new SessionInterceptor()).addPathPatterns(patterns) .excludePathPatterns(excludePatterns);
     }
 }

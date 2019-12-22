@@ -127,6 +127,6 @@ public class DeliverManageController {
     @PostMapping("/DeliverManage/queryDelivery")
     @ResponseBody
     public String query(String com, String num) {
-        return queryDelivery.query(com, num);
+        return queryDelivery.kuaidiniaoquery(com, num);
     }
 }

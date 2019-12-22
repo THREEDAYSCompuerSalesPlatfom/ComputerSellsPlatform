@@ -12,6 +12,33 @@ public class Customer {
     private String cu_Telephone;//买家电话
     private String cu_Address;//买家地址
     private String cu_Name;//买家姓名
+    private String token;//token
+    private String accountId;//github accountId
+    private float balance;//余额
+
+    public float getBalance() {
+        return balance;
+    }
+
+    public void setBalance(float balance) {
+        this.balance = balance;
+    }
+
+    public String getAccountId() {
+        return accountId;
+    }
+
+    public void setAccountId(String accountId) {
+        this.accountId = accountId;
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
+    }
 
     public BigInteger getCustomerId() {
         return customerId;

@@ -8,7 +8,7 @@ import java.math.BigInteger;
  * @ClassNameGitCustomer
  * @Date2019-12-223:47
  **/
-public class GitCustomer {
+    public class GithubCustomer {
     private BigInteger id;
     private String name;
     private String accountId;

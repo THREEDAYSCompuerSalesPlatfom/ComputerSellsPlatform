@@ -6,6 +6,9 @@
         <result property="cu_Telephone" column="cu_tel" javaType="java.lang.String"/>
         <result property="cu_Address" column="cu_address" javaType="java.lang.String"/>
         <result property="cu_Name" column="cu_name" javaType="java.lang.String"/>
+        <result property="token" column="token" javaType="java.lang.String"/>
+        <result property="accountId" column="accountId" javaType="java.lang.String"/>
+        <result property="balance" column="balance" javaType="float"/>
     </resultMap>
     <select id="findAll" parameterType="com.threeDays.POJO.Customer" resultMap="CustomerMap">
         select *
@@ -13,8 +16,8 @@
     </select>
     <insert id="addCustomer" parameterType="com.threeDays.POJO.Customer" useGeneratedKeys="true"
             keyProperty="cu_id">
-        insert into customer (cu_tel, cu_address, cu_name)
-        values (#{cu_Telephone}, #{cu_Address}, #{cu_Name})
+        insert into customer (cu_tel, cu_address, cu_name, token, accountId,balance)
+        values (#{cu_Telephone}, #{cu_Address}, #{cu_Name}, #{token}, #{accountId},#{balance})
     </insert>
     <delete id="deleteCustomer" parameterType="com.threeDays.POJO.Customer">
         delete
@@ -25,13 +28,13 @@
         update customer
         <set>
             <if test="cu_Telephone !=null and cu_Telephone !=''">
-            cu_tel=#{cu_Telephone},
+                cu_tel=#{cu_Telephone},
             </if>
             <if test="cu_Address !=null and cu_Address !=''">
-            cu_address=#{cu_Address},
+                cu_address=#{cu_Address},
             </if>
             <if test="cu_Name !=null and cu_Name !=''">
-            cu_name=#{cu_Name}
+                cu_name=#{cu_Name}
             </if>
         </set>
         <where>cu_id=#{customerId}
@@ -42,6 +45,30 @@
         from customer
         where cu_id = #{customerId}
     </select>
-
+    <select id="getCustomerId" resultMap="CustomerMap">
+        select cu_id
+        from customer
+        where token = #{token}
+    </select>
+    <select id="findByToken" resultMap="CustomerMap">
+        select *
+        from customer
+        where token = #{token}
+    </select>
+    <select id="findByAccountId" resultMap="CustomerMap">
+        select *
+        from customer
+        where accountId = #{accountId}
+    </select>
+    <update id="updateToken" parameterType="com.threeDays.POJO.Customer">
+        update customer
+        <set>
+            <if test="token !=null and token !=''">
+                token=#{token}
+            </if>
+        </set>
+        <where>cu_id=#{customerId}
+        </where>
+    </update>
 
 </mapper>

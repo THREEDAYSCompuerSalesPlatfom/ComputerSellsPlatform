@@ -1,4 +1,4 @@
-package com.threeDays.controller;
+package com.threeDays.controller.test;
 
 import com.threeDays.POJO.Customer;
 import com.threeDays.dao.CustomerMapper;

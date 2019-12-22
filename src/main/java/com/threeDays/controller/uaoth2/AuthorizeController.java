@@ -1,9 +1,11 @@
 package com.threeDays.controller.uaoth2;
 
 import com.threeDays.POJO.AccessTokenDto;
-import com.threeDays.POJO.GitCustomer;
+import com.threeDays.POJO.GithubCustomer;
 import com.threeDays.POJO.GithubUser;
+import com.threeDays.dao.GithubCustomerMapper;
 import com.threeDays.provider.GithubProvider;
+import com.threeDays.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -11,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.UUID;
 
@@ -20,11 +21,15 @@ import java.util.UUID;
  * @Date2019-12-220:12 GET
  **/
 
-//登陆：href= https://github.com/login/oauth/authorize?client_id=3d0fc83ea1af95ebd2fd&redirect_uri=http://localhost:8080/callback&scope=user&state=1
+//github登陆：href= https://github.com/login/oauth/authorize?client_id=3d0fc83ea1af95ebd2fd&redirect_uri=http://localhost:8080/callback&scope=user&state=1
 @Controller
 public class AuthorizeController {
     @Autowired
     private GithubProvider githubProvider;
+    @Autowired
+    private CustomerService customerService;
+    @Autowired
+    private GithubCustomerMapper githubCustomerMapper;
     @Value("S{github.client.id}")
     private String clientId;
     @Value("S{github.client.secret}")
@@ -32,10 +37,9 @@ public class AuthorizeController {
     @Value("S{github.Redirect.url}")
     private String RedirectUrl;
 
-    @RequestMapping("callback")
+    @RequestMapping("/callback")
     public String callback(@RequestParam(name = "code") String code,
                            @RequestParam(name = "state") String state,
-                           HttpServletRequest httpServletRequest,
                            HttpServletResponse httpServletResponse) {
         AccessTokenDto accessTokenDto = new AccessTokenDto();
         //accessTokenDto.setClient_id("3d0fc83ea1af95ebd2fd");
@@ -51,25 +55,24 @@ public class AuthorizeController {
         GithubUser githubUser = githubProvider.getUser(accessToken);
         if (githubUser != null) {
             //成功登陆，写入cookie session 维持登陆状态
-            GitCustomer gitCustomer = new GitCustomer();
+            GithubCustomer githubCustomer = new GithubCustomer();
             String token = UUID.randomUUID().toString();
-            gitCustomer.setToken(token);
-            gitCustomer.setAccountId(String.valueOf(githubUser.getId()));
-            gitCustomer.setName(githubUser.getName());
+            githubCustomer.setToken(token);
+            githubCustomer.setAccountId(String.valueOf(githubUser.getId()));
+            githubCustomer.setName(githubUser.getName());
+            githubCustomerMapper.addGithubCustomer(githubCustomer);
+            customerService.mergeCustomer(githubCustomer);//合并生成数据库中customer，返回customerId
             httpServletResponse.addCookie(new Cookie("token", token));//借助token，cookie维持登陆验证是否登陆成功
-
-
             //httpServletRequest.getSession().setAttribute("githubUser", githubUser);//th:if="${session.githubUser！=null}"
             return "redirect:/index";
         } else {
             //失败重新登陆
-            return "redirect:/customerLogin";
+            return "redirect:/index";
         }
 
     }
 }
 /*
- *
  * HttpServletRequest httpServletRequest
  * Cookie [] cookies=httpServletRequest.getCookie()
  * for(Cookie cookie:cookies){

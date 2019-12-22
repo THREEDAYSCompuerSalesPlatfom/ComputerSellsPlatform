@@ -17,7 +17,10 @@ public interface CustomerMapper {
     //新增买家
     int addCustomer(@Param("cu_Telephone") String cu_Telephone,
                     @Param("cu_Address") String cu_Address,
-                    @Param("cu_Name") String cu_Name);
+                    @Param("cu_Name") String cu_Name,
+                    @Param("token")String token,
+                    @Param("accountId")String accountId,
+                    @Param("balance")float balance);
 
     //注销买家
     int deleteCustomer(@Param("customerId") BigInteger customerId);
@@ -31,4 +34,15 @@ public interface CustomerMapper {
     //查询买家
     Customer getCustomer(@Param("customerId") BigInteger customerId);
 
+    //获取买家Id
+    BigInteger getCustomerId(@Param("token")String token);
+
+    //获取买家
+    Customer findByToken(@Param("token") String token);
+
+    //更新Token
+    int updateToken(@Param("customerId") BigInteger customerId,
+                    @Param("token")String token);
+    //通过accountId获取买家
+    Customer findByAccountId(@Param("accountId")String accountId);
 }

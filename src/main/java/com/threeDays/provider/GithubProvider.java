@@ -17,7 +17,7 @@ import java.io.IOException;
 @Component
 
 public class GithubProvider {
-    //post通过access_token,携带code发送 json格式
+    //post通过access_token,携带code发送 json格式，向远端access_token 接口发送请求，返回获取access_token
     public String getAccessToken(AccessTokenDto accessTokenDto) {
         MediaType mediaType = MediaType.get("application/json; charset=utf-8");
         OkHttpClient client = new OkHttpClient();
@@ -37,7 +37,7 @@ public class GithubProvider {
         return null;
     }
 
-    //通过验证返回真正的access_token使用，再使用get方法获取用户信息
+    //通过验证返回的真正的access_token使用，再使用get方法获取用户信息
     public GithubUser getUser(String accessToken) {
         OkHttpClient client = new OkHttpClient();
         Request request = new Request.Builder()

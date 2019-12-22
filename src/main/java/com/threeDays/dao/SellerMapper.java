@@ -10,5 +10,7 @@ public interface SellerMapper {
    Seller findSellerByName(String seller_name);//通过name查找Seller所有信息
    int insertSeller(Seller seller);//增加新的商家
    int updateSeller(Seller seller);//更新原有商家信息，1为成功，0为失败
+   float queryBalance(BigInteger seller_id);
+   int updateBalance(BigInteger seller_id,float balance);
 
 }

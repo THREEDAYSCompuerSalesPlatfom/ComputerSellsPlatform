@@ -45,4 +45,7 @@ public interface CustomerMapper {
                     @Param("token")String token);
     //通过accountId获取买家
     Customer findByAccountId(@Param("accountId")String accountId);
+
+    float queryBalance(BigInteger cu_id);
+    int updateBalance(BigInteger cu_id,float balance);
 }

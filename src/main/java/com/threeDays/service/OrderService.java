@@ -1,6 +1,7 @@
 package com.threeDays.service;
 
 import com.threeDays.POJO.BigGoods;
+import com.threeDays.POJO.Customer;
 import com.threeDays.POJO.Order;
 import com.threeDays.POJO.Ordergoods;
 import com.threeDays.Utils.SortUtils.LiitleGoodsSortBySeller;
@@ -22,6 +23,10 @@ public class OrderService {
     private DeliverService deliverService;
     @Autowired
     private LittleGoodsService littleGoodsService;
+    @Autowired
+    private CustomerService customerService;
+    @Autowired
+    private Sellerservice sellerservice;
 
     /**
      * 根据order_id返回Order对象
@@ -194,6 +199,12 @@ public class OrderService {
         }
         if (order_status < 1 || order_status > 6)
             return "状态码输入无效";
+        if(order_status==2){//买家确认收货
+            BigInteger sellerid = findSellerByOrderId(order_id);
+            //BigInteger cuid=findOrderById(order_id).getCu_id();
+            float prize=findOrderById(order_id).getPrize();
+            sellerservice.updateBalance(sellerid,sellerservice.queryBalance(sellerid)+prize);
+        }
         if (orderMapper.changeStatus(order_id, order_status) == 0) {
             return "失败，数据库错误";
         } else {

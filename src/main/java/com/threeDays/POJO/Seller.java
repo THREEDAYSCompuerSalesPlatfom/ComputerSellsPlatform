@@ -7,6 +7,15 @@ public class Seller {
     private String seller_tel;//卖家电话
     private String seller_address;//卖家地址
     private String seller_name;//卖家姓名
+    private float balance;
+
+    public float getBalance() {
+        return balance;
+    }
+
+    public void setBalance(float balance) {
+        this.balance = balance;
+    }
 
     public BigInteger getSeller_id() {
         return seller_id;

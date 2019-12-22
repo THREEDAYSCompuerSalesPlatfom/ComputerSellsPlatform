@@ -1,5 +1,6 @@
 package com.threeDays.service;
 
+import com.sun.org.apache.regexp.internal.RE;
 import com.threeDays.POJO.Seller;
 import com.threeDays.dao.SellerMapper;
 import com.threeDays.dao.SellerPasswordMapper;
@@ -60,25 +61,26 @@ public class Sellerservice {
      * 返回-1：id未在seller对象中标明
      * 返回-2：不存在此id
      * 返回-3：用户名重复
-     * **/
+     **/
     public int updateSellerInfo(Seller seller) {
-        if (seller.getSeller_id()== null) {
+        if (seller.getSeller_id() == null) {
             return -1;
         }
-        if(sellerMapper.findSellerById(seller.getSeller_id())==null){
+        if (sellerMapper.findSellerById(seller.getSeller_id()) == null) {
             return -2;
         }
-        if(sellerMapper.findSellerByName(seller.getSeller_name())!=null){
+        if (sellerMapper.findSellerByName(seller.getSeller_name()) != null) {
             return -3;
         }
         return sellerMapper.updateSeller(seller);
     }
+
     /**
      * 更新seller密码
      * 返回1标识成功，0失败
-     * **/
-    public int updateSellerPassword(BigInteger seller_id,String password) {
-        return sellerPasswordMapper.updatePassword(seller_id,password);
+     **/
+    public int updateSellerPassword(BigInteger seller_id, String password) {
+        return sellerPasswordMapper.updatePassword(seller_id, password);
     }
 
     /**
@@ -92,13 +94,29 @@ public class Sellerservice {
      * 判断商家名是否已经存在
      * 已经存在返回1
      * 不存在返回0
-     * */
-    public int isNameExist( String seller_name){
-        if(sellerMapper.findSellerByName(seller_name)==null){
+     */
+    public int isNameExist(String seller_name) {
+        if (sellerMapper.findSellerByName(seller_name) == null) {
             return 0;
-        }else {
+        } else {
             return 1;
         }
+    }
+
+    /**
+     * 查余额
+     */
+    public float queryBalance(BigInteger seller_id) {
+        return sellerMapper.queryBalance(seller_id);
+    }
+
+    /**
+     * 改余额
+     * 返回1成功
+     * 返回0失败
+     */
+    public int updateBalance(BigInteger seller_id, float balance) {
+        return sellerMapper.updateBalance(seller_id, balance);
     }
 
 

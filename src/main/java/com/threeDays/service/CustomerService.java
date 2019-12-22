@@ -80,4 +80,11 @@ public class CustomerService {
     public Customer findByToken(String token) {
         return customerMapper.findByToken(token);
     }
+
+    float queryBalance(BigInteger cu_id){
+        return customerMapper.queryBalance(cu_id);
+    }
+    int updateBalance(BigInteger cu_id,float balance){
+        return customerMapper.updateBalance(cu_id,balance);
+    }
 }

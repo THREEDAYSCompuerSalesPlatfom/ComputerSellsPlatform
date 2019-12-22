@@ -2,6 +2,7 @@ package com.threeDays.controller.SellerManage;
 
 import com.threeDays.POJO.Order;
 import com.threeDays.service.OrderService;
+import com.threeDays.service.Sellerservice;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -15,6 +16,8 @@ import java.util.List;
 public class ReturnSalesManage {
     @Autowired
     private OrderService orderService;
+    @Autowired
+    private Sellerservice sellerservice;
 
     /**
      * 根据订单状态返回订单列表
@@ -34,6 +37,12 @@ public class ReturnSalesManage {
     @PostMapping("/ReturnSalesManage/changeStatus")
     @ResponseBody
     public String changeStatus(BigInteger order_id, int order_status) {
+        if (order_status == 6) {
+            BigInteger sellerid = orderService.findSellerByOrderId(order_id);
+            float balance = sellerservice.queryBalance(sellerid);
+            sellerservice.updateBalance(sellerid, balance - orderService.findOrderById(order_id).getPrize());
+            /**方法尚未加，等维系吧余额 的方法写完*/
+        }
         return orderService.changeStatus(order_id, order_status);
     }
 }

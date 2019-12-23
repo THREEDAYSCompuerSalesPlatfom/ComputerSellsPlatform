@@ -24,10 +24,12 @@ public class bigGoodsController {
     BigGoodsService bigGoodsService;
     @Autowired
     LittleGoodsService littleGoodsService;
+    /**
+     * 具体大商品展示接口
+     * */
 
     @RequestMapping(value = "/bigGoods")
-    public String lookBigGoods(Model model, @RequestParam("bigGoodsId") BigInteger bigGoodsId,
-                               HttpServletRequest httpServletRequest) {
+    public String lookBigGoods(Model model, @RequestParam("bigGoodsId") BigInteger bigGoodsId) {
         BigInteger sellerId=bigGoodsService.getSellerId(bigGoodsId);
         float minPrice=littleGoodsService.minPrice(bigGoodsId,sellerId);
         float maxPrice=littleGoodsService.maxPrice(bigGoodsId,sellerId);

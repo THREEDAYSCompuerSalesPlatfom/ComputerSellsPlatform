@@ -11,6 +11,7 @@
     <select id="findAll" parameterType="com.threeDays.POJO.Cart" resultMap="CartMap">
         select *
         from cart
+        where cu_id=#{customerId}
     </select>
     <insert id="addLittleGoods" parameterType="com.threeDays.POJO.Cart" useGeneratedKeys="true"
             keyProperty="cart_id">
@@ -89,8 +90,8 @@
         where cu_id = #{customerId}
           and littlegoods_id = #{littleGoodsId}
     </select>
-    <select id="getAllLittleGoodsId" parameterType="com.threeDays.POJO.Cart" resultMap="CartMap">
-        select littlegoods_id
+    <select id="getAllLittleGoods" parameterType="com.threeDays.POJO.Cart" resultMap="CartMap">
+        select *
         from cart
         where cu_id = #{customerId}
     </select>

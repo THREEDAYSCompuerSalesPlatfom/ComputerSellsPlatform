@@ -1,7 +1,6 @@
 package com.threeDays.service;
 
 import com.threeDays.POJO.BigGoods;
-import com.threeDays.POJO.Customer;
 import com.threeDays.POJO.Order;
 import com.threeDays.POJO.Ordergoods;
 import com.threeDays.Utils.SortUtils.LiitleGoodsSortBySeller;
@@ -35,7 +34,11 @@ public class OrderService {
     public Order findOrderById(BigInteger order_id) {
         return orderMapper.findOrderById(order_id);
     }
-
+    //返回用户所有的订单
+    public List<BigInteger> findOrderByCuId(BigInteger cu_id){
+        List<BigInteger>orders=orderMapper.findOrderIdByCustomer(cu_id);
+        return  orders;
+    }
 
     //！！！！！！！！！！！！！！旧的！！！！！！！！！！别用!!!!!!!!!!!!!!!!!!!!!!!
 

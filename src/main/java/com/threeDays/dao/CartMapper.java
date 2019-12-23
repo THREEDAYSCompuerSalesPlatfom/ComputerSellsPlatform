@@ -1,11 +1,14 @@
 package com.threeDays.dao;
 
+import com.threeDays.POJO.BigGoods;
 import com.threeDays.POJO.Cart;
 import com.threeDays.POJO.LittleGoods;
 import org.apache.ibatis.annotations.Param;
 
 import java.math.BigInteger;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @ClassNamecart
@@ -13,7 +16,7 @@ import java.util.List;
  **/
 public interface CartMapper {
     //test
-    List<Cart> findAll();
+    List<Cart> findAll(@Param("customerId")BigInteger customerId);
 
     //增加一件新的详细商品
     int addLittleGoods(@Param("customerId") BigInteger customerId,
@@ -57,6 +60,9 @@ public interface CartMapper {
                                   @Param("littleGoodsId") BigInteger littleGoodsId);
 
     //查询用户所有商品Id
-    List<BigInteger> getAllLittleGoodsId(@Param("customerId") BigInteger customerId);
+    List<LittleGoods> getAllLittleGoods(@Param("customerId") BigInteger customerId);
+
+
+
 
 }

@@ -34,7 +34,13 @@ public class WebConfig implements WebMvcConfigurer {
         excludePatterns.add("/signIn");
         excludePatterns.add("/signUp");
         excludePatterns.add("/index");
+        excludePatterns.add("/captcha");
+        excludePatterns.add("/selogin");
+        excludePatterns.add("/selogin/submit");
+        excludePatterns.add("/sellerregesiter");
+        excludePatterns.add("/sellerregesiter/submit");
+        excludePatterns.add("/sellerregesiter/isNameExist");
         // 注册拦截器
-        registry .addInterceptor(sessionInterceptor).addPathPatterns(patterns);// .excludePathPatterns(excludePatterns);
+        registry .addInterceptor(sessionInterceptor).addPathPatterns(patterns).excludePathPatterns(excludePatterns);
     }
 }

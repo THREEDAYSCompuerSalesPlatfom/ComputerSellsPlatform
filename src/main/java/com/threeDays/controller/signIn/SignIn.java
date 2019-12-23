@@ -35,7 +35,7 @@ public class SignIn {
      * 前端代码：<img src="/captcha" width="130px" height="48px" />
      * 不要忘了把/captcha路径排除登录拦截
      */
-    @RequestMapping("/captcha")
+    @RequestMapping("/cap")
     public void captcha(HttpServletRequest request, HttpServletResponse response) throws Exception {
         // 使用gif验证码
         GifCaptcha gifCaptcha = new GifCaptcha(130, 48);

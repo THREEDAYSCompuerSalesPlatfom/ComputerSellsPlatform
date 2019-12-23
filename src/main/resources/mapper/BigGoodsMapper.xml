@@ -51,6 +51,11 @@
         from biggoods
         where goods_name = #{goodsName}
     </select>
+    <select id="getSellerIdById" resultMap="BigGoodsMap">
+        select seller_id
+        from biggoods
+        where  biggoods_id= #{bigGoodsId}
+    </select>
     <select id="getBigGoods" resultMap="BigGoodsMap">
         select *
         from biggoods

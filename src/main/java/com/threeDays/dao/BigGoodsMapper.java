@@ -36,6 +36,8 @@ public interface BigGoodsMapper {
 
     //获取商品商家Id
     List<BigInteger> getSellerId(@Param("goodsName") String goodsName);
+    //获取商品商家Id
+    BigInteger getSellerIdById(@Param("bigGoodsId") BigInteger bigGoodsId);
 
     //获取商品BigGoods
     BigGoods getBigGoods(@Param("bigGoodsId") BigInteger bigGoodsId);

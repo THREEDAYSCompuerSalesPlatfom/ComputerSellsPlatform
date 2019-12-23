@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
  **/
 
 @Controller
-public class Login {
+public class GithubLogin {
     @RequestMapping("/gitLogin")
     public String login() {
         return "index";

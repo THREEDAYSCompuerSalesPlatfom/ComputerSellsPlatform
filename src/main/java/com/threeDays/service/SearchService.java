@@ -68,35 +68,36 @@ public class SearchService {
 
     private List<BigInteger> output() {
         List<Map.Entry<BigInteger, Integer>> list = new ArrayList<>(map.entrySet());
-        Collections.sort(list, new Comparator<Map.Entry<BigInteger, Integer>>() {
+        Collections.sort(list, new Comparator<Map.Entry<BigInteger, Integer>>() {//排序list，大在前
             public int compare(Map.Entry<BigInteger, Integer> o1,
                                Map.Entry<BigInteger, Integer> o2) {
                 return -(o1.getValue().compareTo(o2.getValue()));
             }
         });
-        int weight=avgWeight(list);//截断低于平均权重的结果
-       // BigInteger[] bigIntegers = new BigInteger[list.size()];
+        double weight=avgWeight(list);//截断低于平均权重的结果
         ArrayList<BigInteger> arrayList=new ArrayList<>();
         for (int i = 0; i < list.size(); i++) {
-            if(list.get(i).getValue()<=weight)
+            if(list.get(i).getValue()<weight)//排除低于平均权重的结果
                 break;
             arrayList.add(i,list.get(i).getKey());
         }
-        AllList.clear();
-        map.clear();
+        AllList.clear();//清空防止下次搜索出现上次结果
+        map.clear();//清空防止下次搜索出现上次结果
         return arrayList;
     }
 
-    private int avgWeight(List<Map.Entry<BigInteger, Integer>> list){//获取平均权重
+    private double avgWeight(List<Map.Entry<BigInteger, Integer>> list){//获取平均权重
         int sumweight=0;
         for(Map.Entry<BigInteger, Integer> map:list){
             System.out.println("商品id："+map.getKey()+"  权重："+map.getValue());
             sumweight=sumweight+map.getValue();
         }
-        int avgweight=sumweight/list.size();
-        float wei=(float) sumweight/list.size();
+       // int avgweight=sumweight/list.size();
+        Double wei=(double) sumweight/list.size();
         System.out.println("平均权重："+wei);
-        return avgweight;
+
+
+        return wei;
     }
 
 }

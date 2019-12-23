@@ -35,6 +35,8 @@ public class orderController {
                littleGoodsList.clear();
            }
         }
+
+
         return "order";
     }
 }

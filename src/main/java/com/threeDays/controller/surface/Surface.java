@@ -14,5 +14,9 @@ public class Surface {
     public String login(String name, String pwd, HttpServletRequest request) {
         return "index";
     }
+    @RequestMapping("/Login")
+    public String goToSellerLogin() {
+        return "redirect:/Login";
+    }
 }
 

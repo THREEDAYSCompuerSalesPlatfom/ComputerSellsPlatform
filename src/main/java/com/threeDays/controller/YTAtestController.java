@@ -208,7 +208,7 @@ public class YTAtestController {
 
     @GetMapping("searchGoods")
     @ResponseBody
-    public BigInteger[] searchGoods(@RequestParam("name") String name){
+    public List<BigInteger> searchGoods(@RequestParam("name") String name){
      //   name="%"+name+"%";
 
         return searchService.search(name);

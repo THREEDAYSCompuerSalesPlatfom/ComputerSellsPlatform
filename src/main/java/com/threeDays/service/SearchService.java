@@ -21,7 +21,7 @@ import java.util.*;
 @Service
 public class SearchService {
 
-    private  final String[] computer = {"电脑"};//一开始可以剔除的关键字
+    private  final String[] computer = {""};//一开始可以剔除的关键字
     @Autowired
     private BigGoodsMapper bigGoodsMapper;
 
@@ -29,7 +29,7 @@ public class SearchService {
     ArrayList<BigInteger> AllList = new ArrayList();//放所有查到的biggoodsid
     Map<BigInteger, Integer> map = new HashMap<>();//存入AllList中所有id的频率
 
-    public BigInteger[] search(String name) {
+    public List<BigInteger> search(String name) {
         // int index = 0;//map中的key，标识每次关键字查询所对数组
         out:
         for (Object term : (HanLP.segment(name)).toArray()) {//分词
@@ -66,7 +66,7 @@ public class SearchService {
         }
     }
 
-    private BigInteger[] output() {
+    private List<BigInteger> output() {
         List<Map.Entry<BigInteger, Integer>> list = new ArrayList<>(map.entrySet());
         Collections.sort(list, new Comparator<Map.Entry<BigInteger, Integer>>() {
             public int compare(Map.Entry<BigInteger, Integer> o1,
@@ -74,12 +74,31 @@ public class SearchService {
                 return -(o1.getValue().compareTo(o2.getValue()));
             }
         });
-        BigInteger[] bigIntegers = new BigInteger[list.size()];
+        int weight=avgWeight(list);//截断低于平均权重的结果
+       // BigInteger[] bigIntegers = new BigInteger[list.size()];
+        ArrayList<BigInteger> arrayList=new ArrayList<>();
         for (int i = 0; i < list.size(); i++) {
-            bigIntegers[i] = list.get(i).getKey();
+            if(list.get(i).getValue()<=weight)
+                break;
+            arrayList.add(i,list.get(i).getKey());
         }
         AllList.clear();
         map.clear();
-        return bigIntegers;
+        return arrayList;
     }
+
+    private int avgWeight(List<Map.Entry<BigInteger, Integer>> list){//获取平均权重
+        int sumweight=0;
+        for(Map.Entry<BigInteger, Integer> map:list){
+            System.out.println("商品id："+map.getKey()+"  权重："+map.getValue());
+            sumweight=sumweight+map.getValue();
+        }
+        int avgweight=sumweight/list.size();
+        float wei=(float) sumweight/list.size();
+        System.out.println("平均权重："+wei);
+        return avgweight;
+    }
+
 }
+
+

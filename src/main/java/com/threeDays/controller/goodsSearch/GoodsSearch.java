@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.math.BigInteger;
+import java.util.List;
 
 /**
  * @ClassNameGoodsSearch
@@ -24,7 +25,7 @@ public class GoodsSearch {
      */
     @GetMapping("searchGoods")
     @ResponseBody
-    public BigInteger[] searchGoods(@RequestParam("name") String name) {
+    public List<BigInteger> searchGoods(@RequestParam("name") String name) {
         return searchService.search(name);
     }
 }

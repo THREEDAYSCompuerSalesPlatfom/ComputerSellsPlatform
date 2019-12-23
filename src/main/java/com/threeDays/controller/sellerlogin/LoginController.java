@@ -46,7 +46,7 @@ public class LoginController {
      */
     @RequestMapping("/selogin")
     public String goToSellerLogin() {
-        return "redirect:/selogin";
+        return "redirect:/sellerlogin";
     }
 
 
@@ -62,15 +62,15 @@ public class LoginController {
         if (!CaptchaUtil.ver(verCode, Request)) {
             CaptchaUtil.clear(Request);  // 清除session中的验证码
             model.addAttribute("errormsg", "验证码错误");
-            return "redirect:/selogin";
+            return "redirect:/sellerlogin";
         }
         BigInteger Sellerid = sellerservice.login(name, password);
         if (Sellerid.equals(new BigInteger("-1"))) {
             model.addAttribute("errormsg", "账号不存在");
-            return "redirect:/selogin";
+            return "redirect:/sellerlogin";
         } else if (Sellerid.equals(new BigInteger("-2"))) {
             model.addAttribute("errormsg", "密码错误");
-            return "redirect:/selogin";
+            return "redirect:/sellerlogin";
         } else {
             Request.getSession().setAttribute("Seller_id", Sellerid);
             return "redirect:/seller";

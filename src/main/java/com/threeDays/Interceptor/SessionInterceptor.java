@@ -46,7 +46,7 @@ public class SessionInterceptor implements HandlerInterceptor {
                 }
 
             }
-        if((request.getSession().getAttribute("customer")!=null)||(request.getSession().getAttribute("Seller_id")!=null)){
+        if(request.getSession().getAttribute("customer")!=null){
             return true;
         }
         String url="/login";

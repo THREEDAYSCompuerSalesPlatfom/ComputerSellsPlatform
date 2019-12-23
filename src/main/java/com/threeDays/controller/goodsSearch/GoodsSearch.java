@@ -23,7 +23,7 @@ public class GoodsSearch {
      * 牛逼的模糊搜索（zwx快叫爸爸）
      * 返回：符合的商品id列表
      */
-    @GetMapping("searchGoods")
+    @GetMapping("/searchGoods")
     @ResponseBody
     public List<BigInteger> searchGoods(@RequestParam("name") String name) {
         return searchService.search(name);

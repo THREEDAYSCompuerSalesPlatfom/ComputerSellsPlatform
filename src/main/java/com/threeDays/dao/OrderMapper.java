@@ -16,4 +16,5 @@ public interface OrderMapper {
     int changeStatus(@Param("order_id") BigInteger order_id,@Param("order_status") int order_status);//变更订单状态
     int updatePrize(@Param("order_id")BigInteger order_id,@Param("prize")float prize);
     List<Order> findOrderByStatusANDSeller(int order_status,BigInteger seller_id);
+    List<BigInteger> findOrderIdByCustomer(@Param("cu_id")BigInteger cu_id);
 }

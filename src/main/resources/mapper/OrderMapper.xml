@@ -30,6 +30,9 @@
         select * from ordergoods,littlegoods,[order] where ordergoods.littlegoods_id=littlegoods.littlegoods_id and
          [order].order_id=ordergoods.order_id and order_status=#{order_status} and seller_id=#{seller_id}
     </select>
+    <select id="findOrderIdByCustomer" resultMap="OrderMap">
+        select order_id from [order] where cu_id=#{cu_id}
+    </select>
 
     <resultMap type="com.threeDays.POJO.Order" id="OrderMap">
         <id property="order_id" column="order_id" javaType="java.math.BigInteger"/>

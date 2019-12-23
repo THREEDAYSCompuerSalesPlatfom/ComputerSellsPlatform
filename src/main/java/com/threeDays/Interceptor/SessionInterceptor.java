@@ -44,8 +44,14 @@ public class SessionInterceptor implements HandlerInterceptor {
                     }
                     break;
                 }
+                
             }
-        return true;
+        if(request.getSession().getAttribute("customer")!=null){
+            return true;
+        }
+        String url="/login";
+        response.sendRedirect(url);
+        return false;
     }
     @Override
     public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception {

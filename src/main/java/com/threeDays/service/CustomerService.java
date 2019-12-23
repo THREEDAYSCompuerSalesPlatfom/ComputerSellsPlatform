@@ -84,7 +84,7 @@ public class CustomerService {
     float queryBalance(BigInteger cu_id){
         return customerMapper.queryBalance(cu_id);
     }
-    int updateBalance(BigInteger cu_id,float balance){
+    public int updateBalance(BigInteger cu_id,float balance){
         return customerMapper.updateBalance(cu_id,balance);
     }
 }

@@ -4,6 +4,7 @@ import com.threeDays.POJO.AfterSales;
 import com.threeDays.POJO.Deliver;
 import com.threeDays.POJO.Order;
 import com.threeDays.POJO.Seller;
+import com.threeDays.dao.BigGoodsMapper;
 import com.threeDays.dao.OrderMapper;
 import com.threeDays.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import java.math.BigInteger;
 import java.util.*;
 
-@Controller
+//@Controller
 public class YTAtestController {
     @Autowired
     private YTATestservice testservice;
@@ -25,9 +26,14 @@ public class YTAtestController {
     private OrderService orderService;
     @Autowired
     private Sellerservice sellerservice;
+    @Autowired
+    private SearchService searchService;
 
     @Autowired
     private OrderMapper orderMapper;
+
+    @Autowired
+    private BigGoodsMapper bigGoodsMapper;
 
 
     @RequestMapping("/findfindSellerById/{seller_id}")
@@ -198,6 +204,21 @@ public class YTAtestController {
     @ResponseBody
     public String changeStatus(BigInteger order_id, int order_status) {
         return orderService.changeStatus(order_id, order_status);
+    }
+
+    @GetMapping("searchGoods")
+    @ResponseBody
+    public List<BigInteger> searchGoods(@RequestParam("name") String name){
+     //   name="%"+name+"%";
+
+        return searchService.search(name);
+    }
+    @GetMapping("searchGoods2")
+    @ResponseBody
+    public List<BigInteger> searchGoods2(@RequestParam("name") String name){
+        name="%"+name+"%";
+        return bigGoodsMapper.searchGoods(name);
+        //return new SearchService().search(name);
     }
 
 

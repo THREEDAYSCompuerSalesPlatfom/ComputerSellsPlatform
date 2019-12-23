@@ -13,11 +13,18 @@
     <update id="updateSeller" parameterType="com.threeDays.POJO.Seller">
         update seller SET seller_tel=#{seller_tel},seller_address=#{seller_address},seller_name=#{seller_name} where seller_id=#{seller_id}
     </update>
+    <select id="queryBalance" resultType="java.math.BigInteger">
+        select balance from seller where seller_id=#{seller_id}
+    </select>
+    <update id="updateBalance">
+        update seller SET balance=#{balance} where  seller_id=#{seller_id}
+    </update>
 
     <resultMap type="com.threeDays.POJO.Seller" id="SellerMap">
         <id property="seller_id" column="seller_id" javaType="java.math.BigInteger"/>
         <result property="seller_tel" column="seller_tel" javaType="java.lang.String"/>
         <result property="seller_address" column="seller_address" javaType="java.lang.String"/>
         <result property="seller_name" column="seller_name" javaType="java.lang.String"/>
+        <result property="balance" column="balance" javaType="java.lang.Float"/>
     </resultMap>
 </mapper>

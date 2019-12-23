@@ -25,7 +25,7 @@ public class signUp {
     CustomerPasswordService customerPasswordService;
     @Autowired
     CustomerService customerService;
-    @RequestMapping(value = "signUp")
+    @RequestMapping(value = "/signUp")
     public String signUp(@RequestParam("customerId")BigInteger customerId,
                          @RequestParam("customerPassword")String customerPassword,
                          HttpServletResponse httpServletResponse,

@@ -51,5 +51,5 @@ public interface BigGoodsMapper {
     /**
      * 对输入的那么模糊搜索，返回匹配的商品id列表
      */
-    BigInteger[] searchGoods(String name);
+    List<BigInteger> searchGoods(String name);
 }

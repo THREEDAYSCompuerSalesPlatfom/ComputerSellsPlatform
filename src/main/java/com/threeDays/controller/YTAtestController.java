@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import java.math.BigInteger;
 import java.util.*;
 
-@Controller
+//@Controller
 public class YTAtestController {
     @Autowired
     private YTATestservice testservice;
@@ -26,6 +26,8 @@ public class YTAtestController {
     private OrderService orderService;
     @Autowired
     private Sellerservice sellerservice;
+    @Autowired
+    private SearchService searchService;
 
     @Autowired
     private OrderMapper orderMapper;
@@ -207,8 +209,16 @@ public class YTAtestController {
     @GetMapping("searchGoods")
     @ResponseBody
     public BigInteger[] searchGoods(@RequestParam("name") String name){
+     //   name="%"+name+"%";
+
+        return searchService.search(name);
+    }
+    @GetMapping("searchGoods2")
+    @ResponseBody
+    public List<BigInteger> searchGoods2(@RequestParam("name") String name){
         name="%"+name+"%";
         return bigGoodsMapper.searchGoods(name);
+        //return new SearchService().search(name);
     }
 
 

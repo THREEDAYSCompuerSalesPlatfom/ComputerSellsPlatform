@@ -4,6 +4,7 @@ import com.threeDays.POJO.AfterSales;
 import com.threeDays.POJO.Deliver;
 import com.threeDays.POJO.Order;
 import com.threeDays.POJO.Seller;
+import com.threeDays.dao.BigGoodsMapper;
 import com.threeDays.dao.OrderMapper;
 import com.threeDays.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +29,9 @@ public class YTAtestController {
 
     @Autowired
     private OrderMapper orderMapper;
+
+    @Autowired
+    private BigGoodsMapper bigGoodsMapper;
 
 
     @RequestMapping("/findfindSellerById/{seller_id}")
@@ -198,6 +202,13 @@ public class YTAtestController {
     @ResponseBody
     public String changeStatus(BigInteger order_id, int order_status) {
         return orderService.changeStatus(order_id, order_status);
+    }
+
+    @GetMapping("searchGoods")
+    @ResponseBody
+    public BigInteger[] searchGoods(@RequestParam("name") String name){
+        name="%"+name+"%";
+        return bigGoodsMapper.searchGoods(name);
     }
 
 

@@ -12,7 +12,9 @@ public interface BigGoodsMapper {
     //test
     List<BigGoods> findAll();
 
-    /**增加一类商品,，参数中主键id可以为null*/
+    /**
+     * 增加一类商品,，参数中主键id可以为null
+     */
     int saveBigGoods(BigGoods bigGoods);
 
     //删除某类商品
@@ -42,7 +44,12 @@ public interface BigGoodsMapper {
     List<BigGoods> getBigGoodsByBrand(@Param("brand") String brand);
 
     List<BigInteger> getBigGoodsIdByBrand(@Param("brand") String brand);
-    //获取商品列表（根据卖家Id）
-    List<BigGoods> getBigGoodsBySellerId(@Param("sellerId")BigInteger sellerId);
 
+    //获取商品列表（根据卖家Id）
+    List<BigGoods> getBigGoodsBySellerId(@Param("sellerId") BigInteger sellerId);
+
+    /**
+     * 对输入的那么模糊搜索，返回匹配的商品id列表
+     */
+    BigInteger[] searchGoods(String name);
 }

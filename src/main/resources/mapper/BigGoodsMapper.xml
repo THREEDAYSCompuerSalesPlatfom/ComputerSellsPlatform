@@ -71,4 +71,7 @@
         from biggoods
         where seller_id = #{sellerId}
     </select>
+    <select id="searchGoods" parameterType="java.lang.String" resultType="java.math.BigInteger">
+        select biggoods_id from biggoods where goods_name like #{name}
+    </select>
 </mapper>

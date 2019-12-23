@@ -70,5 +70,11 @@
         <where>cu_id=#{customerId}
         </where>
     </update>
+    <select id="queryBalance" parameterType="java.math.BigInteger" resultType="java.lang.Float">
+        select balance from seller where cu_id=#{cu_id}
+    </select>
+    <update id="updateBalance">
+        update seller SET balance=#{balance} where  cu_id=#{cu_id}
+    </update>
 
 </mapper>

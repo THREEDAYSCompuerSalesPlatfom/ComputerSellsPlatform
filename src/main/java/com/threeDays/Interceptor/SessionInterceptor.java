@@ -44,7 +44,7 @@ public class SessionInterceptor implements HandlerInterceptor {
                     }
                     break;
                 }
-                
+
             }
         if(request.getSession().getAttribute("customer")!=null){
             return true;

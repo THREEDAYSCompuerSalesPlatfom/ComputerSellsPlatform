@@ -22,7 +22,7 @@ import java.util.Map;
 @Controller
 public class orderController {
     @Autowired
-    OrderService orderService;
+    OrderService orderService; 
     @Autowired
     LittleGoodsService littleGoodsService;
     public String order(Map<BigInteger, List<LittleGoods>> map, HttpServletRequest httpServletRequest){

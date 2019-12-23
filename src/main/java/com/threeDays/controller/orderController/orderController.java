@@ -25,7 +25,6 @@ public class orderController {
     OrderService orderService;
     @Autowired
     LittleGoodsService littleGoodsService;
-
     public String order(Model model, HttpServletRequest httpServletRequest) {
         Map<BigInteger, List<LittleGoods>> map = new HashMap<>();
         Customer customer = (Customer) httpServletRequest.getSession().getAttribute("customer");

@@ -28,8 +28,14 @@ public class GoodsService {
         List<LittleGoods> littleGoods= littleGoodsMapper.LittleGoods(bigGoodsId);
         goods.setBigGoodsId(bigGoodsId);
         goods.setLittleGoodsList(littleGoods);
-        goods.setMinPrice(littleGoodsMapper.minPrice(bigGoodsId,bigGoods.getSellerId()));
-        goods.setMaxPrice(littleGoodsMapper.maxPrice(bigGoodsId,bigGoods.getSellerId()));
+        Float minPrice=littleGoodsMapper.minPrice(bigGoodsId,bigGoods.getSellerId());
+        if(minPrice==null)
+            minPrice=0f;
+        goods.setMinPrice(minPrice);
+        Float maxPrice=littleGoodsMapper.maxPrice(bigGoodsId,bigGoods.getSellerId());
+        if(maxPrice==null)
+            maxPrice=0f;
+        goods.setMaxPrice(maxPrice);
         goods.setName(bigGoods.getGoodsName());
         return goods;
     }

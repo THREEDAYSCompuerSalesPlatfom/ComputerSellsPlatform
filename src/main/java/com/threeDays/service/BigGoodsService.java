@@ -21,7 +21,7 @@ import java.util.Map;
  * @ClassNameBigGoodsService
  * @Date2019-12-1717:05
  **/
-@Service
+@Service("BigGoodsService")
 public class BigGoodsService {
     @Autowired
     private BigGoodsMapper bigGoodsMapper;

@@ -53,13 +53,13 @@
         from littlegoods
         where littlegoods_id = #{littleGoodsId}
     </delete>
-    <select id="minPrice" resultMap="LittleGoodsMap">
+    <select id="minPrice" resultType="java.lang.Float">
         select min(goodsprice)
         from LittleGoods
         where biggoods_id = #{bigGoodsId}
           and seller_id = #{sellerId}
     </select>
-    <select id="maxPrice" resultMap="LittleGoodsMap">
+    <select id="maxPrice" resultType="java.lang.Float">
         select max(goodsprice)
         from LittleGoods
         where biggoods_id = #{bigGoodsId}
@@ -70,7 +70,7 @@
         from LittleGoods
         where biggoods_id = #{bigGoodsId}
     </select>
-    <select id="getEdition" resultMap="LittleGoodsMap">
+    <select id="getEdition" resultType="java.lang.String">
         select edition
         from LittleGoods
         where biggoods_id = #{bigGoodsId}

@@ -9,12 +9,13 @@ import com.threeDays.dao.OrderMapper;
 import com.threeDays.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.math.BigInteger;
 import java.util.*;
 
-//@Controller
+@Controller
 public class YTAtestController {
     @Autowired
     private YTATestservice testservice;
@@ -206,20 +207,39 @@ public class YTAtestController {
         return orderService.changeStatus(order_id, order_status);
     }
 
-    @GetMapping("searchGoods")
-    @ResponseBody
-    public List<BigInteger> searchGoods(@RequestParam("name") String name){
-     //   name="%"+name+"%";
-
-        return searchService.search(name);
+    List<BigInteger> resultList;
+    int fromindex;
+    int toindex;
+    //@PostMapping("/searchGoods")
+   // @ResponseBody
+    public List<BigInteger> searchGoods(@RequestParam("name") String name, Model model) {
+        fromindex=0;
+        toindex=0;
+        resultList=searchService.search(name);
+        toindex=resultList.size()>5?5:resultList.size()-1;
+        List<BigInteger> sublist=resultList.subList(0,toindex);
+        System.out.println(fromindex+"  "+toindex);
+        model.addAttribute("result",sublist);
+        model.addAttribute("size",resultList.size());
+        System.out.println(resultList.size());
+        return sublist;
     }
-    @GetMapping("searchGoods2")
-    @ResponseBody
-    public List<BigInteger> searchGoods2(@RequestParam("name") String name){
-        name="%"+name+"%";
-        return bigGoodsMapper.searchGoods(name);
-        //return new SearchService().search(name);
+   // @PostMapping("/nextPage")
+   // @ResponseBody
+    public List<BigInteger> nextPage(Model model){
+        System.out.println(fromindex+"  "+toindex);
+        if(resultList.size()==toindex+1){
+            model.addAttribute("result","没了");
+        }
+        fromindex=toindex;
+        System.out.println(fromindex+"  "+toindex);
+        toindex=toindex+1+((resultList.size()-1-toindex)>5?5:resultList.size()-1-toindex);
+        System.out.println(fromindex+"  "+toindex);
+        List<BigInteger> sublist=resultList.subList(fromindex,toindex);
+        System.out.println(fromindex+"  "+toindex);
+        model.addAttribute("result",sublist);
+        model.addAttribute("size",resultList.size());
+        return sublist;
     }
-
 
 }

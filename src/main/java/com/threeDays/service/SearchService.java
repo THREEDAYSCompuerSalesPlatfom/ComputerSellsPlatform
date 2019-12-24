@@ -82,6 +82,7 @@ public class SearchService {
         }
         AllList.clear();//清空防止下次搜索出现上次结果
         map.clear();//清空防止下次搜索出现上次结果
+        System.out.println("总搜索结果"+arrayList.size());
         return arrayList;
     }
 

@@ -10,7 +10,7 @@ import java.math.BigInteger;
 import java.util.List;
 import java.util.ListIterator;
 
-@Service
+@Service("LittleGoodsService")
 public class LittleGoodsService {
     @Autowired
     private LittleGoodsMapper littleGoodsMapper;

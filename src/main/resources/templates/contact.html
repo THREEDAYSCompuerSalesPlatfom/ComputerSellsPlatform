@@ -1,4 +1,6 @@
 <!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:th="http://www.thymeleaf.org">
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -53,7 +55,8 @@
 				</div>
 				<div class="col-xs-6">
 					<ul class="top-link">
-						<li><a href="account.html"><span class="glyphicon glyphicon-user"></span> My Account</a></li>
+						<li><a href="/account" th:if="${session.user} != null" th:text="${session.user.getCu_Name()}"><span class="glyphicon glyphicon-user"></span> My Account</a></li>
+						<li><a href="/account" th:if="${session.user} == null" ><span class="glyphicon glyphicon-user"></span> My Account</a></li>
 						<li><a href="contact.html"><span class="glyphicon glyphicon-envelope"></span> Contact</a></li>
 					</ul>
 				</div>

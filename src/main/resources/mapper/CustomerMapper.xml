@@ -45,7 +45,7 @@
         from customer
         where cu_id = #{customerId}
     </select>
-    <select id="getCustomerId" resultMap="CustomerMap">
+    <select id="getCustomerId" resultType="java.math.BigInteger">
         select cu_id
         from customer
         where token = #{token}

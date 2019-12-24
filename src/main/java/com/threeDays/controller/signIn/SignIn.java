@@ -1,5 +1,6 @@
 package com.threeDays.controller.signIn;
 
+import com.threeDays.POJO.Customer;
 import com.threeDays.dao.CustomerMapper;
 import com.threeDays.dao.CustomerPasswordMapper;
 import com.threeDays.service.CustomerPasswordService;
@@ -30,6 +31,11 @@ public class SignIn {
     @Autowired
     CustomerService customerService;
 
+//    @RequestMapping("/account")
+//    public String acc(){
+//        return "account.html";
+//    }
+
     /**
      * 获取验证码图片(项目源地址：https://github.com/whvcse/EasyCaptcha)
      * 前端代码：<img src="/captcha" width="130px" height="48px" />
@@ -45,25 +51,31 @@ public class SignIn {
         CaptchaUtil.out(gifCaptcha, request, response);
     }
     @RequestMapping(value = "/SignIn")
-    public String signUp(@RequestParam("customerId")BigInteger customerId,
+    public String SignIn(@RequestParam("customerId")String customer_Id,
                          @RequestParam("customerPassword")String customerPassword,
                          @RequestParam("verCode") String verCode,
                          HttpServletResponse httpServletResponse,
                          HttpServletRequest httpServletRequest, Model model){
+       // System.out.println(customer_Id);
+        BigInteger customerId=new BigInteger(customer_Id);
         verCode = verCode.toUpperCase();//将用户输入转为大写
         if (!CaptchaUtil.ver(verCode, httpServletRequest)) {
             CaptchaUtil.clear(httpServletRequest);  // 清除session中的验证码
             model.addAttribute("errormsg", "验证码错误");
-            return "redirect:/SignIn";
+            return "/account";
         }
         String token = UUID.randomUUID().toString();
         if(customerPasswordService.check(customerId,customerPassword)==1){
             customerService.updateToken(customerId,token);//更新token
             httpServletResponse.addCookie(new Cookie("token", token));//借助token，cookie维持登陆验证是否登陆成功
+            Customer customer=customerService.findByToken(token);
             httpServletRequest.getSession().setAttribute("result","登录成功");
+            httpServletRequest.getSession().setAttribute("user",customer);
         }
         else{
+            model.addAttribute("errormsg", "密码错误");
             httpServletRequest.getSession().setAttribute("result","用户名密码错误");
+            return "/account";
         }
         return "redirect:/index";
     }

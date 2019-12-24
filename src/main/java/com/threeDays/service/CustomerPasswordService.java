@@ -19,7 +19,7 @@ public class CustomerPasswordService {
         if (customerPasswordMapper.passwordById(customerId) == null) {
             System.out.println("用户不存在");
             return 0;
-        } else if (customerPasswordMapper.passwordById(customerId).getCustomerPassWord().equals(customerPassword)) {
+        } else if (!customerPasswordMapper.passwordById(customerId).getCustomerPassWord().equals(customerPassword)) {
             System.out.println("密码错误");
             return 2;
         } else {

@@ -50,7 +50,7 @@ public class CartController {
         model.addAttribute("sellerIdList", sellerIdList);*/
         //通过商家Id列表Map映射获取LittleGoods
         model.addAttribute("sellerLittleGoods", sellerLittleGoods);
-        return "cart";
+        return "cart.html";
     }
     @RequestMapping("/updateLittleGoods")
     public String changeCart( HttpServletRequest httpServletRequest,

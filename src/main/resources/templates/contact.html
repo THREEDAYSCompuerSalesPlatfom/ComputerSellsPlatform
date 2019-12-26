@@ -58,7 +58,7 @@
 					<li><a th:href="@{~/account}" th:if="${session.user} != null"
 						   th:text="${session.user.getCu_Name()}"><span
 							class="glyphicon glyphicon-user"></span> My Account</a></li>
-					<li><a th:href="@{~/account}" th:if="${session.user} == null"><span
+					<li><a th:href="@{~/index}" th:if="${session.user} == null"><span
 							class="glyphicon glyphicon-user"></span> My Account</a></li>
 					<li><a th:href="@{~/account}"><span class="glyphicon glyphicon-envelope"></span> Contact</a></li>
 				</ul>
@@ -87,61 +87,62 @@
 </header>
 <!--Navigation-->
 <nav id="menu" class="navbar">
-	<div class="container">
-		<div class="navbar-header"><span id="heading" class="visible-xs">Categories</span>
-			<button type="button" class="btn btn-navbar navbar-toggle" data-toggle="collapse"
-					data-target=".navbar-ex1-collapse"><i class="fa fa-bars"></i></button>
-		</div>
-		<div class="collapse navbar-collapse navbar-ex1-collapse">
-			<ul class="nav navbar-nav">
-				<li><a th:href="@{~/index.html}">Home</a></li>
-				<li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">PC Computers</a>
-					<div class="dropdown-menu">
-						<div class="dropdown-inner">
-							<ul class="list-unstyled">
-								<li><a th:href="@{~/selectbrand/小米}">XiaoMi</a></li>
-								<li><a th:href="@{~/selectbrand/苹果}">Apple</a></li>
-								<li><a th:href="@{~/selectbrand/戴尔}">Dell</a></li>
-								<li><a th:href="@{~/selectbrand/华硕}">Asus</a></li>
-								<li><a th:href="@{~/selectbrand/三星}">Samsung</a></li>
-								<li><a th:href="@{~/selectbrand/联想}">Lenovo</a></li>
-								<li><a th:href="@{~/selectbrand/宏碁}">Acer</a></li>
-							</ul>
-						</div>
-					</div>
-				</li>
-				<li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Mobiles &amp; Tablet</a>
-					<div class="dropdown-menu" style="margin-left: -203.625px;">
-						<div class="dropdown-inner">
-							<ul class="list-unstyled">
-								<li><a th:href="@{~/category.html}">Iphone</a></li>
-								<li><a th:href="@{~/category.html}">Samsung</a></li>
-								<li><a th:href="@{~/category.html}">Nokia</a></li>
-								<li><a th:href="@{~/category.html}">Lenovo</a></li>
-								<li><a th:href="@{~/category.html}">Google</a></li>
-							</ul>
-							<ul class="list-unstyled">
-								<li><a th:href="@{~/category.html}">Nexus</a></li>
-								<li><a th:href="@{~/category.html}">Dell</a></li>
-								<li><a th:href="@{~/category.html}">Oppo</a></li>
-								<li><a th:href="@{~/category.html}">Blackberry</a></li>
-								<li><a th:href="@{~/category.html}">HTC</a></li>
-							</ul>
-							<ul class="list-unstyled">
-								<li><a th:href="@{~/category.html}">LG</a></li>
-								<li><a th:href="@{~/category.html}">Q-Mobiles</a></li>
-								<li><a th:href="@{~/category.html}">Sony</a></li>
-								<li><a th:href="@{~/category.html}">Wiko</a></li>
-								<li><a th:href="@{~/category.html}">T&T</a></li>
-							</ul>
-						</div>
-					</div>
-				</li>
-				<li><a th:href="@{~/category.html}">Software</a></li>
-			</ul>
-		</div>
-	</div>
+    <div class="container">
+        <div class="navbar-header"><span id="heading" class="visible-xs">Categories</span>
+            <button type="button" class="btn btn-navbar navbar-toggle" data-toggle="collapse"
+                    data-target=".navbar-ex1-collapse"><i class="fa fa-bars"></i></button>
+        </div>
+        <div class="collapse navbar-collapse navbar-ex1-collapse">
+            <ul class="nav navbar-nav">
+                <li><a th:href="@{~/index.html}">Home</a></li>
+                <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">PC Computers</a>
+                    <div class="dropdown-menu">
+                        <div class="dropdown-inner">
+                            <ul class="list-unstyled">
+                                <li><a th:href="@{~/selectbrand/小米}">XiaoMi</a></li>
+                                <li><a th:href="@{~/selectbrand/苹果}">Apple</a></li>
+                                <li><a th:href="@{~/selectbrand/戴尔}">Dell</a></li>
+                                <li><a th:href="@{~/selectbrand/华硕}">Asus</a></li>
+                                <li><a th:href="@{~/selectbrand/三星}">Samsung</a></li>
+                                <li><a th:href="@{~/selectbrand/联想}">Lenovo</a></li>
+                                <li><a th:href="@{~/selectbrand/宏碁}">Acer</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </li>
+                <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Mobiles &amp; Tablet</a>
+                    <div class="dropdown-menu" style="margin-left: -203.625px;">
+                        <div class="dropdown-inner">
+                            <ul class="list-unstyled">
+                                <li><a th:href="@{~/category.html}">Iphone</a></li>
+                                <li><a th:href="@{~/category.html}">Samsung</a></li>
+                                <li><a th:href="@{~/category.html}">Nokia</a></li>
+                                <li><a th:href="@{~/category.html}">Lenovo</a></li>
+                                <li><a th:href="@{~/category.html}">Google</a></li>
+                            </ul>
+                            <ul class="list-unstyled">
+                                <li><a th:href="@{~/category.html}">Nexus</a></li>
+                                <li><a th:href="@{~/category.html}">Dell</a></li>
+                                <li><a th:href="@{~/category.html}">Oppo</a></li>
+                                <li><a th:href="@{~/category.html}">Blackberry</a></li>
+                                <li><a th:href="@{~/category.html}">HTC</a></li>
+                            </ul>
+                            <ul class="list-unstyled">
+                                <li><a th:href="@{~/category.html}">LG</a></li>
+                                <li><a th:href="@{~/category.html}">Q-Mobiles</a></li>
+                                <li><a th:href="@{~/category.html}">Sony</a></li>
+                                <li><a th:href="@{~/category.html}">Wiko</a></li>
+                                <li><a th:href="@{~/category.html}">T&T</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </li>
+                <li><a th:href="@{~/category.html}">Software</a></li>
+            </ul>
+        </div>
+    </div>
 </nav>
+
 <!--//////////////////////////////////////////////////-->
 <!--///////////////////Contact Page///////////////////-->
 <!--//////////////////////////////////////////////////-->

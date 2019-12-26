@@ -58,7 +58,7 @@
                     <li><a th:href="@{~/account}" th:if="${session.user} != null"
                            th:text="${session.user.getCu_Name()}"><span
                             class="glyphicon glyphicon-user"></span> My Account</a></li>
-                    <li><a th:href="@{~/account}" th:if="${session.user} == null"><span
+                    <li><a th:href="@{~/index}" th:if="${session.user} == null"><span
                             class="glyphicon glyphicon-user"></span> My Account</a></li>
                     <li><a th:href="@{~/account}"><span class="glyphicon glyphicon-envelope"></span> Contact</a></li>
                 </ul>
@@ -142,6 +142,7 @@
         </div>
     </div>
 </nav>
+
 <!--//////////////////////////////////////////////////-->
 <!--///////////////////Account Page///////////////////-->
 <!--//////////////////////////////////////////////////-->

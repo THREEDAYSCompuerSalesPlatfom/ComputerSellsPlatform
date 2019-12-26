@@ -42,6 +42,7 @@ public class CartController {
     @RequestMapping("/getCart")
     public String getCart(Model model, HttpServletRequest httpServletRequest) {
         Customer customer=(Customer) httpServletRequest.getSession().getAttribute("customer");
+        System.out.println(customer.getCustomerId());
         List<LittleGoods> sellerLittleGoods = cartService.getSellerLittleGoods(customer.getCustomerId());
         /*List<BigInteger> sellerIdList = new ArrayList<>();
         for (BigInteger sellerId : sellerLittleGoods.keySet()) {
@@ -50,7 +51,7 @@ public class CartController {
         model.addAttribute("sellerIdList", sellerIdList);*/
         //通过商家Id列表Map映射获取LittleGoods
         model.addAttribute("sellerLittleGoods", sellerLittleGoods);
-        return "cart.html";
+        return "redirect:/cart.html";
     }
     @RequestMapping("/updateLittleGoods")
     public String changeCart( HttpServletRequest httpServletRequest,

@@ -84,21 +84,22 @@ public class GoodsSearch {
             bigGoodslist.add(goodsService.getGoods(bigInteger));
         }
         int size = bigGoodslist.size() / 3 + 1;
-        List<List<Goods>> biggoods = new ArrayList<>();
+        List<List<Goods>> goodslist = new ArrayList<>();
         // BigGoods[][] biggoods = new BigGoods[3][size];
         int a = 0, j = 0;
-        biggoods.add(new ArrayList<>());
+        goodslist.add(new ArrayList<>());
         for (int i = 0; i < bigGoodslist.size(); i++) {
-            biggoods.get(a).add(bigGoodslist.get(i));
+            goodslist.get(a).add(bigGoodslist.get(i));
             if (j == 2) {
                 a++;
                 j = -1;
-                biggoods.add(new ArrayList<>());
+                goodslist.add(new ArrayList<>());
             }
             j++;
         }
 
-        model.addAttribute("result", biggoods);
+        model.addAttribute("category","Category : Search");
+        model.addAttribute("result", goodslist);
         return "category";
     }
 }

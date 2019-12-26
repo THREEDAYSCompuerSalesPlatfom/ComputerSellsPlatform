@@ -70,6 +70,7 @@ public class SignIn {
             httpServletResponse.addCookie(new Cookie("token", token));//借助token，cookie维持登陆验证是否登陆成功
             Customer customer=customerService.findByToken(token);
             httpServletRequest.getSession().setAttribute("result","登录成功");
+            httpServletRequest.getSession().setAttribute("customer",customer);
             httpServletRequest.getSession().setAttribute("user",customer);
         }
         else{

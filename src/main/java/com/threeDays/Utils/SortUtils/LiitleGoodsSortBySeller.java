@@ -1,10 +1,13 @@
 package com.threeDays.Utils.SortUtils;
 
 import com.threeDays.service.LittleGoodsService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.math.BigInteger;
-
+@Service
 public class LiitleGoodsSortBySeller extends AbstractSort<BigInteger> {
+@Autowired
     private LittleGoodsService littleGoodsService;
     @Override
     protected boolean compare(BigInteger o1, BigInteger o2) {

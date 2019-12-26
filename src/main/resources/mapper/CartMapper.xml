@@ -78,19 +78,19 @@
             and cu_id = #{customerId}
         </where>
     </update>
-    <select id="selectLittleGoodsNum" resultMap="CartMap">
+    <select id="selectLittleGoodsNum" resultType="int">
         select littlegoods_num
         from cart
         where cu_id = #{customerId}
           and littlegoods_id = #{littleGoodsId}
     </select>
-    <select id="selectLittleGoods" parameterType="com.threeDays.POJO.Cart" resultMap="CartMap">
+    <select id="selectLittleGoods" parameterType="com.threeDays.POJO.Cart" resultType="com.threeDays.POJO.LittleGoods">
         select *
         from cart
         where cu_id = #{customerId}
           and littlegoods_id = #{littleGoodsId}
     </select>
-    <select id="getAllLittleGoods" parameterType="com.threeDays.POJO.Cart" resultMap="CartMap">
+    <select id="getAllLittleGoods" parameterType="com.threeDays.POJO.Cart" resultType="com.threeDays.POJO.LittleGoods">
         select *
         from cart
         where cu_id = #{customerId}

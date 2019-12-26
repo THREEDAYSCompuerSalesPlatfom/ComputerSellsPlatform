@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org">
+      xmlns:th="http://www.thymeleaf.org" xmlns:Edtion="http://www.w3.org/1999/xhtml"
+      xmlns:h5th="http://www.w3.org/1999/html">
 <html lang="en">
 <head>
     <meta charset="utf-8"/>
@@ -35,54 +36,54 @@
     <script th:src="@{~/js/respond.min.js}"></script>
     <![endif]-->
 </head>
-<body>
+<body >
 <!--Top-->
 <nav id="top">
-	<div class="container">
-		<div class="row">
-			<div class="col-xs-6">
-				<select class="language">
-					<option value="English" selected>English</option>
-					<option value="France">France</option>
-					<option value="Germany">Germany</option>
-				</select>
-				<select class="currency">
-					<option value="USD" selected>USD</option>
-					<option value="EUR">EUR</option>
-					<option value="DDD">DDD</option>
-				</select>
-			</div>
-			<div class="col-xs-6">
-				<ul class="top-link">
-					<li><a th:href="@{~/account}" th:if="${session.user} != null"
-						   th:text="${session.user.getCu_Name()}"><span
-							class="glyphicon glyphicon-user"></span> My Account</a></li>
-					<li><a th:href="@{~/index}" th:if="${session.user} == null"><span
-							class="glyphicon glyphicon-user"></span> My Account</a></li>
-					<li><a th:href="@{~/account}"><span class="glyphicon glyphicon-envelope"></span> Contact</a></li>
-				</ul>
-			</div>
-		</div>
-	</div>
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-6">
+                <select class="language">
+                    <option value="English" selected>English</option>
+                    <option value="France">France</option>
+                    <option value="Germany">Germany</option>
+                </select>
+                <select class="currency">
+                    <option value="USD" selected>USD</option>
+                    <option value="EUR">EUR</option>
+                    <option value="DDD">DDD</option>
+                </select>
+            </div>
+            <div class="col-xs-6">
+                <ul class="top-link">
+                    <li><a th:href="@{~/index}" th:if="${session.user} != null"
+                           th:text="${session.user.getCu_Name()}"><span
+                            class="glyphicon glyphicon-user"></span> My Account</a></li>
+                    <li><a th:href="@{~/account}" th:if="${session.user} == null"><span
+                            class="glyphicon glyphicon-user"></span> My Account</a></li>
+                    <li><a th:href="@{~/account}"><span class="glyphicon glyphicon-envelope"></span> Contact</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
 </nav>
 <!--Header-->
 <header class="container">
-	<div class="row">
-		<div class="col-md-4">
-			<div id="logo"><img src="/images/logo.png"/></div>
-		</div>
-		<div class="col-md-4">
-			<form class="form-search" method="post" action="/searchGoods">
-				<input type="text" class="input-medium search-query" name="name">
-				<button type="submit" class="btn"><span class="glyphicon glyphicon-search"></span></button>
-			</form>
-		</div>
-		<div class="col-md-4">
-			<div id="cart"><a class="btn btn-1" th:href="@{~/getCart}"><span
-					class="glyphicon glyphicon-shopping-cart"></span>CART
-				: 0 ITEM</a></div>
-		</div>
-	</div>
+    <div class="row">
+        <div class="col-md-4">
+            <div id="logo"><img src="/images/logo.png"/></div>
+        </div>
+        <div class="col-md-4">
+            <form class="form-search" method="post" action="/searchGoods">
+                <input type="text" class="input-medium search-query" name="name">
+                <button type="submit" class="btn"><span class="glyphicon glyphicon-search"></span></button>
+            </form>
+        </div>
+        <div class="col-md-4">
+            <div id="cart"><a class="btn btn-1" th:href="@{~/getCart}"><span
+                    class="glyphicon glyphicon-shopping-cart"></span>CART
+                : 0 ITEM</a></div>
+        </div>
+    </div>
 </header>
 <!--Navigation-->
 <nav id="menu" class="navbar">
@@ -147,61 +148,60 @@
 <!--//////////////////////////////////////////////////-->
 <div id="page-content" class="single-page">
     <div class="container">
+
         <div class="row">
             <div class="col-lg-12">
                 <ul class="breadcrumb">
-                    <li><a href="index.html">Home</a></li>
-                    <li><a href="cart.html">Cart</a></li>
+                    <li><a th:href="@{~/index}">Home</a></li>
+                    <li><a>Cart</a></li>
                 </ul>
             </div>
         </div>
-        <div class="row">
+
+        <div class="row" th:each="cartGoods,userStat:${cartGoodsList}">
             <div class="product well">
                 <div class="col-md-3">
                     <div class="image">
-                        <img src="../static/images/galaxy-note.jpg"/>
+                        <img th:src="@{/image/getIxdexImage(goodsid=${cartGoods.getBiggoodsid()})}"/>
                     </div>
                 </div>
                 <div class="col-md-9">
                     <div class="caption">
-                        <div class="name"><h3><a href="product.html">Aliquam erat volutpat</a></h3></div>
+                        <div class="name"><h3><a href="product.html" th:text="${cartGoods.getName()}">Aliquam erat
+                            volutpat</a></h3></div>
                         <div class="info">
                             <ul>
-                                <li>Brand: text</li>
-                                <li>ID: 0122222</li>
+                                <tr>
+                                    <td>Edtion:</td>
+                                    <td th:text="${cartGoods.getEdtion()}">Edtion: text</td>
+                                </tr>
+                                <br>
+                                <tr>
+                                    <td>Brand:</td>
+                                    <td th:text="${cartGoods.getBrand()}">Brand: text</td>
+                                </tr>
+                                <br>
+                                <tr>
+                                    <td>ID:</td>
+                                    <td th:text="${cartGoods.getBiggoodsid()}">ID: 0122222</td>
+                                </tr>
+
                             </ul>
                         </div>
-                        <div class="price">$122<span>$98</span></div>
-                        <label>Qty: </label> <input class="form-inline quantity" type="text" value="1"><a href="#"
-                                                                                                          class="btn btn-2 ">Update</a>
+                        <br>
+                        <tr>
+                            <td>Prize:￥</td>
+                            <td class="price" th:text="${cartGoods.getPrize()}">$122</td>
+                        </tr>
+                        <br>
+                        <label>NUM: </label>
+                        <li th:text="${cartGoods.getNum()}"></li>
+                        <a th:href="@{~/plus(littlegoodsid=${cartGoods.getLittlegoodsid()})}" class="btn btn-2 ">+</a>
+                        <a th:href="@{~/minus(littlegoodsid=${cartGoods.getLittlegoodsid()})}" class="btn btn-2 ">-</a>
                         <hr>
-                        <a href="#" class="btn btn-default pull-right">REMOVE</a>
-                    </div>
-                </div>
-                <div class="clear"></div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="product well">
-                <div class="col-md-3">
-                    <div class="image">
-                        <img src="../static/images/Z1.png"/>
-                    </div>
-                </div>
-                <div class="col-md-9">
-                    <div class="caption">
-                        <div class="name"><h3><a href="product.html">Aliquam erat volutpat</a></h3></div>
-                        <div class="info">
-                            <ul>
-                                <li>Brand: text</li>
-                                <li>ID: 0122222</li>
-                            </ul>
-                        </div>
-                        <div class="price">$122<span>$98</span></div>
-                        <label>Qty: </label> <input class="form-inline quantity" type="text" value="1"><a href="#"
-                                                                                                          class="btn btn-2 ">Update</a>
-                        <hr>
-                        <a href="#" class="btn btn-default pull-right">REMOVE</a>
+                        <a th:href="@{~/deleteLittleGoods(littleGoods=${cartGoods.getLittlegoodsid()})}"
+                           class="btn btn-default pull-right">REMOVE</a>
+
                     </div>
                 </div>
                 <div class="clear"></div>
@@ -209,7 +209,7 @@
         </div>
         <div class="row">
             <div class="col-md-4 col-md-offset-8 ">
-                <center><a href="#" class="btn btn-1">Continue To Shopping</a></center>
+                <center><a th:href="@{~/index}" class="btn btn-1">Continue To Shopping</a></center>
             </div>
         </div>
         <div class="row">
@@ -219,7 +219,7 @@
                         <h6>Price Details</h6>
                         <tr>
                             <td>Total</td>
-                            <td>350.00</td>
+                            <td th:text="${total}">350.00</td>
                         </tr>
                         <tr>
                             <td>Discount</td>
@@ -227,17 +227,18 @@
                         </tr>
                         <tr>
                             <td>Delivery Charges</td>
-                            <td>100.00</td>
+                            <td th:text="${deliveryCharges}">100.00</td>
                         </tr>
                         <tr style="border-top: 1px solid #333">
                             <td><h5>TOTAL</h5></td>
-                            <td>400.00</td>
+                            <td th:text="${totalprize}">400.00</td>
                         </tr>
                     </table>
-                    <center><a href="#" class="btn btn-1">Checkout</a></center>
+                    <center><a th:href="@{~/buyByCart}" class="btn btn-1">Checkout</a></center>
                 </div>
             </div>
         </div>
+
     </div>
 </div>
 <footer>
@@ -302,4 +303,5 @@
     </div>
 </footer>
 </body>
+
 </html>

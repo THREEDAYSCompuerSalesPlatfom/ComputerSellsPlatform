@@ -1,5 +1,6 @@
 package com.threeDays.controller.buyController;
 
+import com.threeDays.POJO.CartGoods;
 import com.threeDays.POJO.Customer;
 import com.threeDays.POJO.LittleGoods;
 import com.threeDays.service.*;
@@ -34,6 +35,8 @@ public class BuyController {
     CustomerService customerService;
     @Autowired
     OrderService orderService;
+    @Autowired
+    CartGoodsService cartGoodsService;
 
     @RequestMapping("/directBuy")
     public String buyLittleGoods(Model model, @RequestParam("LittleGoodsId") BigInteger littleGoodsId,
@@ -57,7 +60,7 @@ public class BuyController {
             return "order";
         }
     }
-    @RequestMapping("/buyByCart")
+   // @RequestMapping("/buyByCart")
     public String buyByCart(HttpServletRequest httpServletRequest/*,@RequestParam("price")float price*/
                             ,@RequestParam("allLittleGoodsId[]") List<BigInteger>allLittleGoodsId) {
         Customer customer = (Customer) httpServletRequest.getSession().getAttribute("customer");
@@ -80,4 +83,22 @@ public class BuyController {
             return "购买成功界面";
         }
     }
+
+    @RequestMapping("/buyByCart")
+    public String buy(HttpServletRequest request){
+        Customer customer = (Customer) request.getSession().getAttribute("customer");
+        BigInteger cuid=customer.getCustomerId();
+        List<CartGoods> cartGoodsList=cartGoodsService.findCartGoodsByCuid(cuid);
+        Map</*商品id*/BigInteger,/*数量*/ Integer> Cartmap=new HashMap<>();
+        for(CartGoods cartGoods:cartGoodsList){
+            BigInteger id=cartGoods.getLittlegoodsid();
+            int num=cartGoods.getNum();
+            Cartmap.put(id,num);
+
+        }
+        orderService.CreateNewOrder(cuid,Cartmap);
+        return "/index";
+    }
+
+
 }

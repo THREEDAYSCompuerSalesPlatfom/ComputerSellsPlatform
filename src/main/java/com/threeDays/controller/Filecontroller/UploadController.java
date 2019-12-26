@@ -140,11 +140,7 @@ public class UploadController {
      */
     @PostMapping("/image/AllImageNames") // 等价于 @RequestMapping(value = "/upload", method = RequestMethod.POST)
     @ResponseBody
-    public String[] AllImageNames(@RequestParam("goodsid") BigInteger goods_id, HttpServletRequest request) {
-        BigInteger seller_id = (BigInteger) request.getSession().getAttribute("Seller_id");
-//        if(bigGoodsService.getBigGoods(goods_id).getSellerId().equals(seller_id)){
-//            return null;
-//        }
+    public String[] AllImageNames(@RequestParam("goodsid") BigInteger goods_id) {
         String destFileName = parentDir + goods_id + File.separator;
         File file = new File(destFileName);
         return file.list();

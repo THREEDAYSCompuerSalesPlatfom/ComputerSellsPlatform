@@ -1,8 +1,9 @@
 package com.threeDays.controller.SellerManage;
 
 import com.threeDays.POJO.Deliver;
-import com.threeDays.POJO.FinalDeliver;
 import com.threeDays.POJO.Order;
+import com.threeDays.Utils.Delivery.deliverPojo.deliverpojo;
+import com.threeDays.Utils.Delivery.deliverPojo.lichen;
 import com.threeDays.Utils.Delivery.queryDelivery;
 import com.threeDays.service.DeliverService;
 import com.threeDays.service.OrderService;
@@ -136,10 +137,18 @@ public class DeliverManageController {
      *
      * num：单号
      */
-    @PostMapping("/DeliverManage/queryDelivery")
-    @ResponseBody
-    public String query(String com, String num) {
-        return queryDelivery.kuaidiniaoquery(com, num);
+    @GetMapping("/DeliverManage/queryDelivery")
+    public String query(String com, String num, Model model) {
+        System.out.println(com+"     "+num);
+        deliverpojo deliverpojo =queryDelivery.kuaidiniaoquery(com, num);
+        String s=new String("");
+        for(lichen r:deliverpojo.getTraces()){
+            String date=r.getAcceptTime()+"\n";
+            String station=r.getAcceptStation()+"\n";
+            s=s+date+station;
+        }
+        model.addAttribute("lichenlist",deliverpojo.getTraces());
+        return "kuaidi";
     }
 
     @RequestMapping("/deliver")

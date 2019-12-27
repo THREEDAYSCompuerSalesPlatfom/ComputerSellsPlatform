@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigInteger;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 
@@ -25,6 +26,7 @@ public class GoodsService {
     public Goods getGoods(BigInteger bigGoodsId){
         Goods goods=new Goods();
         BigGoods bigGoods=bigGoodsMapper.findBigGoodsById(bigGoodsId);
+        goods.setBrand(bigGoodsMapper.getBigGoods(bigGoodsId).getBrand());
         List<LittleGoods> littleGoods= littleGoodsMapper.LittleGoods(bigGoodsId);
         goods.setBigGoodsId(bigGoodsId);
         goods.setLittleGoodsList(littleGoods);
@@ -38,6 +40,15 @@ public class GoodsService {
         goods.setMaxPrice(maxPrice);
         goods.setName(bigGoods.getGoodsName());
         return goods;
+    }
+    public List<Goods> getgoodsbysellerid(BigInteger sellerid){
+        List<BigGoods> bigGoods=bigGoodsMapper.getBigGoodsBySellerId(sellerid);
+        List<Goods> goodsList=new ArrayList<>();
+        for(BigGoods bigGoods1:bigGoods){
+            goodsList.add(getGoods(bigGoods1.getBigGoodsId()));
+        }
+        return goodsList;
+
     }
     //生成n个随机数
     /*public  List<BigGoods> randomSet(int min, int max, int n, List<BigGoods> bigGoodsList, HashSet<BigInteger> set) {

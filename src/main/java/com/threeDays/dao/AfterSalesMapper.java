@@ -14,5 +14,6 @@ public interface AfterSalesMapper {
     int updateSellerExcuse(BigInteger order_id,String seller_excuse);
     int updateCuExcuse(BigInteger order_id,String cu_excuse);
     List<AfterSales> findAftersalesBySellerId(BigInteger seller_id);
+    AfterSales findAftersalesByOrderid(BigInteger Orderid);
 
 }

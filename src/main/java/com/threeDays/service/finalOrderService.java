@@ -25,6 +25,8 @@ public class finalOrderService {
     private CustomerMapper customerMapper;
     @Autowired
     private LittleGoodsService littleGoodsService;
+    @Autowired
+    private AfterSalesService afterSalesService;
 
     public List<FinalDeliver> findfinalDeliver(BigInteger orderid) {
         Order order = orderService.findOrderById(orderid);
@@ -46,6 +48,7 @@ public class finalOrderService {
             finalDeliver.setReply(order.getReply());
             finalDeliver.setEdtion(littleGoodsService.findLittleGoodsById(ordergoods1.getLittlegoods_id()).getEdition());
             finalDeliver.setNum(ordergoods1.getNumber());
+            finalDeliver.setAfterSales(afterSalesService.findAftersalesByOrderid(orderid));
             finalDelivers.add(finalDeliver);
         }
 

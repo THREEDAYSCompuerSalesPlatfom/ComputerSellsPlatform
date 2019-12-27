@@ -10,6 +10,7 @@ import com.threeDays.service.finalOrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -63,10 +64,11 @@ public class DeliverManageController {
      * 插入物流单
      * 返回失败或成功信息字符串
      */
-    @PostMapping("/DeliverManage/insertExpress")
+    @GetMapping("/DeliverManage/insertExpress")
+    @ResponseBody
     public String insertExpress(BigInteger order_id, String express, HttpServletRequest request,Model model) {
-        System.out.println(deliverService.insertExpress(order_id, express));
-         return getfinaldeliverbySeler(model,request);
+
+         return deliverService.insertExpress(order_id, express);
     }
 
     /**
@@ -97,9 +99,10 @@ public class DeliverManageController {
      * 加入卖家回复
      * 返回失败或成功信息字符串
      */
-    @PostMapping("/DeliverManage/insertReply")
+    @GetMapping("/DeliverManage/insertReply")
     @ResponseBody
-    public String insertReply(BigInteger order_id, String reply) {
+    public String insertReply(BigInteger order_id, String reply,HttpServletRequest request,Model model) {
+
         return orderService.insertReply(order_id, reply);
     }
 
@@ -150,5 +153,11 @@ public class DeliverManageController {
         BigInteger Seller_id = (BigInteger) request.getSession().getAttribute("Seller_id");
         model.addAttribute("list",finalOrderService.getfinaldeliverbySeler(Seller_id,2));
         return "seller/comment";
+    }
+    @RequestMapping("/backgoods")
+    public String backgoods(Model model,HttpServletRequest request){
+        BigInteger Seller_id = (BigInteger) request.getSession().getAttribute("Seller_id");
+        model.addAttribute("list",finalOrderService.getfinaldeliverbySeler(Seller_id,3));
+        return "seller/backgoods";
     }
 }

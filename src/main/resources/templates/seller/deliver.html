@@ -77,7 +77,7 @@
 
 
                 <td class="text-center">
-                    <button type="button" class="btn bg-olive btn-xs" data-toggle="modal" data-target="#deliverModal">
+                    <button type="button" class="btn bg-olive btn-xs"  onclick='Tinsertexpress()'>
                         添加物流单号
                     </button>
                 </td>
@@ -107,7 +107,7 @@
             </div>
             <div class="modal-body">
 
-                <form method="post" th:action="@{~/DeliverManage/insertExpress}">
+                <form method="get" th:action="@{~/DeliverManage/insertExpress}" id="insertexpress">
                     <table class="table table-bordered table-striped" width="800px">
 
                         <tr>
@@ -120,12 +120,13 @@
                         </tr>
 
                     </table>
-                    <div class="modal-footer">
-                        <input button type="submit" class="btn btn-success" data-dismiss="modal"
-                               aria-hidden="true"></inputbutton>
-                        <button class="btn btn-default" data-dismiss="modal" aria-hidden="true">关闭</button>
-                    </div>
                 </form>
+                <div class="modal-footer">
+                    <button onclick='insertexpress()' class="btn btn-success" data-dismiss="modal"
+                            aria-hidden="true">保存</button>
+                    <button class="btn btn-default" data-dismiss="modal" aria-hidden="true">关闭</button>
+                </div>
+
             </div>
 
         </div>
@@ -133,5 +134,30 @@
 </div>
 
 </body>
+<script type="text/javascript">
+    function insertexpress() {
+        $("#insertexpress").submit();
+        window.location.reload();
 
+    }
+
+    function Tinsertexpress() {
+        var express=prompt("输入物流单号：");
+        if(express==null)
+            return;
+        var td = event.srcElement; // 通过event.srcElement 获取激活事件的对象 td
+        var rowindex = td.parentElement.parentElement.rowIndex;
+        var table = document.getElementById("dataList");
+        var orderid = table.rows[rowindex].cells[0].innerHTML;
+        $.ajax({
+            type: "get",
+            url: "[[@{~/DeliverManage/insertExpress}]]?order_id=" + orderid+"&express="+express,
+            contentType: "application/json; charset=utf-8",
+            success: function(string) {
+                alert(string);
+                window.location.reload();
+            }
+        });
+    }
+</script>
 </html>

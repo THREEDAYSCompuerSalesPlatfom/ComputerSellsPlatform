@@ -4,9 +4,7 @@ import com.threeDays.POJO.AfterSales;
 import com.threeDays.service.AfterSalesService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.math.BigInteger;
@@ -43,7 +41,7 @@ public class AfterSalesManageController {
     /**
      * 更新售后状态，成功1，失败0
      */
-    @PostMapping("/AfterSales/changeAfterSalesStatus")
+    @GetMapping("/AfterSales/changeAfterSalesStatus")
     @ResponseBody
     public String changeAfterSalesStatus(BigInteger after_id, int status, HttpServletRequest request) {
         BigInteger seller_id = (BigInteger) request.getSession().getAttribute("Seller_id");

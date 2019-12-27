@@ -71,7 +71,7 @@
 									     
 									                
 		                                  <td class="text-center">                                          
-		                                 	  <button type="button" class="btn bg-olive btn-xs"data-toggle="modal" data-target="#commentModal">反馈</button>                  
+		                                 	  <button type="button" class="btn bg-olive btn-xs" onclick='Tinsert()'>反馈</button>
 		                                  </td>
 		                                  
 			                          </tr>
@@ -95,27 +95,59 @@
 			<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
 			<h3 id="myModalLabel">评价反馈</h3>
 		</div>
-		<div class="modal-body">							
-			
+		<div class="modal-body">
+			<form method="post" th:action="@{~/DeliverManage/insertReply}" id="insertreply">
 			<table class="table table-bordered table-striped"  width="800px">
-				
-				
+
+
+				<tr>
+					<td>订单号</td>
+					<td><input name="order_id" type="text" class="form-control" placeholder="订单号" >  </td>
+				</tr>
 		      	<tr>
 		      		<td>评价反馈</td>
-		      		<td><input  class="form-control" placeholder="评价反馈" >  </td>
+		      		<td><input  name="reply" type="text" class="form-control" placeholder="评价反馈" >  </td>
 		      	</tr>
 			    
 			 	
-			 </table>				
-			
+			 </table>
+
+			</form>
 		</div>
 		<div class="modal-footer">						
-			<button class="btn btn-success" data-dismiss="modal" aria-hidden="true">保存</button>
+			<button onclick='insert()' class="btn btn-success" data-dismiss="modal" aria-hidden="true">保存</button>
 			<button class="btn btn-default" data-dismiss="modal" aria-hidden="true">关闭</button>
 		</div>
 	  </div>
 	</div>
 </div>
 </body>
+<script type="text/javascript">
+	function insert() {
+		$("#insertreply").submit();
+		window.location.reload();
+
+	}
+
+	function Tinsert() {
+		var reply=prompt("输入回复：");
+		if(reply==null)
+			return;
+		var td = event.srcElement; // 通过event.srcElement 获取激活事件的对象 td
+		var rowindex = td.parentElement.parentElement.rowIndex;
+		var table = document.getElementById("dataList");
+		var orderid = table.rows[rowindex].cells[0].innerHTML;
+		$.ajax({
+			type: "get",
+			url: "[[@{~/DeliverManage/insertReply}]]?order_id=" + orderid+"&reply="+reply,
+			contentType: "application/json; charset=utf-8",
+			success: function(string) {
+				alert(string);
+				window.location.reload();
+			}
+		});
+
+	}
+</script>
 
 </html>

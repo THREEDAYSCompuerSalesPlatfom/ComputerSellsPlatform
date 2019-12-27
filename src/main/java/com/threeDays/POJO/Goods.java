@@ -12,7 +12,16 @@ public class Goods {
     private String name;
     private float minPrice;
     private float maxPrice;
+    private String brand;
     List<LittleGoods> littleGoodsList;
+
+    public String getBrand() {
+        return brand;
+    }
+
+    public void setBrand(String brand) {
+        this.brand = brand;
+    }
 
     public BigInteger getBigGoodsId() {
         return bigGoodsId;

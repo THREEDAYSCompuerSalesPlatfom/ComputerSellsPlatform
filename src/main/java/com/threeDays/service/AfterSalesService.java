@@ -104,5 +104,8 @@ public class AfterSalesService {
     public List<AfterSales> findAftersalesBySellerId(BigInteger seller_id){
         return afterSalesMapper.findAftersalesBySellerId(seller_id);
     }
+    public AfterSales findAftersalesByOrderid(BigInteger orderid){
+        return afterSalesMapper.findAftersalesByOrderid(orderid);
+    }
 
 }

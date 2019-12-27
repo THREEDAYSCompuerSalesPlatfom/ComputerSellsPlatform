@@ -35,4 +35,7 @@
     <select id="findAftersalesBySellerId" resultMap="AfterSalesMap">
         select * from AfterSales where seller_id=#{seller_id}
     </select>
+    <select id="findAftersalesByOrderid" resultMap="AfterSalesMap">
+         select * from AfterSales where order_id=#{Orderid}
+    </select>
 </mapper>

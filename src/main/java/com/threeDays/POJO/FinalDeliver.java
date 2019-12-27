@@ -12,6 +12,15 @@ public class FinalDeliver {
     private String cuaddress;
     private String commemts;
     private String reply;
+    private AfterSales afterSales;
+
+    public AfterSales getAfterSales() {
+        return afterSales;
+    }
+
+    public void setAfterSales(AfterSales afterSales) {
+        this.afterSales = afterSales;
+    }
 
     public String getCommemts() {
         return commemts;

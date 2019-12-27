@@ -25,10 +25,10 @@ public class surfacecontroller {
     public String password(HttpServletRequest request, Model model){
         return "seller/password";
     }
-    @RequestMapping("goods")
-    public String goods(HttpServletRequest request, Model model){
-        return "seller/goods";
-    }
+//    @RequestMapping("goods")
+//    public String goods(HttpServletRequest request, Model model){
+//        return "seller/goods";
+//    }
 //    @RequestMapping("deliver")
 //    public String deliver(HttpServletRequest request, Model model){
 //        return "seller/deliver";
@@ -37,10 +37,10 @@ public class surfacecontroller {
 //    public String comment(HttpServletRequest request, Model model){
 //        return "seller/comment";
 //    }
-    @RequestMapping("backgoods")
-    public String backgoods(HttpServletRequest request, Model model){
-        return "seller/backgoods";
-    }
+//    @RequestMapping("backgoods")
+//    public String backgoods(HttpServletRequest request, Model model){
+//        return "seller/backgoods";
+//    }
     @RequestMapping("aftersale")
     public String aftersale(HttpServletRequest request, Model model){
         return "seller/aftersale";

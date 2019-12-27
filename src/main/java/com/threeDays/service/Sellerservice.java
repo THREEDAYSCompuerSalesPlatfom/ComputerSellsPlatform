@@ -62,13 +62,17 @@ public class Sellerservice {
      * 返回-2：不存在此id
      * 返回-3：用户名重复
      **/
-    public int updateSellerInfo(Seller seller) {
+    public int updateSellerInfo(Seller seller,String originname) {
         if (seller.getSeller_id() == null) {
             return -1;
         }
         if (sellerMapper.findSellerById(seller.getSeller_id()) == null) {
             return -2;
         }
+        if(seller.getSeller_name().equals(originname)){
+            return sellerMapper.updateSeller(seller);
+        }
+
         if (sellerMapper.findSellerByName(seller.getSeller_name()) != null) {
             return -3;
         }

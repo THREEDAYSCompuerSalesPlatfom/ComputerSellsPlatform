@@ -46,7 +46,7 @@ public class LoginController {
      */
     @RequestMapping("/selogin")
     public String goToSellerLogin() {
-        return "redirect:/sellerlogin";
+        return "se-login";
     }
 
 
@@ -58,22 +58,28 @@ public class LoginController {
      **/
     @PostMapping("/selogin/submit")
     public String login(@RequestParam("name") String name, @RequestParam("password") String password, @RequestParam("verCode") String verCode, Model model, HttpServletRequest Request) {
+        System.out.println("login name:"+name);
         verCode = verCode.toUpperCase();//将用户输入转为大写
         if (!CaptchaUtil.ver(verCode, Request)) {
             CaptchaUtil.clear(Request);  // 清除session中的验证码
             model.addAttribute("errormsg", "验证码错误");
-            return "redirect:/sellerlogin";
+            System.out.println("验证码错误");
+            return "se-login";
         }
         BigInteger Sellerid = sellerservice.login(name, password);
         if (Sellerid.equals(new BigInteger("-1"))) {
             model.addAttribute("errormsg", "账号不存在");
-            return "redirect:/sellerlogin";
+            System.out.println("账号不存在");
+            return "se-login";
         } else if (Sellerid.equals(new BigInteger("-2"))) {
             model.addAttribute("errormsg", "密码错误");
-            return "redirect:/sellerlogin";
+            System.out.println("密码错误");
+            return "se-login";
         } else {
             Request.getSession().setAttribute("Seller_id", Sellerid);
-            return "redirect:/seller";
+            Request.getSession().setAttribute("Seller", sellerservice.findSellerById(Sellerid));
+            System.out.println("login finish");
+            return "seller/sellerindex";
         }
     }
 
@@ -83,7 +89,7 @@ public class LoginController {
      */
     @RequestMapping("/sellerregesiter")
     public String goToSellerRegester() {
-        return "redirect:/seregesiter";
+        return "se-register";
     }
 
     /**
@@ -94,35 +100,41 @@ public class LoginController {
      * 成功注册时，session中存有Seller_id,作为是否登录的依据。成功后跳转seller界面
      */
     @PostMapping("/sellerregesiter/submit")
-    public String regesiter(Seller seller, @RequestParam("password") String password, @RequestParam("verCode") String verCode, Model model, HttpServletRequest request) {
+    public String regesiter(Seller seller, @RequestParam("password") String password,@RequestParam("againpassword")String againpassword, @RequestParam("verCode") String verCode, Model model, HttpServletRequest request) {
         verCode = verCode.toUpperCase();//将用户输入转为大写
         if (!CaptchaUtil.ver(verCode, request)) {
             CaptchaUtil.clear(request);  // 清除session中的验证码
             model.addAttribute("errormsg", "验证码错误");
-            return "redirect:/seregesiter";
+            return "/se-register";
+        }
+        seller.setBalance(0);
+        if(!password.equals(againpassword)){
+            model.addAttribute("errormsg", "密码不同");
+            return "se-register";
         }
         if (seller.getSeller_address() == null) {
             model.addAttribute("errormsg", "地址未添加");
             model.addAttribute("Seller", seller);//使得重新加载的网页不丢失用户原有填写的信息
-            return "redirect:/seregesiter";
+            return "se-register";
         } else if (seller.getSeller_tel() == null) {
             model.addAttribute("errormsg", "联系方式未添加");
             model.addAttribute("Seller", seller);//使得重新加载的网页不丢失用户原有填写的信息
-            return "redirect:/seregesiter";
+            return "/se-register";
         } else if (!(RegexUtils.checkMobile(seller.getSeller_tel()) || RegexUtils.checkPhone(seller.getSeller_tel()))) {
             model.addAttribute("errormsg", "联系方式非法");
             model.addAttribute("Seller", seller);//使得重新加载的网页不丢失用户原有填写的信息
-            return "redirect:/seregesiter";
+            return "/se-register";
         }
 
         BigInteger seller_id = sellerservice.register(seller, password);
         if (seller_id.equals(new BigInteger("-1"))) {
             model.addAttribute("errormsg", "账号已存在");
             model.addAttribute("Seller", seller);//使得重新加载的网页不丢失用户原有填写的信息
-            return "redirect:/seregesiter";
+            return "redirect:/se-register";
         } else {//注册成功，进入商家界面
             request.getSession().setAttribute("Seller_id", seller_id);
-            return "redirect:/seller";
+            request.getSession().setAttribute("Seller", sellerservice.findSellerById(seller_id));
+            return "seller/sellerindex";
         }
 
     }

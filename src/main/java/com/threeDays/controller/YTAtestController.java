@@ -107,11 +107,11 @@ public class YTAtestController {
         return sellerservice.register(seller, password);
     }
 
-    @GetMapping("updateSellerInfo")
-    @ResponseBody
-    public int updateSellerInfo(Seller seller) {
-        return sellerservice.updateSellerInfo(seller);
-    }
+//    @GetMapping("updateSellerInfo")
+//    @ResponseBody
+//    public int updateSellerInfo(Seller seller) {
+//        return sellerservice.updateSellerInfo(seller);
+//    }
 
     @PostMapping("updateSellerPassword")
     @ResponseBody

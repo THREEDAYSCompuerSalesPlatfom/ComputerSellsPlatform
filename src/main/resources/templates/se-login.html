@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=9; IE=8; IE=7; IE=EDGE">
+	<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" />
+	<title>登录</title>
+    <link rel="stylesheet" type="text/css" th:href="@{~/css/webbase.css}" />
+	<link rel="stylesheet" type="text/css" th:href="@{~/css/pages-login-manage.css}" />
+
+	<script type="text/javascript" th:src="@{~/plugins/angularjs/angular.min.js}"></script>
+	<script type="text/javascript" th:src="@{~/js/base.js}"></script>
+
+
+</head>
+
+<body ng-app="myApp" ng-controller="controller">
+	<div class="login-box">
+		<!--head-->
+		<div class="py-container logoArea">
+			<a href="" class="logo"></a>
+		</div>
+		<!--loginArea-->
+		<div class="loginArea">
+			<div class="py-container login">
+				<div class="loginform">
+					<ul class="sui-nav nav-tabs">
+						<li class="active">
+								<h3>商家登录</h3>
+						</li>
+					</ul>
+					<div class="tab-content tab-wraped">
+						<div id="profile" class="tab-pane  active">
+							<h4 th:if="${errormsg}!=null" th:text="${errormsg}"></h4>
+							<form class="sui-form" method="post" th:action="@{~/selogin/submit}" id="loginForm">
+								<div class="input-prepend"><span class="add-on loginname"></span>
+									<input  name="name" type="text" placeholder="用户名" class="span2 input-xfat">
+								</div>
+								<div class="input-prepend"><span class="add-on loginpwd"></span>
+									<input  name="password" type="password" placeholder="请输入密码" class="span2 input-xfat">
+								</div>
+								<div class="input-prepend"><span class="add-on loginname"></span>
+									<input  name="verCode" type="text" placeholder="验证码" class="span2 input-xfat">
+								</div>
+								<div>
+									<img th:src="@{~/cap}"/></img>
+								</div>
+								<div class="logined">
+									<input button class="sui-btn btn-block btn-xlarge btn-danger" type="submit" target="_blank"></inputbutton>
+								</div>
+							</form>
+							<a th:href="@{~/sellerregesiter}">注册成为商家</a>
+						</div>
+					</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+<script type="text/javascript" th:src="@{~/js/plugins/jquery/jquery.min.js}"></script>
+<script type="text/javascript" th:src="@{~/js/plugins/jquery.easing/jquery.easing.min.js}"></script>
+<script type="text/javascript" th:src="@{~/js/plugins/sui/sui.min.js}"></script>
+<script type="text/javascript" th:src="@{~/js/plugins/jquery-placeholder/jquery.placeholder.min.js}"></script>
+<script type="text/javascript" th:src="@{~/js/pages/login.js}"></script>
+<script type="text/javascript">
+	function  selogin() {
+		$("loginForm").submit();
+
+	}
+</script>
+</body>
+
+</html>

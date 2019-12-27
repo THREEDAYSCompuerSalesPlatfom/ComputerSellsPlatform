@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <!-- 页面meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>商家资料</title>
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no" name="viewport">
+
+    <link rel="stylesheet" href="../plugins/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../plugins/adminLTE/css/AdminLTE.css">
+    <link rel="stylesheet" href="../plugins/adminLTE/css/skins/_all-skins.min.css">
+    <link rel="stylesheet" href="../css/style2.css">
+    <script src="../plugins/jQuery/jquery-2.2.3.min.js"></script>
+    <script src="../plugins/bootstrap/js/bootstrap.min.js"></script>
+
+
+</head>
+
+<body class="hold-transition skin-red sidebar-mini">
+
+
+<!-- 正文区域 -->
+<section class="content">
+
+    <div class="box-body">
+
+        <!--tab页-->
+        <div class="nav-tabs-custom">
+
+            <!--tab头-->
+            <ul class="nav nav-tabs">
+
+                <li class="active">
+                    <a href="#home" data-toggle="tab">商家信息</a>
+                </li>
+            </ul>
+            <!--tab头/-->
+
+            <!--tab内容-->
+            <div class="tab-content">
+
+                <!--表单内容-->
+                <div class="tab-pane active" id="home">
+                    <div class="row data-type">
+                        <form method="post" th:action="@{~/updateSellerInfo}" id="updatesellerinfo">
+
+                            <div class="col-md-2 title">商家名称</div>
+                            <div class="col-md-10 data">
+                                <input name="seller_name" type="text" class="form-control" placeholder="商家名称" value=""
+                                       th:if="${session.Seller}!=null"
+                                       th:placeholder="${session.Seller.getSeller_name()}" th:text="${session.Seller.getSeller_name()}">
+                            </div>
+
+                            <div class="col-md-2 title">商家手机</div>
+                            <div class="col-md-10 data">
+                                <input name="seller_tel" type="text" class="form-control" placeholder="商家手机" value=""
+                                       th:if="${session.Seller}!=null"
+                                       th:placeholder="${session.Seller.getSeller_tel()}" th:text="${session.Seller.getSeller_tel()}" >
+                            </div>
+
+
+                            <div class="col-md-2 title">商家地址</div>
+                            <div class="col-md-10 data">
+                                <input name="seller_address" type="text" class="form-control" placeholder="商家地址"
+                                       value="" th:if="${session.Seller}!=null"
+                                       th:placeholder="${session.Seller.getSeller_address()}"
+                                       th:text="${session.Seller.getSeller_address()}">
+                            </div>
+
+                            <div class="btn-toolbar list-toolbar">
+                                <input button class="btn btn-primary" type="submit"><i class="fa fa-save"></i>保存</inputbutton>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+
+            </div>
+            <!--tab内容/-->
+            <!--表单内容/-->
+            <h3 th:if="${message}!=null" th:text="${message}"></h3>
+
+        </div>
+
+
+    </div>
+
+
+
+</section>
+<!-- 正文区域 /-->
+<script type="text/javascript">
+    function updateseller() {
+        $("updatesellerinfo").submit();
+
+    }
+</script>
+
+</body>
+
+</html>

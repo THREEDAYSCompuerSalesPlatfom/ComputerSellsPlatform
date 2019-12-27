@@ -111,7 +111,7 @@ public class UploadController {
             //同时辅以sellerid为文件名，以&分割
             String fileName = System.currentTimeMillis() + "&" + bigGoodsService.getBigGoods(goods_id).getSellerId();
             //3.通过req.getServletContext().getRealPath("") 获取当前项目的真实路径，然后拼接前面的文件名
-            String destFileName = parentDir + goods_id + File.separator;
+            String destFileName = parentDir + goods_id + File.separator+fileName;
             //String destFileName = request.getServletContext().getRealPath("") + "goods" + File.separator + goods_id + File.separator + fileName;
             System.out.println(destFileName);
             //4.第一次运行的时候，这个文件所在的目录往往是不存在的，这里需要创建一下目录（创建到了webapp下uploaded文件夹下）

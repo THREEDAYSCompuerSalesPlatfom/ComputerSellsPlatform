@@ -79,9 +79,11 @@
             </form>
         </div>
         <div class="col-md-4">
-            <div id="cart"><a class="btn btn-1" th:href="@{~/getCart}"><span
+            <div id="cart"><a class="btn btn-1" th:href="@{~/getCart}" th:if="${session.cartNum}!=null"><span
                     class="glyphicon glyphicon-shopping-cart"></span>CART
-                : 0 ITEM</a></div>
+                : [[${session.cartNum}]] ITEM</a><a class="btn btn-1" th:href="@{~/getCart}"
+                                                    th:if="${session.cartNum}==null"><span
+                    class="glyphicon glyphicon-shopping-cart"></span>登录查看购物车</a></div>
         </div>
     </div>
 </header>
@@ -188,8 +190,9 @@
                     <a href="#">Forgot Your Password ?</a>
                 </form>
                 <a href="https://github.com/login/oauth/authorize?client_id=3d0fc83ea1af95ebd2fd&redirect_uri=http://localhost:8080/callback&scope=user&state=1"><img
-                        src="images/github.jpg">
+                        src="images/github.jpg">Github登录
                 </a>
+                <a  th:href="@{~/se-login}"><h2>我是卖家！</h2></a>
             </div>
             <div class="col-md-6">
                 <div class="heading">

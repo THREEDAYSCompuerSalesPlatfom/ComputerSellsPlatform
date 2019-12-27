@@ -78,9 +78,11 @@
             </form>
         </div>
         <div class="col-md-4">
-            <div id="cart"><a class="btn btn-1" th:href="@{~/getCart}"><span
+            <div id="cart"><a class="btn btn-1" th:href="@{~/getCart}" th:if="${session.cartNum}!=null"><span
                     class="glyphicon glyphicon-shopping-cart"></span>CART
-                : 0 ITEM</a></div>
+                : [[${session.cartNum}]] ITEM</a><a class="btn btn-1" th:href="@{~/getCart}"
+                                                    th:if="${session.cartNum}==null"><span
+                    class="glyphicon glyphicon-shopping-cart"></span>登录查看购物车</a></div>
         </div>
     </div>
 </header>
@@ -163,7 +165,7 @@
                             <div th:each="Goods,userStat:${biggood}">
                                 <div class="col-lg-4 col-md-4 col-xs-12">
                                     <div class="product">
-                                        <div class="image"><a href="product.html"><img
+                                        <div class="image"><a th:href="@{~/bigGoods/{biggoods}(biggoods=${Goods.getBigGoodsId()})}"><img
                                                 th:src="@{/image/getIxdexImage(goodsid=${Goods.getBigGoodsId()})}"/></a>
                                         </div>
                                         <div class="buttons">
@@ -175,7 +177,7 @@
                                                     class="glyphicon glyphicon-transfer"></span></a>
                                         </div>
                                         <div class="caption">
-                                            <div class="name"><h3><a href="product.html" th:text="${Goods.getName()}">Aliquam
+                                            <div class="name"><h3><a th:href="@{~/bigGoods/{biggoods}(biggoods=${Goods.getBigGoodsId()})}" th:text="${Goods.getName()}">Aliquam
                                                 erat volutpat</a></h3>
                                             </div>
                                             <div class="price" th:text="${Goods.getMinPrice()}"> no prize</div>

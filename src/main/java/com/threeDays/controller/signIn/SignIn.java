@@ -1,8 +1,10 @@
 package com.threeDays.controller.signIn;
 
+import com.threeDays.POJO.CartGoods;
 import com.threeDays.POJO.Customer;
 import com.threeDays.dao.CustomerMapper;
 import com.threeDays.dao.CustomerPasswordMapper;
+import com.threeDays.service.CartGoodsService;
 import com.threeDays.service.CustomerPasswordService;
 import com.threeDays.service.CustomerService;
 import com.wf.captcha.GifCaptcha;
@@ -18,6 +20,7 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.math.BigInteger;
+import java.util.List;
 import java.util.UUID;
 
 /** 跳转登陆界面完成进入index
@@ -30,6 +33,8 @@ public class SignIn {
     CustomerPasswordService customerPasswordService;
     @Autowired
     CustomerService customerService;
+    @Autowired
+    CartGoodsService cartGoodsService;
 
 //    @RequestMapping("/account")
 //    public String acc(){
@@ -72,12 +77,15 @@ public class SignIn {
             httpServletRequest.getSession().setAttribute("result","登录成功");
             httpServletRequest.getSession().setAttribute("customer",customer);
             httpServletRequest.getSession().setAttribute("user",customer);
+            List<CartGoods> cartGoodsList=cartGoodsService.findCartGoodsByCuid(customer.getCustomerId());
+            httpServletRequest.getSession().setAttribute("cartNum",cartGoodsList.size());
         }
         else{
             model.addAttribute("errormsg", "密码错误");
             httpServletRequest.getSession().setAttribute("result","用户名密码错误");
             return "/account";
         }
+
         return "redirect:/index";
     }
 }

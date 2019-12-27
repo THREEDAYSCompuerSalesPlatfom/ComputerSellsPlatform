@@ -79,9 +79,11 @@
             </form>
         </div>
         <div class="col-md-4">
-            <div id="cart"><a class="btn btn-1" th:href="@{~/getCart}"><span
+            <div id="cart"><a class="btn btn-1" th:href="@{~/getCart}" th:if="${session.cartNum}!=null"><span
                     class="glyphicon glyphicon-shopping-cart"></span>CART
-                : 0 ITEM</a></div>
+                : [[${session.cartNum}]] ITEM</a><a class="btn btn-1" th:href="@{~/getCart}"
+                                                    th:if="${session.cartNum}==null"><span
+                    class="glyphicon glyphicon-shopping-cart"></span>登录查看购物车</a></div>
         </div>
     </div>
 </header>

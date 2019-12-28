@@ -39,7 +39,7 @@ public class orderController {
     }
     @RequestMapping("/changeStatus")
     public String changeStatus(BigInteger order_id,Model model){
-        orderService.changeStatus(order_id,3);
+        orderService.changeStatus(order_id,new Integer(3));
         List<cuOrderGoods> cuOrderGoodsList =(List<cuOrderGoods>) model.getAttribute("cuOrderGoods");
         Iterator<cuOrderGoods> i=cuOrderGoodsList.iterator();
         while(i.hasNext()){

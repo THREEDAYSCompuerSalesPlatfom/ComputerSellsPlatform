@@ -216,7 +216,7 @@ public class OrderService {
     /**
      * 更改订单状态
      */
-    public String changeStatus(BigInteger order_id, int order_status) {
+    public String changeStatus(BigInteger order_id, Integer order_status) {
         if (order_id == null) {
             return "没有此订单";
         }

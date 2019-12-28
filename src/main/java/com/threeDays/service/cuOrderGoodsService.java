@@ -48,6 +48,7 @@ public class cuOrderGoodsService {
                 showGoods.add(new ShowGoods(orderId, littleGoods, bigGoods, num));
             }
             cuOrderGoods cuOrderGoods = new cuOrderGoods();
+            cuOrderGoods.setOrderId(orderId);
             cuOrderGoods.setDate(orderMapper.findOrderById(orderId).getDate());
             cuOrderGoods.setAllPrize(allPrize);
             cuOrderGoods.setShowGoods(showGoods);

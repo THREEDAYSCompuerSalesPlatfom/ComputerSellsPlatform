@@ -13,6 +13,8 @@ public class sellerssessionInterceptor implements HandlerInterceptor {
         if(request.getSession().getAttribute("Seller_id")!=null){
             return true;
         }
+        String url="/account";
+        response.sendRedirect(url);
         return false;
     }
 }

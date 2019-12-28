@@ -196,7 +196,7 @@
         var orderId = $(".orderId").innerHTML;
         $.ajax({
             type: "get",
-            url: "/comment?comment=" + comment + "&orderId=" +orderId+"&file="+"back",
+            url: "/change?comment=" + comment + "&orderId=" +orderId+"&file="+"back",
             contentType: "application/json; charset=utf-8",
             success: function (data) {
                 if (null != data) {

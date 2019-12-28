@@ -35,7 +35,7 @@ public class commentController {
         return "cu-back";
     }
 
-    @RequestMapping("/comment")
+    @RequestMapping("/change")
     public String comment(@RequestParam("comment") String comment,
                           @RequestParam("orderId") BigInteger orderId,
                           @RequestParam("file")String file) {

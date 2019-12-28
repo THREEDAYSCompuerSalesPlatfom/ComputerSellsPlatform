@@ -12,7 +12,7 @@
         from biggoods
     </select>
     <insert id="saveBigGoods" parameterType="com.threeDays.POJO.BigGoods" useGeneratedKeys="true"
-            keyProperty="biggoods_id">
+            keyProperty="bigGoodsId">
         insert into biggoods(goods_name, seller_id, brand)
         values (#{goodsName}, #{sellerId}, #{brand})
     </insert>

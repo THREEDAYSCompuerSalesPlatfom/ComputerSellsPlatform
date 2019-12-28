@@ -106,9 +106,9 @@ public class GoodsManageController {
     @RequestMapping("/GoodsManage/deleteLittleGoodsById/{littleGoodsId}")
     @ResponseBody
     public String deleteLittleGoodsById(@PathVariable("littleGoodsId") BigInteger littleGoodsId) {
-        if(littleGoodsService.deleteLittleGoodsById(littleGoodsId)==1){
+        if (littleGoodsService.deleteLittleGoodsById(littleGoodsId) == 1) {
             return "success";
-        }else {
+        } else {
             return "fail";
         }
     }
@@ -122,7 +122,7 @@ public class GoodsManageController {
     @ResponseBody
     public int updateLittleGoods(String edition, BigInteger littlegoodsid, HttpServletRequest request) {
         BigInteger seller_id = (BigInteger) request.getSession().getAttribute("Seller_id");
-        return littleGoodsService.updateLittleGoods(edition,  littlegoodsid);
+        return littleGoodsService.updateLittleGoods(edition, littlegoodsid);
     }
 
     /**
@@ -154,11 +154,23 @@ public class GoodsManageController {
         LittleGoods littleGoods = littleGoodsService.findLittleGoodsById(littleGoodsId);
         return littleGoodsService.updateLittleGoodsPrice(littleGoods.getEdition(), goodsPrice, seller_id, littleGoods.getBigGoodsId());
     }
+
     @RequestMapping("goods")
-    public String goods(HttpServletRequest request, Model model){
+    public String goods(HttpServletRequest request, Model model) {
         BigInteger seller_id = (BigInteger) request.getSession().getAttribute("Seller_id");
-        model.addAttribute("goods",goodsService.getgoodsbysellerid(seller_id));
+        model.addAttribute("goods", goodsService.getgoodsbysellerid(seller_id));
         return "seller/goods";
+    }
+
+    /**
+     * 新建商品，大商品id如果存在就在底下建立littleid
+     */
+    @PostMapping("newgoods")
+    public String newgoods(BigInteger biggoodsid, String name, String brand, String edtion, String prize, HttpServletRequest request, Model model) {
+        System.out.println("newgoods start");
+        BigInteger seller_id = (BigInteger) request.getSession().getAttribute("Seller_id");
+        goodsService.newgoods(biggoodsid, name, brand, edtion, Float.parseFloat(prize), seller_id);
+        return goods(request, model);
     }
 }
 

@@ -2,6 +2,7 @@ package com.threeDays.provider;
 
 
 import com.alibaba.fastjson.JSON;
+import com.fasterxml.jackson.annotation.JsonAlias;
 import com.threeDays.POJO.GithubUser;
 import com.threeDays.POJO.AccessTokenDto;
 import okhttp3.*;
@@ -22,13 +23,14 @@ public class GithubProvider {
         MediaType mediaType = MediaType.get("application/json; charset=utf-8");
         OkHttpClient client = new OkHttpClient();
         //对象转string类型json，待测试！！原来方法已失效
-        RequestBody body = RequestBody.create(JSON.toJSONString(accessTokenDto), mediaType);
+        RequestBody body = RequestBody.create(mediaType, JSON.toJSONString(accessTokenDto));
         Request request = new Request.Builder()
                 .url("https://github.com/login/oauth/access_token")//post获取access_token
                 .post(body)
                 .build();
         try (Response response = client.newCall(request).execute()) {
-            String string = response.body().string();
+            String string = response.   body().string();
+            System.out.println(string);
             String token = string.split("&")[0].split("=")[1];
             return token;
         } catch (IOException e) {

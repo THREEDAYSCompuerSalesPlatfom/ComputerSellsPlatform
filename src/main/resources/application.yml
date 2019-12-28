@@ -27,7 +27,7 @@ mybatis:
 github:
   client:
     id:3d0fc83ea1af95ebd2fd
-    secret:a6368413a6c23a164517aae4bad6d9ed846776c3
+    secret:d4121d67fa1b77c7fb4b1cf7fd633aeb5f257995
   Redirect:
     url:http://localhost:8080/callback
 

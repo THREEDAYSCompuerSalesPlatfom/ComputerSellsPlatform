@@ -39,7 +39,7 @@
         </where>
     </update>
     <insert id="addNewLittleGoods" useGeneratedKeys="true"
-            keyProperty="littlegoods_id">
+            keyProperty="littleGoodsId">
         insert into littlegoods (biggoods_id, edition, seller_id, goodsprice)
         values (#{bigGoodsId}, #{edition}, #{sellerId}, #{goodsPrice})
     </insert>

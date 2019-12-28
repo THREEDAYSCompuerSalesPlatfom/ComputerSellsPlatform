@@ -42,7 +42,7 @@ public class LittleGoodsService {
 
     //检查配置是否重复
     public Boolean edition(String edition, BigInteger bigGoodsId) {
-        Boolean a = false;
+        Boolean a = true;
         List<String> littleGoodsEdition = littleGoodsMapper.getEdition(bigGoodsId);
         ListIterator<String> iterator = littleGoodsEdition.listIterator();
         while (iterator.hasNext()) {

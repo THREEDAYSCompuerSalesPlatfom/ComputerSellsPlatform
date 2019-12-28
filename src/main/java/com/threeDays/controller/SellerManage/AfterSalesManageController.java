@@ -2,6 +2,7 @@ package com.threeDays.controller.SellerManage;
 
 import com.threeDays.POJO.AfterSales;
 import com.threeDays.service.AfterSalesService;
+import com.threeDays.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -17,6 +18,8 @@ import java.util.List;
 public class AfterSalesManageController {
     @Autowired
     private AfterSalesService afterSalesService;
+    @Autowired
+    private OrderService orderService;
 
     /**
      * 到商品管理界面
@@ -48,13 +51,14 @@ public class AfterSalesManageController {
         if (!afterSalesService.findAfterSalesById(after_id).getSeller_id().equals(seller_id)) {
             return "非所属售后id";
         }
+        orderService.changeStatus(afterSalesService.findAfterSalesById(after_id).getOrder_id(),status);
         return afterSalesService.changeAfterSalesStatus(after_id, status);
     }
 
     /**
      * 更新卖家理由
      */
-    @PostMapping("/AfterSales/updateSellerExcuse")
+    @GetMapping("/AfterSales/updateSellerExcuse")
     @ResponseBody
     public String updateSellerExcuse(BigInteger after_id, String seller_excuse, HttpServletRequest request) {
         BigInteger seller_id = (BigInteger) request.getSession().getAttribute("Seller_id");

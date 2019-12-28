@@ -165,7 +165,7 @@
                             <div th:each="Goods,userStat:${biggood}">
                                 <div class="col-lg-4 col-md-4 col-xs-12">
                                     <div class="product">
-                                        <div class="image"><a th:href="@{~/bigGoods/{biggoods}(biggoods=${Goods.getBigGoodsId()})}"><img
+                                        <div class="image"><a th:href="${'/bigGoods?bigGoodsId='+Goods.getBigGoodsId()}"><img
                                                 th:src="@{/image/getIxdexImage(goodsid=${Goods.getBigGoodsId()})}"/></a>
                                         </div>
                                         <div class="buttons">
@@ -177,7 +177,7 @@
                                                     class="glyphicon glyphicon-transfer"></span></a>
                                         </div>
                                         <div class="caption">
-                                            <div class="name"><h3><a th:href="@{~/bigGoods/{biggoods}(biggoods=${Goods.getBigGoodsId()})}" th:text="${Goods.getName()}">Aliquam
+                                            <div class="name"><h3><a th:href="${'/bigGoods?bigGoodsId='+Goods.getBigGoodsId()}" th:text="${Goods.getName()}">Aliquam
                                                 erat volutpat</a></h3>
                                             </div>
                                             <div class="price" th:text="${Goods.getMinPrice()}"> no prize</div>

@@ -27,6 +27,8 @@ public class finalOrderService {
     private LittleGoodsService littleGoodsService;
     @Autowired
     private AfterSalesService afterSalesService;
+    @Autowired
+    private BigGoodsService bigGoodsService;
 
     public List<FinalDeliver> findfinalDeliver(BigInteger orderid) {
         Order order = orderService.findOrderById(orderid);
@@ -39,6 +41,7 @@ public class finalOrderService {
         for (Ordergoods ordergoods1 : ordergoods) {
             FinalDeliver finalDeliver = new FinalDeliver();
             finalDeliver.setOrderid(orderid);
+            finalDeliver.setName(bigGoodsService.getGoodsNameById(littleGoodsService.findLittleGoodsById(ordergoods1.getLittlegoods_id()).getBigGoodsId()));
             finalDeliver.setCuaddress(customer.getCu_Address());
             finalDeliver.setCuname(customer.getCu_Name());
             finalDeliver.setCutel(customer.getCu_Telephone());
@@ -49,6 +52,7 @@ public class finalOrderService {
             finalDeliver.setEdtion(littleGoodsService.findLittleGoodsById(ordergoods1.getLittlegoods_id()).getEdition());
             finalDeliver.setNum(ordergoods1.getNumber());
             finalDeliver.setAfterSales(afterSalesService.findAftersalesByOrderid(orderid));
+            finalDeliver.setOrderstatus(order.getOrder_status());
             finalDelivers.add(finalDeliver);
         }
 

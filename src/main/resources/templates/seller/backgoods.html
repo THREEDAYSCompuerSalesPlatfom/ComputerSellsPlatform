@@ -71,56 +71,72 @@
                 <td th:text="${FinalDeliver.getEdtion()}">4Gb</td>
 
                 <td th:text="${FinalDeliver.getAfterSales().getCu_excuse()}">七天无理由退货</td>
-                <td th:text="${FinalDeliver.getAfterSales().getExpress()}"
-                    th:if="${FinalDeliver.getAfterSales().getExpress()}!=null">&nbsp;
+                <td th:if="${FinalDeliver.getAfterSales().getExpress()}!=null">&nbsp;<a
+                        th:text="${FinalDeliver.getAfterSales().getExpress()}"
+                        th:href="@{~/DeliverManage/queryDelivery(com='ZTO',num=${FinalDeliver.getExpress()})}"></a>
                 </td>
                 <td th:if="${FinalDeliver.getAfterSales().getExpress()}==null">无</td>
 
-                <td class="text-center">
+                <td class="text-center" th:if="${FinalDeliver.getOrderstatus()}==3">
                     <button type="button" class="btn bg-olive btn-xs" onclick='isagree()'>同意退货</button>
                     <button type="button" class="btn bg-olive btn-xs" onclick='isdisagree()'>不同意退货</button>
                 </td>
+                <td th:if="${FinalDeliver.getOrderstatus()}=='4'">已同意</td>
+                <td th:if="${FinalDeliver.getOrderstatus()}=='5'">已拒绝</td>
 
             </tr>
             </tbody>
         </table>
         <!--数据列表/-->
         <script type="text/javascript">
-			function isagree() {
-				if(confirm("你确认吗？")){
-					var td = event.srcElement; // 通过event.srcElement 获取激活事件的对象 td
-					var rowindex = td.parentElement.parentElement.rowIndex;
-					var table = document.getElementById("dataList");
-					var afterid = table.rows[rowindex].cells[1].innerHTML;
-					$.ajax({
-						type: "get",
-						url: "[[@{~/AfterSales/changeAfterSalesStatus}]]?after_id=" + afterid+"&status=4",
-						contentType: "application/json; charset=utf-8",
-						success: function(string) {
-								alert(string);
-							window.location.reload();
-						}
-					});
-				}
-			}
+            function isagree() {
+                if (confirm("你确认吗？")) {
+                    var td = event.srcElement; // 通过event.srcElement 获取激活事件的对象 td
+                    var rowindex = td.parentElement.parentElement.rowIndex;
+                    var table = document.getElementById("dataList");
+                    var afterid = table.rows[rowindex].cells[1].innerHTML;
+                    $.ajax({
+                        type: "get",
+                        url: "[[@{~/AfterSales/changeAfterSalesStatus}]]?after_id=" + afterid + "&status=4",
+                        contentType: "application/json; charset=utf-8",
+                        success: function (string) {
+                            alert(string);
+                            window.location.reload();
+                        }
+                    });
+                }
+            }
 
-			function isdisagree() {
-				if(confirm("你确认吗？")){
-					var td = event.srcElement; // 通过event.srcElement 获取激活事件的对象 td
-					var rowindex = td.parentElement.parentElement.rowIndex;
-					var table = document.getElementById("dataList");
-					var afterid = table.rows[rowindex].cells[1].innerHTML;
-					$.ajax({
-						type: "get",
-						url: "[[@{~/AfterSales/changeAfterSalesStatus}]]?after_id=" + afterid+"&status=5",
-						contentType: "application/json; charset=utf-8",
-						success: function(string) {
-							alert(string);
-							window.location.reload();
-						}
-					});
-				}
-			}
+            function isdisagree() {
+                if (confirm("你确认吗？")) {
+                    var td = event.srcElement; // 通过event.srcElement 获取激活事件的对象 td
+                    var rowindex = td.parentElement.parentElement.rowIndex;
+                    var table = document.getElementById("dataList");
+                    var afterid = table.rows[rowindex].cells[1].innerHTML;
+                    $.ajax({
+                        type: "get",
+                        url: "[[@{~/AfterSales/changeAfterSalesStatus}]]?after_id=" + afterid + "&status=5",
+                        contentType: "application/json; charset=utf-8",
+                        success: function (string) {
+                            var reply = prompt("请输入同意理由：");
+                            if (reply == null) {
+                                alert("拒绝" + string);
+                                window.location.reload();
+                            }
+                            $.ajax({
+                                type: "get",
+                                url: "[[@{~/AfterSales/updateSellerExcuse}]]?after_id=" + afterid + "&seller_excuse=" + reply,
+                                contentType: "application/json; charset=utf-8",
+                                success: function (string) {
+                                    alert(string);
+                                    window.location.reload();
+                                }
+                            });
+
+                        }
+                    });
+                }
+            }
 
         </script>
 

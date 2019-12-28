@@ -12,7 +12,16 @@ public class FinalDeliver {
     private String cuaddress;
     private String commemts;
     private String reply;
+    private int orderstatus;
     private AfterSales afterSales;
+
+    public int getOrderstatus() {
+        return orderstatus;
+    }
+
+    public void setOrderstatus(int orderstatus) {
+        this.orderstatus = orderstatus;
+    }
 
     public AfterSales getAfterSales() {
         return afterSales;

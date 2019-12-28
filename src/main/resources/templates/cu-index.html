@@ -42,25 +42,28 @@
 <!-- 头部栏位 -->
 <!--页面顶部-->
 <div id="nav-bottom">
-	<!--顶部-->
-	<div class="nav-top">
-		<div class="top">
-			<div class="py-container">
-				<div class="shortcut">
-					<ul class="fl">
-						<li class="f-item">threedays欢迎您！</li>
-						<li class="f-item" th:if="${session.customer}==null">请<a href="login.html" target="_blank">登录</a>　<span><a href="register.html" target="_blank">免费注册</a></span></li>
-                        <li class="f-item" th:if="${session.customer}!=null" th:text="${session.customer.getCu_Name()}"></li>
-					</ul>
-					<ul class="fr">
-						<li class="f-item"><a th:href="@{~/getCart}" target="_blank">我的购物车</a></li>
-						<li class="f-item space"></li>
-						<li class="f-item"><a th:href="@{~/cu-index}" target="_blank">我的中心</a></li>
-					</ul>
-				</div>
-			</div>
-		
-</div>
+    <!--顶部-->
+    <div class="nav-top">
+        <div class="top">
+            <div class="py-container">
+                <div class="shortcut">
+                    <ul class="fl">
+                        <li class="f-item">threedays欢迎您！</li>
+                        <li class="f-item" th:if="${session.customer}==null">请<a href="login.html"
+                                                                                 target="_blank">登录</a>　<span><a
+                                href="register.html" target="_blank">免费注册</a></span></li>
+                        <li class="f-item" th:if="${session.customer}!=null"
+                            th:text="${session.customer.getCu_Name()}"></li>
+                    </ul>
+                    <ul class="fr">
+                        <li class="f-item"><a th:href="@{~/getCart}" target="_blank">我的购物车</a></li>
+                        <li class="f-item space"></li>
+                        <li class="f-item"><a th:href="@{~/cu-index}" target="_blank">我的中心</a></li>
+                    </ul>
+                </div>
+            </div>
+
+        </div>
 
         <!--头部-->
         <div class="header">
@@ -81,19 +84,19 @@
 						</div>
 						
 					</div>-->
-					<div class="yui3-u Right shopArea">
-						<div class="fr shopcar">
-							<div class="show-shopcar" id="shopcar">
-								<span class="car"></span>
-								<a class="sui-btn btn-default btn-xlarge" th:href="@{~/getCart}" target="_blank">
-							
-									<span>我的购物车</span>
-									<i class="shopnum">0</i>
-								</a>
-							</div>
-						</div>
-					</div>
-				</div>
+                    <div class="yui3-u Right shopArea">
+                        <div class="fr shopcar">
+                            <div class="show-shopcar" id="shopcar">
+                                <span class="car"></span>
+                                <a class="sui-btn btn-default btn-xlarge" th:href="@{~/getCart}" target="_blank">
+
+                                    <span>我的购物车</span>
+                                    <i class="shopnum">0</i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
 
             </div>
@@ -175,43 +178,59 @@
                                         <tr th:each="show,Stat:${Goods.getShowGoods()}">
                                             <td width="35%">
                                                 <!--"${'/bigGoods?bigGoodsId='+Goods.getBigGoodsId()}"-->
-                                                <div class="typographic"><img th:src="@{/image/getIxdexImage(goodsid=${show.getBigGoods().getBigGoodsId()})}"/>
+                                                <div class="typographic"><img
+                                                        th:src="@{/image/getIxdexImage(goodsid=${show.getBigGoods().getBigGoodsId()})}"/>
                                                     <a th:href="${'/bigGoods?bigGoodsId='+show.getBigGoods().getBigGoodsId()}"
-                                                       class="block-text" th:text="${show.getBigGoods().getGoodsName()}">商品名1</a>
+                                                       class="block-text"
+                                                       th:text="${show.getBigGoods().getGoodsName()}">商品名1</a>
                                                     <span class="guige" th:text="${show.getLittlegoods().getEdition()}">规格1</span>
                                                 </div>
                                             </td>
                                             <td width="5%" class="center">
                                                 <ul class="unstyled">
-                                                    <li th:text="'¥单价'+${show.getLittlegoods().getGoodsPrice()}">¥单价</li>
+                                                    <li th:text="'¥单价'+${show.getLittlegoods().getGoodsPrice()}">¥单价
+                                                    </li>
                                                 </ul>
                                             </td>
                                             <td width="5%" class="center" th:text="${show.getNumber()}">数量1</td>
                                             <td width="8%" class="center">
-                                                <li><a class="btn" th:href="@{/changeStatus}" th:if="${Goods.getStatus() ne 3}">退货/退款</a></li>
+                                                <li><a class="btn" th:href="@{/changeStatus}"
+                                                       th:if="${Goods.getStatus() ne 3}">退货/退款</a></li>
                                             </td>
-                                            <td width="10%" class="center" th:if="${Stat.index}==0" th:rowspan="${Stat.size}">
+                                            <td width="10%" class="center" th:if="${Stat.index}==0"
+                                                th:rowspan="${Stat.size}">
                                                 <ul class="unstyled">
                                                     <li th:text="'¥总价'+${Goods.getAllPrize()}">¥总价</li>
                                                 </ul>
                                             </td>
-                                            <td width="10%" class="center" th:if="${Stat.index}==0" th:rowspan="${Stat.size}">
+                                            <td width="10%" class="center" th:if="${Stat.index}==0"
+                                                th:rowspan="${Stat.size}">
                                                 <ul class="unstyled">
-                                                    <li >状态</li>
-                                                    <li><p href="orderDetail.html" class="btn" th:if="${Goods.getStatus() eq 0}">卖家待发货 </p></li>
-                                                    <li><p href="orderDetail.html" class="btn" th:if="${Goods.getStatus() eq 1}">卖家已发货 </p></li>
-                                                    <li><p href="orderDetail.html" class="btn" th:if="${Goods.getStatus() eq 2}">买家确认收获 </p></li>
-                                                    <li><p href="orderDetail.html" class="btn" th:if="${Goods.getStatus() eq 3}">退货申请中 </p></li>
-                                                    <li><p href="orderDetail.html" class="btn" th:if="${Goods.getStatus() eq 4}">卖家同意退货 </p></li>
-                                                    <li><p href="orderDetail.html" class="btn" th:if="${Goods.getStatus() eq 5}">卖家拒绝退货 </p></li>
-                                                    <li><p href="orderDetail.html" class="btn" th:if="${Goods.getStatus() eq 5}">订单详情 </p></li>
+                                                    <li>状态</li>
+                                                    <li><p href="orderDetail.html" class="btn"
+                                                           th:if="${Goods.getStatus() eq 0}">卖家待发货 </p></li>
+                                                    <li><p href="orderDetail.html" class="btn"
+                                                           th:if="${Goods.getStatus() eq 1}">卖家已发货 </p></li>
+                                                    <li><p href="orderDetail.html" class="btn"
+                                                           th:if="${Goods.getStatus() eq 2}">买家确认收获 </p></li>
+                                                    <li><p href="orderDetail.html" class="btn"
+                                                           th:if="${Goods.getStatus() eq 3}">退货申请中 </p></li>
+                                                    <li><p href="orderDetail.html" class="btn"
+                                                           th:if="${Goods.getStatus() eq 4}">卖家同意退货 </p></li>
+                                                    <li><p href="orderDetail.html" class="btn"
+                                                           th:if="${Goods.getStatus() eq 5}">卖家拒绝退货 </p></li>
+                                                    <li><p href="orderDetail.html" class="btn"
+                                                           th:if="${Goods.getStatus() eq 5}">订单详情 </p></li>
                                                 </ul>
                                             </td>
-                                            <td width="10%" class="center" th:if="${Stat.index}==0" th:rowspan="${Stat.size}">
+                                            <td width="10%" class="center" th:if="${Stat.index}==0"
+                                                th:rowspan="${Stat.size}">
                                                 <ul class="unstyled">
                                                     <li th:if="${Goods.getStatus() eq 2}">已确认收货</a></li>
                                                     <button type="button" class="btn bg-olive btn-x" title="确认收货"
-                                                            onclick='confirm("你确认收货吗？")' th:if="${Goods.getStatus() ne 2}"><i class="fa fa-trash-o"></i> 确认收货
+                                                            onclick='confirm("你确认收货吗？")'
+                                                            th:if="${Goods.getStatus() ne 2}"><i
+                                                            class="fa fa-trash-o"></i> 确认收货
                                                     </button>
                                                 </ul>
                                             </td>

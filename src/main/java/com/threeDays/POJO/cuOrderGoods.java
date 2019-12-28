@@ -24,9 +24,9 @@ public class cuOrderGoods {
     private Date date;
     private BigInteger orderId;//同orderGoodsId同
     private List<ShowGoods>showGoods;
-    private int status;//订单状态
+    private Integer status;//订单状态
 
-    public int getStatus() {
+    public Integer getStatus() {
         return status;
     }
 

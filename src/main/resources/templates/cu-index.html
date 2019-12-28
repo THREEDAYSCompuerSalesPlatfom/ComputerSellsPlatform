@@ -194,7 +194,7 @@
                                             </td>
                                             <td width="5%" class="center" th:text="${show.getNumber()}">数量1</td>
                                             <td width="8%" class="center">
-                                                <li><a class="btn" th:href="@{/changeStatus}"
+                                                <li><a class="btn" th:href="@{/changeStatus(order_id=${Goods.getOrderId()})}"
                                                        th:if="${Goods.getStatus() ne 3}">退货/退款</a></li>
                                             </td>
                                             <td width="10%" class="center" th:if="${Stat.index}==0"

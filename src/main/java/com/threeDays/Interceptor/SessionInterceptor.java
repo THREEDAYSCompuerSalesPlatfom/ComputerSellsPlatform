@@ -49,7 +49,7 @@ public class SessionInterceptor implements HandlerInterceptor {
         if(request.getSession().getAttribute("customer")!=null){
             return true;
         }
-        String url="/login";
+        String url="/signIn";
         response.sendRedirect(url);
         return false;
     }

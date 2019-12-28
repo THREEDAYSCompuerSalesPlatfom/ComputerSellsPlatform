@@ -35,4 +35,9 @@ public class LittleGoodsController {
         model.addAttribute("price", price);
         return "littleGoods";
     }
+    @RequestMapping("/getPrice")
+    public float getPrice(@RequestParam("bigGoodsId")BigInteger bigGoodsId,
+                           @RequestParam("edition")String edition){
+       return littleGoodsService.findLittleGoodsById(littleGoodsService.getLittleGoodsId(edition,bigGoodsId)).getGoodsPrice();
+    }
 }

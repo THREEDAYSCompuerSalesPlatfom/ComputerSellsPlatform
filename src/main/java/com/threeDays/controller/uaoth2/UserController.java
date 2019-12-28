@@ -13,13 +13,6 @@ import javax.servlet.http.HttpServletRequest;
 @Controller
 public class UserController {
 
-    @GetMapping("/cuIndex")
-    public String cuIndex(Model model, HttpServletRequest httpServletRequest) {
-        Customer customer = (Customer) httpServletRequest.getSession().getAttribute("customer");
-        model.addAttribute("customer",customer);
-        return "cu-index";
-    }
-
     @GetMapping("/cuSetting")
     public String cuSetting(Model model, HttpServletRequest httpServletRequest) {
         Customer customer = (Customer) httpServletRequest.getSession().getAttribute("customer");

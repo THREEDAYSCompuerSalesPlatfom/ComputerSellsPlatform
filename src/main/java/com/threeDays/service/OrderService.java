@@ -3,6 +3,7 @@ package com.threeDays.service;
 import com.threeDays.POJO.BigGoods;
 import com.threeDays.POJO.Order;
 import com.threeDays.POJO.Ordergoods;
+import com.threeDays.Utils.SortUtils.BigintegerSort;
 import com.threeDays.Utils.SortUtils.LiitleGoodsSortBySeller;
 import com.threeDays.dao.DeliverMapper;
 import com.threeDays.dao.OrderMapper;
@@ -37,10 +38,11 @@ public class OrderService {
     public Order findOrderById(BigInteger order_id) {
         return orderMapper.findOrderById(order_id);
     }
+
     //返回用户所有的订单
-    public List<BigInteger> findOrderByCuId(BigInteger cu_id){
-        List<BigInteger>orders=orderMapper.findOrderIdByCustomer(cu_id);
-        return  orders;
+    public List<BigInteger> findOrderByCuId(BigInteger cu_id) {
+        List<BigInteger> orders = orderMapper.findOrderIdByCustomer(cu_id);
+        return orders;
     }
 
     //！！！！！！！！！！！！！！旧的！！！！！！！！！！别用!!!!!!!!!!!!!!!!!!!!!!!
@@ -62,6 +64,7 @@ public class OrderService {
 
     @Autowired
     LiitleGoodsSortBySeller liitleGoodsSortBySeller;
+
     /**
      * 从购物车的一切商品直接生成对应各自商家的订单
      * 每个插入新的order（默认订单状态为0）,同时往ordergoods里插入商品
@@ -70,9 +73,9 @@ public class OrderService {
     public List<BigInteger> CreateNewOrder(BigInteger cu_id, Map</*商品id*/BigInteger,/*数量*/ Integer> Cartmap) {
         Set<BigInteger> set = Cartmap.keySet();
         Object[] littlegoodsidlisttemp = set.toArray();
-        BigInteger[] littlegoodsidlist=new BigInteger[littlegoodsidlisttemp.length];
-        for(int i=0;i<littlegoodsidlisttemp.length;i++){
-            littlegoodsidlist[i]=(BigInteger) littlegoodsidlisttemp[i];
+        BigInteger[] littlegoodsidlist = new BigInteger[littlegoodsidlisttemp.length];
+        for (int i = 0; i < littlegoodsidlisttemp.length; i++) {
+            littlegoodsidlist[i] = (BigInteger) littlegoodsidlisttemp[i];
         }
 
         liitleGoodsSortBySeller.QuickSort(littlegoodsidlist, 0, littlegoodsidlist.length - 1);//通过排序让同一个商家的商品紧挨在一起
@@ -101,7 +104,7 @@ public class OrderService {
         return orderidlist;
     }
 
-   //下面这个别用，请用上面的方法
+    //下面这个别用，请用上面的方法
     public BigInteger insertOrderANDGoods(Order order, Map</*商品id*/BigInteger,/*数量*/ Integer> map) {
         if (map.isEmpty()) {
             return new BigInteger("-2");
@@ -127,7 +130,7 @@ public class OrderService {
                 ordergoodsMapper.deleteOrderGoods(order_id);//删除已经插入的Ordergoods
                 return new BigInteger("-1");
             }
-            deliverMapper.insertExpress(order.getOrder_id(),null,findSellerByOrderId(order_id));
+            deliverMapper.insertExpress(order.getOrder_id(), null, findSellerByOrderId(order_id));
         }
         orderMapper.updatePrize(order_id, prize);
 
@@ -219,11 +222,11 @@ public class OrderService {
         }
         if (order_status < 1 || order_status > 6)
             return "状态码输入无效";
-        if(order_status==2){//买家确认收货
+        if (order_status == 2) {//买家确认收货
             BigInteger sellerid = findSellerByOrderId(order_id);
             //BigInteger cuid=findOrderById(order_id).getCu_id();
-            float prize=findOrderById(order_id).getPrize();
-            sellerservice.updateBalance(sellerid,sellerservice.queryBalance(sellerid)+prize);
+            float prize = findOrderById(order_id).getPrize();
+            sellerservice.updateBalance(sellerid, sellerservice.queryBalance(sellerid) + prize);
         }
         if (orderMapper.changeStatus(order_id, order_status) == 0) {
             return "失败，数据库错误";
@@ -258,6 +261,15 @@ public class OrderService {
             map.put(ordergoods.getLittlegoods_id(), ordergoods.getNumber());
         }
         return map;
+    }
+
+    public int getGoodsNum(BigInteger order_id, BigInteger littleGoodsId) {
+        Map<BigInteger, Integer> map = new HashMap();
+        Ordergoods[] list = ordergoodsMapper.findOrderGoodsByOrderId(order_id);
+        for (Ordergoods ordergoods : list) {
+            map.put(ordergoods.getLittlegoods_id(), ordergoods.getNumber());
+        }
+        return map.get(littleGoodsId);
     }
 
     /**

@@ -10,5 +10,4 @@ public interface OrdergoodsMapper {
     Ordergoods[] findOrderGoodsByOrderId(BigInteger order_id);//根据order_id返回订单内所有ordergoods对象
     int insertOrderGoods(Ordergoods ordergoods);//增加订单时调用
     int deleteOrderGoods(BigInteger order_id);//删除订单时调用
-
 }

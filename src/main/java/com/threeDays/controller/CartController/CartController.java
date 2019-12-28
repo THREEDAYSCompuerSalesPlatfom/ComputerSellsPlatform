@@ -37,15 +37,20 @@ public class CartController {
     CartGoodsService cartGoodsService;
 
 
-    @RequestMapping("/addToCart")
+        @RequestMapping("/addToCart")
     public String addToCart(HttpServletRequest httpServletRequest,
-                            @RequestParam("littleGoodsId") BigInteger littleGoodsId,
+                            @RequestParam("edition")String edition,
+                            @RequestParam("bigGoodsId") BigInteger bigGoodsId,
                             @RequestParam(value = "littleGoodsNum", defaultValue = "1") int littleGoodsNum) {
         Customer customer = (Customer) httpServletRequest.getSession().getAttribute("customer");
-        cartService.addNewLittleGoods(customer.getCustomerId(), littleGoodsId, littleGoodsNum);
-        List<CartGoods> cartGoodsList=cartGoodsService.findCartGoodsByCuid(customer.getCustomerId());
-        httpServletRequest.getSession().setAttribute("cartNum",cartGoodsList.size());
-        return "bigGoods";
+        BigInteger littleGoodsId =littleGoodsService.getLittleGoodsId(edition,bigGoodsId);
+        if(cartService.addNewLittleGoods(customer.getCustomerId(), littleGoodsId, littleGoodsNum)==1) {
+            List<CartGoods> cartGoodsList=cartGoodsService.findCartGoodsByCuid(customer.getCustomerId());
+            httpServletRequest.getSession().setAttribute("cartNum",cartGoodsList.size());
+            return "success";
+        }else{
+            return "fail";
+        }
     }
 
     @RequestMapping("/getCart")

@@ -12,14 +12,14 @@
     <title>Mobile Shop</title>
 
     <!-- Bootstrap Core CSS -->
-    <link rel="stylesheet" href="css/bootstrap.min.css"  type="text/css">
+    <link rel="stylesheet" href="css/bootstrap.min.css" type="text/css">
 
     <!-- Custom CSS -->
     <link rel="stylesheet" href="css/style.css">
 
 
     <!-- Custom Fonts -->
-    <link rel="stylesheet" href="font-awesome/css/font-awesome.min.css"  type="text/css">
+    <link rel="stylesheet" href="font-awesome/css/font-awesome.min.css" type="text/css">
     <link rel="stylesheet" href="fonts/font-slider.css" type="text/css">
 
     <!-- jQuery and Modernizr-->
@@ -78,11 +78,11 @@
             </form>
         </div>
         <div class="col-md-4">
-			<div id="cart"><a class="btn btn-1" th:href="@{~/getCart}" th:if="${session.cartNum}!=null"><span
-					class="glyphicon glyphicon-shopping-cart"></span>CART
-				: [[${session.cartNum}]] ITEM</a><a class="btn btn-1" th:href="@{~/getCart}"
-													th:if="${session.cartNum}==null"><span
-					class="glyphicon glyphicon-shopping-cart"></span>登录查看购物车</a></div>
+            <div id="cart"><a class="btn btn-1" th:href="@{~/getCart}" th:if="${session.cartNum}!=null"><span
+                    class="glyphicon glyphicon-shopping-cart"></span>CART
+                : [[${session.cartNum}]] ITEM</a><a class="btn btn-1" th:href="@{~/getCart}"
+                                                    th:if="${session.cartNum}==null"><span
+                    class="glyphicon glyphicon-shopping-cart"></span>登录查看购物车</a></div>
         </div>
     </div>
 </header>
@@ -165,10 +165,11 @@
                         <div class="image">
                             <img th:src="@{/image/getIxdexImage(goodsid=${goods.getBigGoodsId()})}"/>
                             <div class="image-more">
-                                <ul class="row" >
+                                <ul class="row">
                                     <li class="col-lg-3 col-sm-3 col-xs-4" th:each="imgName,Stat:${imgName}">
                                         <a href="#">
-                                            <img class="img-responsive" th:src="@{/image/get(goodsid=${goods.getBigGoodsId()},filename=${imgName})}">
+                                            <img class="img-responsive"
+                                                 th:src="@{/image/get(goodsid=${goods.getBigGoodsId()},filename=${imgName})}">
                                         </a>
                                     </li>
                                 </ul>
@@ -181,13 +182,14 @@
                             <div class="info">
                                 <ul>
                                     <li th:text="'BRAND:'+${bigGoods.getBrand()}"></li>
-                                    <li th:text="'ID:'+${goods.getBigGoodsId()}">ID: 0122222</li>
+                                    <li th:text="'ID:'+${goods.getBigGoodsId()}" class="ID">ID: 0122222</li>
                                 </ul>
                             </div>
-                            <div class="price"><p th:text="'$'+${goods.getMinPrice()}">prize</p><span>$98</span></div>
+                            <div class="price"><p th:text="'$'+${goods.getMinPrice()}" class="price">price</p>
+                                <span>$98</span></div>
                             <div class="options">
                                 EDITION OPTIONS
-                                <select id="Choose" name="choseEdition">
+                                <select  name="choseEdition" id="choseEdition" class="Choose" onchange="choose()">
                                     <option value="" selected>----Select Brand----</option>
                                     <option th:each="edition:${edition}"
                                             th:text="${edition}"></option>
@@ -198,9 +200,11 @@
                                     class="glyphicon glyphicon-star"></span><span
                                     class="glyphicon glyphicon-star"></span><span
                                     class="glyphicon glyphicon-star-empty"></span></div>
-                            <div class="well"><label>Qty: </label>
+                            <div class="well"><label class="qty">Qty: </label>
                                 <input class="form-inline quantity" type="text" value="1">
-                                <a href="#" class="btn btn-2" th:href="@{~/addCart}">ADD</a>
+                                <button type="button" class="btn bg-olive btn-x"  title="删除" onclick='addgoods()'><i
+                                        class="fa fa-trash-o"></i> ADD
+                                </button>
                             </div>
                             <div class="share well">
                                 <strong style="margin-right: 13px;">Share :</strong>
@@ -473,6 +477,41 @@
             $(".prev span").text(y);
         });
     });
+</script>
+<script type="text/javascript">
+    function choose() {
+        var edition = $(".Choose").find("option:selected").text();
+        var bigGoodsId = $(".ID").innerHTML;
+        $.ajax({
+            type: "get",
+            url: "/getPrice?edition" + edition + "&bigGoodsId=" + bigGoodsId,
+            contentType: "application/json; charset=utf-8",
+            success: function (data) {
+                if (null != data) {
+                    $(".price").innerHTML = data;
+                }
+                window.location.reload();
+            }
+        });
+    }
+
+    function addgoods() {
+        if (confirm("你确认要添加进购物车吗？")) {
+            var edition = $(".Choose").find("option:selected").text();
+            var bigGoodsId = $(".ID").innerHTML;
+            var num = $(".qty").innerHTML;
+            $.ajax({
+                type: "get",
+                url: "/addToCart?edition=" + edition + "&bigGoodsId=" + bigGoodsId + "&littleGoodsNum=" + num,
+                contentType: "application/json; charset=utf-8",
+                success: function (string) {
+                    alert(string);
+                    window.location.reload();
+                }
+            });
+        }
+
+    }
 </script>
 </body>
 </html>

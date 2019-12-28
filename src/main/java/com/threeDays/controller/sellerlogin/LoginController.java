@@ -24,7 +24,6 @@ public class LoginController {
     @Autowired
     private Sellerservice sellerservice;
 
-
     /**
      * 获取验证码图片(项目源地址：https://github.com/whvcse/EasyCaptcha)
      * 前端代码：<img src="/captcha" width="130px" height="48px" />

@@ -35,27 +35,31 @@ public class CartService {
     }
 
     //商品添加littleGoodsNum个
-    public void addNewLittleGoods(BigInteger customerId,
+    public int addNewLittleGoods(BigInteger customerId,
                                   BigInteger littleGoodsId,
                                   int littleGoodsNum) {
         if (customerId == null) {
             System.out.println("请输入customerId");
+            return 0;
         } else if (littleGoodsId == null) {
             System.out.println("请输入littleGoodsId");
+            return 0;
         } else if (littleGoodsNum == 0) {
             System.out.println("请输入数量");
+            return 0;
         } else if (customerMapper.getCustomer(customerId) == null) {
             System.out.println("买家不存在");
+            return 0;
         } else if (littleGoodsMapper.findLittleGoodsById(littleGoodsId) == null) {
             System.out.println("商品不存在");
+            return 0;
         } else if (cartMapper.selectLittleGoods(customerId, littleGoodsId) == null) {//商品原本不存在
-            cartMapper.addLittleGoods(customerId, littleGoodsId, littleGoodsNum, 0);
+            return cartMapper.addLittleGoods(customerId, littleGoodsId, littleGoodsNum, 0);
 
         } else {
             int num = cartMapper.selectLittleGoodsNum(customerId, littleGoodsId);//商品存在
             littleGoodsNum = num + littleGoodsNum;
-            cartMapper.updateLittleGoodsNum(customerId, littleGoodsId, littleGoodsNum);
-
+            return cartMapper.updateLittleGoodsNum(customerId, littleGoodsId, littleGoodsNum);
         }
     }
 

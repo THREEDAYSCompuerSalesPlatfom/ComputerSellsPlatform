@@ -35,7 +35,7 @@ public class Surface {
         List<Goods> goodsList = new ArrayList<>();
         goodsService.getGoodsList(goodsList);
         List<Goods> goodsList1 = goodsList.subList(0, 3);
-        List<Goods> goodsList2 = goodsList.subList(5, 8);
+        List<Goods> goodsList2 = goodsList.subList(4, 7);
         model.addAttribute("GoodsList1", goodsList1);
         model.addAttribute("GoodsList2", goodsList2);
         return "index";

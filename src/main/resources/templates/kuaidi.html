@@ -4,23 +4,35 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <meta content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no" name="viewport">
+    <link rel="stylesheet" href="../plugins/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../plugins/adminLTE/css/AdminLTE.css">
+    <link rel="stylesheet" href="../plugins/adminLTE/css/skins/_all-skins.min.css">
+    <link rel="stylesheet" href="../css/style2.css">
+    <script src="../plugins/jQuery/jquery-2.2.3.min.js"></script>
+    <script src="../plugins/bootstrap/js/bootstrap.min.js"></script>
 </head>
-<body>
-<table>
-    <thead>
-    <tr>
-    <td>时间</td>
-    <td>站点</td>
-    </tr>
-    </thead>
-    <tbody >
-    <tr th:each="lichen,d:${lichenlist}">
-        <td th:text="${lichen.getAcceptTime()}"></td>
-        <td th:text="${lichen.getAcceptStation()}"></td>
-    </tr>
+<body class="hold-transition skin-red sidebar-mini">
+<div class="box-body">
+    <div class="table-box">
+        <table>
+            <thead>
+            <tr>
+                <td>时间</td>
+                <td>站点</td>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="lichen,d:${lichenlist}">
+                <td th:text="${lichen.getAcceptTime()}"></td>
+                <td th:text="${lichen.getAcceptStation()}"></td>
+            </tr>
 
-    </tbody>
-</table>
+            </tbody>
+        </table>
+    </div>
+</div>
+
 
 </body>
 </html>

@@ -49,4 +49,5 @@ public class surfacecontroller {
     public String aftersale2(HttpServletRequest request, Model model){
         return "seller/aftersale2";
     }
+
 }

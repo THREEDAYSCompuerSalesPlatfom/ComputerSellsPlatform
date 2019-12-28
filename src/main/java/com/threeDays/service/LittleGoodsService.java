@@ -42,7 +42,7 @@ public class LittleGoodsService {
 
     //检查配置是否重复
     public Boolean edition(String edition, BigInteger bigGoodsId) {
-        Boolean a = false;
+        Boolean a = true;
         List<String> littleGoodsEdition = littleGoodsMapper.getEdition(bigGoodsId);
         ListIterator<String> iterator = littleGoodsEdition.listIterator();
         while (iterator.hasNext()) {
@@ -121,11 +121,11 @@ public class LittleGoodsService {
     }
 
     //获取某个商品价格范围
-    public float minPrice(BigInteger bigGoodsId, BigInteger sellerId) {
+    public Float minPrice(BigInteger bigGoodsId, BigInteger sellerId) {
         return littleGoodsMapper.minPrice(bigGoodsId, sellerId);
     }
 
-    public float maxPrice(BigInteger bigGoodsId, BigInteger sellerId) {
+    public Float maxPrice(BigInteger bigGoodsId, BigInteger sellerId) {
         return littleGoodsMapper.maxPrice(bigGoodsId, sellerId);
     }
 

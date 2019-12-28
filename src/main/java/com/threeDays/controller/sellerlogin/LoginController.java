@@ -38,6 +38,12 @@ public class LoginController {
         System.out.println(gifCaptcha.text());
         CaptchaUtil.out(gifCaptcha, request, response);
     }
+    @RequestMapping("signoff")
+    public String signoff(HttpServletRequest httpServletRequest){
+        httpServletRequest.getSession().removeAttribute("Seller_id");
+        httpServletRequest.getSession().removeAttribute("Seller");
+        return goToSellerLogin();
+    }
 
     /**
      * 从客户登录界面转到卖家登录界面

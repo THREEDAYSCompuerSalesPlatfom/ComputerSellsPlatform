@@ -152,27 +152,40 @@ public class DeliverManageController {
         return "kuaidi";
     }
 
-    @RequestMapping("/deliver")
+    @RequestMapping("deliver")
     public String getfinaldeliverbySeler(Model model,HttpServletRequest request){
         BigInteger Seller_id = (BigInteger) request.getSession().getAttribute("Seller_id");
         List<FinalDeliver> weifahuo=finalOrderService.getfinaldeliverbySeler(Seller_id,0);
         List<FinalDeliver> yifahuo=finalOrderService.getfinaldeliverbySeler(Seller_id,1);
-        for(FinalDeliver finalDeliver:weifahuo){
-            yifahuo.add(finalDeliver);
+        for(FinalDeliver finalDeliver:yifahuo){
+            weifahuo.add(finalDeliver);
         }
-        model.addAttribute("list",yifahuo);
+        System.out.println("deliver list:"+weifahuo.size());
+        model.addAttribute("list",weifahuo);
         return "seller/deliver";
     }
-    @RequestMapping("/comment")
+    @RequestMapping("comment")
     public String getcomment(Model model,HttpServletRequest request){
         BigInteger Seller_id = (BigInteger) request.getSession().getAttribute("Seller_id");
-        model.addAttribute("list",finalOrderService.getfinaldeliverbySeler(Seller_id,2));
+        List<FinalDeliver> finalDelivers=finalOrderService.getfinaldeliverbySeler(Seller_id,2);
+        model.addAttribute("list",finalDelivers);
+        System.out.println("comment list:"+finalDelivers.size());
         return "seller/comment";
     }
-    @RequestMapping("/backgoods")
+    @RequestMapping("backgoods")
     public String backgoods(Model model,HttpServletRequest request){
         BigInteger Seller_id = (BigInteger) request.getSession().getAttribute("Seller_id");
-        model.addAttribute("list",finalOrderService.getfinaldeliverbySeler(Seller_id,3));
+        List<FinalDeliver> daishenhe=finalOrderService.getfinaldeliverbySeler(Seller_id,3);
+        List<FinalDeliver> yitongyi=finalOrderService.getfinaldeliverbySeler(Seller_id,4);
+        List<FinalDeliver> butongyi=finalOrderService.getfinaldeliverbySeler(Seller_id,5);
+        for(FinalDeliver finalDeliver:butongyi){
+            daishenhe.add(finalDeliver);
+        }
+        for(FinalDeliver finalDeliver:yitongyi){
+            daishenhe.add(finalDeliver);
+        }
+        model.addAttribute("list",daishenhe);
+        System.out.println("backgoods list:"+daishenhe.size());
         return "seller/backgoods";
     }
 }

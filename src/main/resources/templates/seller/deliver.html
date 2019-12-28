@@ -72,15 +72,16 @@
                 <td th:text="${FinalDeliver.getCuname()}">河海</td>
                 <td th:text="${FinalDeliver.getCutel()}">15995028130</td>
                 <td th:text="${FinalDeliver.getCuaddress()}">河海大学</td>
-                <td th:if="${FinalDeliver.getExpress()}!=null" th:text="${FinalDeliver.getExpress()}">&nbsp;</td>
-                <td th:if="${FinalDeliver.getExpress()}==null">无</td>
+                <td th:if="${FinalDeliver.getExpress()}!=null" ><a th:text="${FinalDeliver.getExpress()}" th:href="@{~/DeliverManage/queryDelivery(com='ZTO',num=${FinalDeliver.getExpress()})}"></a></td>
+                <td th:if="${FinalDeliver.getExpress()}==null"><a href="#">无</a></td>
 
 
-                <td class="text-center">
+                <td class="text-center" th:if="${FinalDeliver.getOrderstatus()}=='0'">
                     <button type="button" class="btn bg-olive btn-xs"  onclick='Tinsertexpress()'>
                         添加物流单号
                     </button>
                 </td>
+                <td th:if="${FinalDeliver.getOrderstatus()}=='1'">已发货</td>
 
             </tr>
             </tbody>

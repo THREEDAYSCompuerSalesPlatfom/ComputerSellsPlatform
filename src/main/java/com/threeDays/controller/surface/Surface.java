@@ -20,6 +20,16 @@ public class Surface {
     @Autowired
     GoodsService goodsService;
 
+    @RequestMapping("/")
+    public String login1(Model model) {
+        List<Goods> goodsList = new ArrayList<>();
+        goodsService.getGoodsList(goodsList);
+        List<Goods> goodsList1 = goodsList.subList(0, 3);
+        List<Goods> goodsList2 = goodsList.subList(5, 8);
+        model.addAttribute("GoodsList1", goodsList1);
+        model.addAttribute("GoodsList2", goodsList2);
+        return "index";
+    }
     @RequestMapping("/index")
     public String login(Model model) {
         List<Goods> goodsList = new ArrayList<>();

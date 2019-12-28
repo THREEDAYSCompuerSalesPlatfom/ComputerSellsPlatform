@@ -190,12 +190,12 @@
                                             <td width="8%" class="center">
                                                 <li><a class="btn" th:href="@{/changeStatus}" th:if="${Goods.getStatus() ne 3}">退货/退款</a></li>
                                             </td>
-                                            <td width="10%" class="center">
+                                            <td width="10%" class="center" th:if="${Stat.index}==0" th:rowspan="${Stat.size}">
                                                 <ul class="unstyled">
                                                     <li th:text="'¥总价'+${Goods.getAllPrize()}">¥总价</li>
                                                 </ul>
                                             </td>
-                                            <td width="10%" class="center">
+                                            <td width="10%" class="center" th:if="${Stat.index}==0" th:rowspan="${Stat.size}">
                                                 <ul class="unstyled">
                                                     <li >状态</li>
                                                     <li><p href="orderDetail.html" class="btn" th:if="${Goods.getStatus() eq 0}">卖家待发货 </p></li>
@@ -207,7 +207,7 @@
                                                     <li><p href="orderDetail.html" class="btn" th:if="${Goods.getStatus() eq 5}">订单详情 </p></li>
                                                 </ul>
                                             </td>
-                                            <td width="10%" class="center">
+                                            <td width="10%" class="center" th:if="${Stat.index}==0" th:rowspan="${Stat.size}">
                                                 <ul class="unstyled">
                                                     <li th:if="${Goods.getStatus() eq 2}">已确认收货</a></li>
                                                     <button type="button" class="btn bg-olive btn-x" title="确认收货"

@@ -4,6 +4,7 @@ import com.threeDays.POJO.BigGoods;
 import com.threeDays.POJO.Order;
 import com.threeDays.POJO.Ordergoods;
 import com.threeDays.Utils.SortUtils.LiitleGoodsSortBySeller;
+import com.threeDays.dao.DeliverMapper;
 import com.threeDays.dao.OrderMapper;
 import com.threeDays.dao.OrdergoodsMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +27,8 @@ public class OrderService {
     private CustomerService customerService;
     @Autowired
     private Sellerservice sellerservice;
+    @Autowired
+    private DeliverMapper deliverMapper;
 
     /**
      * 根据order_id返回Order对象
@@ -57,6 +60,8 @@ public class OrderService {
     }
     //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
+    @Autowired
+    LiitleGoodsSortBySeller liitleGoodsSortBySeller;
     /**
      * 从购物车的一切商品直接生成对应各自商家的订单
      * 每个插入新的order（默认订单状态为0）,同时往ordergoods里插入商品
@@ -64,8 +69,13 @@ public class OrderService {
      */
     public List<BigInteger> CreateNewOrder(BigInteger cu_id, Map</*商品id*/BigInteger,/*数量*/ Integer> Cartmap) {
         Set<BigInteger> set = Cartmap.keySet();
-        BigInteger[] littlegoodsidlist = (BigInteger[]) set.toArray();
-        new LiitleGoodsSortBySeller().QuickSort(littlegoodsidlist, 0, littlegoodsidlist.length - 1);//通过排序让同一个商家的商品紧挨在一起
+        Object[] littlegoodsidlisttemp = set.toArray();
+        BigInteger[] littlegoodsidlist=new BigInteger[littlegoodsidlisttemp.length];
+        for(int i=0;i<littlegoodsidlisttemp.length;i++){
+            littlegoodsidlist[i]=(BigInteger) littlegoodsidlisttemp[i];
+        }
+
+        liitleGoodsSortBySeller.QuickSort(littlegoodsidlist, 0, littlegoodsidlist.length - 1);//通过排序让同一个商家的商品紧挨在一起
         List<BigInteger> orderidlist = new ArrayList<>();//返回的新order的order_id列表
         BigInteger sellerid = littleGoodsService.findSellerById(littlegoodsidlist[0]);
         Map<BigInteger, Integer> ordergoodsmap = new HashMap<>();//单订单中的商品信息
@@ -82,6 +92,12 @@ public class OrderService {
             }
 
         }
+        Order order = new Order();
+        order.setCu_id(cu_id);
+        order.setOrder_status(0);
+        BigInteger orderid = insertOrderANDGoods(order, ordergoodsmap);//插入新的order
+        orderidlist.add(orderid);//在返回的list中加入新的orderid
+        ordergoodsmap.clear();
         return orderidlist;
     }
 
@@ -111,6 +127,7 @@ public class OrderService {
                 ordergoodsMapper.deleteOrderGoods(order_id);//删除已经插入的Ordergoods
                 return new BigInteger("-1");
             }
+            deliverMapper.insertExpress(order.getOrder_id(),null,findSellerByOrderId(order_id));
         }
         orderMapper.updatePrize(order_id, prize);
 

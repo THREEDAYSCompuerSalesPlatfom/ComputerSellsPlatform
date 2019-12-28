@@ -1,5 +1,6 @@
 package com.threeDays.service;
 
+import com.threeDays.POJO.BigGoods;
 import com.threeDays.POJO.LittleGoods;
 import com.threeDays.dao.BigGoodsMapper;
 import com.threeDays.dao.LittleGoodsMapper;
@@ -16,6 +17,8 @@ public class LittleGoodsService {
     private LittleGoodsMapper littleGoodsMapper;
     @Autowired
     private BigGoodsMapper bigGoodsMapper;
+    @Autowired
+    private BigGoodsService bigGoodsService;
 
 
     //test
@@ -83,7 +86,19 @@ public class LittleGoodsService {
 
     //删除原有某个配置
     public int deleteLittleGoodsById(BigInteger littleGoodsId) {
-        return littleGoodsMapper.deleteLittleGoods(littleGoodsId);
+        LittleGoods littleGoods=findLittleGoodsById(littleGoodsId);
+       List<LittleGoods> littleGoodsList= findLittleGoods(littleGoods.getBigGoodsId());
+       if(littleGoodsList.size()!=1){
+           return littleGoodsMapper.deleteLittleGoods(littleGoodsId);
+       }else {
+          BigInteger i= bigGoodsService.deleteBigGoods(littleGoods.getBigGoodsId(),littleGoods.getSellerId());
+           if(i.equals("-1")){
+               return 0;
+           }else {
+               return 1;
+           }
+       }
+
     }
 
 //    //修改某个配置

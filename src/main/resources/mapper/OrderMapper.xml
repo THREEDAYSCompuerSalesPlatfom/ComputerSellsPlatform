@@ -27,7 +27,7 @@
          update [order] SET prize=#{prize} where order_id=#{order_id}
     </update>
     <select id="findOrderByStatusANDSeller" resultMap="OrderMap">
-        select * from ordergoods,littlegoods,[order] where ordergoods.littlegoods_id=littlegoods.littlegoods_id and
+        select distinct [order].order_id,cu_id,order_status,comments,reply,date,prize from ordergoods,littlegoods,[order] where ordergoods.littlegoods_id=littlegoods.littlegoods_id and
          [order].order_id=ordergoods.order_id and order_status=#{order_status} and seller_id=#{seller_id}
     </select>
     <select id="findOrderIdByCustomer" resultMap="OrderMap">

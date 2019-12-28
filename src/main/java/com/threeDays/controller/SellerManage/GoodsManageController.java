@@ -2,9 +2,12 @@ package com.threeDays.controller.SellerManage;
 
 import com.threeDays.POJO.LittleGoods;
 import com.threeDays.service.BigGoodsService;
+import com.threeDays.service.GoodsService;
 import com.threeDays.service.LittleGoodsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -20,6 +23,8 @@ public class GoodsManageController {
     private BigGoodsService bigGoodsService;
     @Autowired
     private LittleGoodsService littleGoodsService;
+    @Autowired
+    private GoodsService goodsService;
 
     /**
      * 到商品管理界面
@@ -98,10 +103,14 @@ public class GoodsManageController {
      * 成功返回1
      * 错误返回0
      */
-    @PostMapping("/GoodsManage/deleteLittleGoodsById")
+    @RequestMapping("/GoodsManage/deleteLittleGoodsById/{littleGoodsId}")
     @ResponseBody
-    public int deleteLittleGoodsById(BigInteger littleGoodsId) {
-        return littleGoodsService.deleteLittleGoodsById(littleGoodsId);
+    public String deleteLittleGoodsById(@PathVariable("littleGoodsId") BigInteger littleGoodsId) {
+        if(littleGoodsService.deleteLittleGoodsById(littleGoodsId)==1){
+            return "success";
+        }else {
+            return "fail";
+        }
     }
 
     /**
@@ -144,6 +153,12 @@ public class GoodsManageController {
         BigInteger seller_id = (BigInteger) request.getSession().getAttribute("Seller_id");
         LittleGoods littleGoods = littleGoodsService.findLittleGoodsById(littleGoodsId);
         return littleGoodsService.updateLittleGoodsPrice(littleGoods.getEdition(), goodsPrice, seller_id, littleGoods.getBigGoodsId());
+    }
+    @RequestMapping("goods")
+    public String goods(HttpServletRequest request, Model model){
+        BigInteger seller_id = (BigInteger) request.getSession().getAttribute("Seller_id");
+        model.addAttribute("goods",goodsService.getgoodsbysellerid(seller_id));
+        return "seller/goods";
     }
 }
 

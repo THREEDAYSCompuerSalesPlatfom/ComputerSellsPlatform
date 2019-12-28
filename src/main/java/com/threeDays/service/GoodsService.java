@@ -23,10 +23,10 @@ public class GoodsService {
     BigGoodsMapper bigGoodsMapper;
     @Autowired
     LittleGoodsMapper littleGoodsMapper;
-
     public Goods getGoods(BigInteger bigGoodsId) {
         Goods goods = new Goods();
         BigGoods bigGoods = bigGoodsMapper.findBigGoodsById(bigGoodsId);
+        goods.setBrand(bigGoodsMapper.getBigGoods(bigGoodsId).getBrand());
         List<LittleGoods> littleGoods = littleGoodsMapper.LittleGoods(bigGoodsId);
         goods.setBigGoodsId(bigGoodsId);
         goods.setLittleGoodsList(littleGoods);
@@ -40,6 +40,15 @@ public class GoodsService {
         goods.setMaxPrice(maxPrice);
         goods.setName(bigGoods.getGoodsName());
         return goods;
+    }
+    public List<Goods> getgoodsbysellerid(BigInteger sellerid){
+        List<BigGoods> bigGoods=bigGoodsMapper.getBigGoodsBySellerId(sellerid);
+        List<Goods> goodsList=new ArrayList<>();
+        for(BigGoods bigGoods1:bigGoods){
+            goodsList.add(getGoods(bigGoods1.getBigGoodsId()));
+        }
+        return goodsList;
+
     }
 
     //生成n个随机数

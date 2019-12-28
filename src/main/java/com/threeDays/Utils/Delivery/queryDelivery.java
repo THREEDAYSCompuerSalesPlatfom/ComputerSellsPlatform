@@ -1,5 +1,8 @@
 package com.threeDays.Utils.Delivery;
 
+import com.alibaba.fastjson.JSON;
+import com.threeDays.POJO.Deliver;
+import com.threeDays.Utils.Delivery.deliverPojo.deliverpojo;
 import org.springframework.beans.factory.annotation.Value;
 
 /**
@@ -24,15 +27,16 @@ public class queryDelivery {
         return result;
     }
 
-    public static String kuaidiniaoquery(String com,String num){
+    public static deliverpojo kuaidiniaoquery(String com,String num){
         KdniaoTrackQueryAPI api = new KdniaoTrackQueryAPI();
         try {
             String result = api.getOrderTracesByJson(com, num);
             System.out.print(result);
-            return result;
+            deliverpojo deliverpojo=JSON.parseObject(result, com.threeDays.Utils.Delivery.deliverPojo.deliverpojo.class);
+            return deliverpojo;
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return "error";
+        return null;
     }
 }

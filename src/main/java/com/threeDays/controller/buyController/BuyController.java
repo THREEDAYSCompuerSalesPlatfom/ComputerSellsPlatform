@@ -1,23 +1,18 @@
 package com.threeDays.controller.buyController;
 
-import com.threeDays.POJO.BigGoods;
+import com.threeDays.POJO.CartGoods;
 import com.threeDays.POJO.Customer;
 import com.threeDays.POJO.Goods;
 import com.threeDays.POJO.LittleGoods;
 import com.threeDays.service.*;
-import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-
 import javax.servlet.http.HttpServletRequest;
 import java.math.BigInteger;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 
@@ -39,6 +34,7 @@ public class BuyController {
     OrderService orderService;
     @Autowired
     GoodsService goodsService;
+
     @RequestMapping("/product")
     public String product(Model model, BigInteger bigGoodsId, HttpServletRequest httpServletRequest){
         Goods goods=goodsService.getGoods(bigGoodsId);
@@ -91,5 +87,21 @@ public class BuyController {
             orderService.CreateNewOrder(customer.getCustomerId(),littleGoodsMap);
             return "购买成功界面";
         }
+    }
+
+    @RequestMapping("/buy")
+    public String buy(HttpServletRequest request){
+        Customer customer = (Customer) request.getSession().getAttribute("customer");
+        BigInteger cuid=customer.getCustomerId();
+        List<CartGoods> cartGoodsList=cartGoodsService.findCartGoodsByCuid(cuid);
+        Map</*商品id*/BigInteger,/*数量*/ Integer> Cartmap=new HashMap<>();
+        for(CartGoods cartGoods:cartGoodsList){
+            BigInteger id=cartGoods.getLittlegoodsid();
+            int num=cartGoods.getNum();
+            Cartmap.put(id,num);
+
+        }
+        orderService.CreateNewOrder(cuid,Cartmap);
+        return "/index";
     }
 }

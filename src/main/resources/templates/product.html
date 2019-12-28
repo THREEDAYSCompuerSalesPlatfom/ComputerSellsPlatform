@@ -55,7 +55,7 @@
             </div>
             <div class="col-xs-6">
                 <ul class="top-link">
-                    <li><a href="/account" th:if="${session.user} != null" th:text="${session.user.getCu_Name()}"><span
+                    <li><a href="/index" th:if="${session.user} != null" th:text="${session.user.getCu_Name()}"><span
                             class="glyphicon glyphicon-user"></span> My Account</a></li>
                     <li><a href="/account" th:if="${session.user} == null"><span
                             class="glyphicon glyphicon-user"></span> My Account</a></li>
@@ -78,8 +78,11 @@
             </form>
         </div>
         <div class="col-md-4">
-            <div id="cart"><a class="btn btn-1" th:href="@{~/getCart}" th:text="'CART: '+${number}+' ITEM'"><span
-                    class="glyphicon glyphicon-shopping-cart"></span></a></div>
+			<div id="cart"><a class="btn btn-1" th:href="@{~/getCart}" th:if="${session.cartNum}!=null"><span
+					class="glyphicon glyphicon-shopping-cart"></span>CART
+				: [[${session.cartNum}]] ITEM</a><a class="btn btn-1" th:href="@{~/getCart}"
+													th:if="${session.cartNum}==null"><span
+					class="glyphicon glyphicon-shopping-cart"></span>登录查看购物车</a></div>
         </div>
     </div>
 </header>

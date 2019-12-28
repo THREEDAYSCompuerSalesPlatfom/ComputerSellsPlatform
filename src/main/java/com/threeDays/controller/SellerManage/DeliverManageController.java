@@ -2,11 +2,16 @@ package com.threeDays.controller.SellerManage;
 
 import com.threeDays.POJO.Deliver;
 import com.threeDays.POJO.Order;
+import com.threeDays.Utils.Delivery.deliverPojo.deliverpojo;
+import com.threeDays.Utils.Delivery.deliverPojo.lichen;
 import com.threeDays.Utils.Delivery.queryDelivery;
 import com.threeDays.service.DeliverService;
 import com.threeDays.service.OrderService;
+import com.threeDays.service.finalOrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -25,6 +30,8 @@ public class DeliverManageController {
     private OrderService orderService;
     @Autowired
     private DeliverService deliverService;
+    @Autowired
+    private finalOrderService finalOrderService;
 
     /**
      * 到商品管理界面
@@ -58,12 +65,11 @@ public class DeliverManageController {
      * 插入物流单
      * 返回失败或成功信息字符串
      */
-    @PostMapping("/DeliverManage/insertExpress")
+    @GetMapping("/DeliverManage/insertExpress")
     @ResponseBody
-    public String insertExpress(BigInteger order_id, String express, HttpServletRequest request) {
-        if (!orderService.findSellerByOrderId(order_id).equals((BigInteger) request.getSession().getAttribute("Seller_id")))
-            return "不是你的订单";
-        return deliverService.insertExpress(order_id, express);
+    public String insertExpress(BigInteger order_id, String express, HttpServletRequest request,Model model) {
+
+         return deliverService.insertExpress(order_id, express);
     }
 
     /**
@@ -71,7 +77,7 @@ public class DeliverManageController {
      * 返回失败或成功信息字符串
      */
     @PostMapping("/DeliverManage/updateExpress")
-    @ResponseBody
+
     public String updateExpress(BigInteger order_id, String express, HttpServletRequest request) {
         if (!orderService.findSellerByOrderId(order_id).equals((BigInteger) request.getSession().getAttribute("Seller_id")))
             return "不是你的订单";
@@ -94,9 +100,10 @@ public class DeliverManageController {
      * 加入卖家回复
      * 返回失败或成功信息字符串
      */
-    @PostMapping("/DeliverManage/insertReply")
+    @GetMapping("/DeliverManage/insertReply")
     @ResponseBody
-    public String insertReply(BigInteger order_id, String reply) {
+    public String insertReply(BigInteger order_id, String reply,HttpServletRequest request,Model model) {
+
         return orderService.insertReply(order_id, reply);
     }
 
@@ -130,9 +137,36 @@ public class DeliverManageController {
      *
      * num：单号
      */
-    @PostMapping("/DeliverManage/queryDelivery")
-    @ResponseBody
-    public String query(String com, String num) {
-        return queryDelivery.kuaidiniaoquery(com, num);
+    @GetMapping("/DeliverManage/queryDelivery")
+    public String query(String com, String num, Model model) {
+        System.out.println(com+"     "+num);
+        deliverpojo deliverpojo =queryDelivery.kuaidiniaoquery(com, num);
+        String s=new String("");
+        for(lichen r:deliverpojo.getTraces()){
+            String date=r.getAcceptTime()+"\n";
+            String station=r.getAcceptStation()+"\n";
+            s=s+date+station;
+        }
+        model.addAttribute("lichenlist",deliverpojo.getTraces());
+        return "kuaidi";
+    }
+
+    @RequestMapping("/deliver")
+    public String getfinaldeliverbySeler(Model model,HttpServletRequest request){
+        BigInteger Seller_id = (BigInteger) request.getSession().getAttribute("Seller_id");
+        model.addAttribute("list",finalOrderService.getfinaldeliverbySeler(Seller_id,0));
+        return "seller/deliver";
+    }
+    @RequestMapping("/comment")
+    public String getcomment(Model model,HttpServletRequest request){
+        BigInteger Seller_id = (BigInteger) request.getSession().getAttribute("Seller_id");
+        model.addAttribute("list",finalOrderService.getfinaldeliverbySeler(Seller_id,2));
+        return "seller/comment";
+    }
+    @RequestMapping("/backgoods")
+    public String backgoods(Model model,HttpServletRequest request){
+        BigInteger Seller_id = (BigInteger) request.getSession().getAttribute("Seller_id");
+        model.addAttribute("list",finalOrderService.getfinaldeliverbySeler(Seller_id,3));
+        return "seller/backgoods";
     }
 }

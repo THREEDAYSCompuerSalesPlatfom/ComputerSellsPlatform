@@ -55,7 +55,7 @@
 					<ul class="fr">
 						<li class="f-item"><a th:href="@{~/getCart}" target="_blank">我的购物车</a></li>
 						<li class="f-item space"></li>
-						<li class="f-item"><a href="cu-index.html" target="_blank">我的中心</a></li>
+						<li class="f-item"><a th:href="@{~/cu-index}" target="_blank">我的中心</a></li>
 					</ul>
 				</div>
 			</div>
@@ -168,7 +168,7 @@
                                 <div th:each="Goods,userStat:${cuOrderGoods}">
                                     <!--order1-->
                                     <div class="choose-title">
-                                        <label th:text="${Goods.getDate()}+${Goods.getOrderId()+${Goods.getSeller().getSeller_name()}}">时间+订单号+卖家</label>
+                                        <label th:text="${Goods.getDate()}+${Goods.getOrderId()}+${Goods.getSeller().getSeller_name()}">时间+订单号+卖家</label>
                                     </div>
                                     <table class="sui-table table-bordered order-datatable">
                                         <tbody th:object="${Goods.getShowGoods()}">

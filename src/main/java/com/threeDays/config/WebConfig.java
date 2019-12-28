@@ -53,6 +53,7 @@ public class WebConfig implements WebMvcConfigurer {
         excludePatterns.add("/image/get");
         excludePatterns.add("/searchGoods");
         excludePatterns.add("/callback");
+        excludePatterns.add("/bigGoods");
 //        excludePatterns.add("/selogin");
 //        excludePatterns.add("/selogin/submit");
 //        excludePatterns.add("/sellerregesiter");
@@ -101,6 +102,10 @@ public class WebConfig implements WebMvcConfigurer {
         sellerpatterns.add("/newgoods");
         sellerpatterns.add("/goods");
         sellerpatterns.add("/backgoods");
+        sellerpatterns.add("/sellermanage");
+        sellerpatterns.add("/home");
+        sellerpatterns.add("/sellerinfo");
+        sellerpatterns.add("/password");
 
         List<String> sellerexcludePatterns = new ArrayList<>();
         sellerexcludePatterns.add("/captcha");

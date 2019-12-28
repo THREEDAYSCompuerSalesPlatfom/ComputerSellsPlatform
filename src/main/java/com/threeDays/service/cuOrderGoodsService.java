@@ -15,7 +15,7 @@ import java.util.List;
  * @ClassNamecuOrderGoodsService
  * @Date2019-12-2817:21
  **/
-
+@Service
 public class cuOrderGoodsService {
     @Autowired
     OrderMapper orderMapper;
@@ -50,7 +50,7 @@ public class cuOrderGoodsService {
             cuOrderGoods.setDate(orderMapper.findOrderById(orderId).getDate());
             cuOrderGoods.setAllPrize(allPrize);
             cuOrderGoods.setShowGoods(showGoods);
-            cuOrderGoods.setSeller(sellerMapper.findSellerById(new OrderService().findSellerByOrderId(orderId)));
+            cuOrderGoods.setSeller(sellerMapper.findSellerById(orderService.findSellerByOrderId(orderId)));
             cuOrderGoods.setStatus(orderMapper.findOrderById(orderId).getOrder_status());
             cuOrderGoodsList.add(cuOrderGoods);
         }

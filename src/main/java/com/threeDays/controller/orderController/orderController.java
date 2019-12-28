@@ -26,12 +26,13 @@ public class orderController {
     OrderService orderService;
     @Autowired
     LittleGoodsService littleGoodsService;
+    @Autowired
+    cuOrderGoodsService cuOrderGoodsService;
 
     @GetMapping("/cuIndex")
     public String order(Model model, HttpServletRequest httpServletRequest) {
         Customer customer = (Customer) httpServletRequest.getSession().getAttribute("customer");
         model.addAttribute("customer",customer);
-        cuOrderGoodsService cuOrderGoodsService=new cuOrderGoodsService();
         List<cuOrderGoods> cuOrderGoods =cuOrderGoodsService.getAll(customer.getCustomerId());
         model.addAttribute("cuOrderGoods",cuOrderGoods);
         return "cu-index";

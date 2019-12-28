@@ -1,6 +1,7 @@
 package com.threeDays.controller.SellerManage;
 
 import com.threeDays.POJO.Deliver;
+import com.threeDays.POJO.FinalDeliver;
 import com.threeDays.POJO.Order;
 import com.threeDays.Utils.Delivery.deliverPojo.deliverpojo;
 import com.threeDays.Utils.Delivery.deliverPojo.lichen;
@@ -154,7 +155,12 @@ public class DeliverManageController {
     @RequestMapping("/deliver")
     public String getfinaldeliverbySeler(Model model,HttpServletRequest request){
         BigInteger Seller_id = (BigInteger) request.getSession().getAttribute("Seller_id");
-        model.addAttribute("list",finalOrderService.getfinaldeliverbySeler(Seller_id,0));
+        List<FinalDeliver> weifahuo=finalOrderService.getfinaldeliverbySeler(Seller_id,0);
+        List<FinalDeliver> yifahuo=finalOrderService.getfinaldeliverbySeler(Seller_id,1);
+        for(FinalDeliver finalDeliver:weifahuo){
+            yifahuo.add(finalDeliver);
+        }
+        model.addAttribute("list",yifahuo);
         return "seller/deliver";
     }
     @RequestMapping("/comment")

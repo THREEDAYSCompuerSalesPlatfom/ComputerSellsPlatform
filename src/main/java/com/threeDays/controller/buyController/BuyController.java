@@ -60,7 +60,7 @@ public class BuyController {
             return "order";
         }
     }
-   // @RequestMapping("/buyByCart")
+    @RequestMapping("/buyByCart")
     public String buyByCart(HttpServletRequest httpServletRequest/*,@RequestParam("price")float price*/
                             ,@RequestParam("allLittleGoodsId[]") List<BigInteger>allLittleGoodsId) {
         Customer customer = (Customer) httpServletRequest.getSession().getAttribute("customer");
@@ -84,7 +84,7 @@ public class BuyController {
         }
     }
 
-    @RequestMapping("/buyByCart")
+    @RequestMapping("/buyByCart1")
     public String buy(HttpServletRequest request){
         Customer customer = (Customer) request.getSession().getAttribute("customer");
         BigInteger cuid=customer.getCustomerId();

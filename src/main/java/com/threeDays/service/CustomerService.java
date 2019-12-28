@@ -57,20 +57,21 @@ public class CustomerService {
     public String createCustomer(String cu_Telephone, String cu_Address, String cu_Name, String customerPassWord) {
         String token = UUID.randomUUID().toString();
         String accountId = UUID.randomUUID().toString();
-        customerMapper.addCustomer(cu_Telephone, cu_Address, cu_Name, token, accountId,0);
+        customerMapper.addCustomer(cu_Telephone, cu_Address, cu_Name, token, accountId, 0);
         BigInteger customerId = customerMapper.getCustomerId(token);
         customerPasswordMapper.insertPassword(customerId, customerPassWord);
         return token;
     }
 
     //更新token
-    public void updateToken(BigInteger customerId,String token){
+    public void updateToken(BigInteger customerId, String token) {
         customerMapper.updateToken(customerId, token);
     }
+
     //通过Github登陆用户和本地用户绑定
     public BigInteger mergeCustomer(GithubCustomer githubCustomer) {
         if (customerMapper.findByAccountId(githubCustomer.getAccountId()) != null) {
-            customerMapper.addCustomer("", "", githubCustomer.getName(), githubCustomer.getToken(), githubCustomer.getAccountId(),0);
+            customerMapper.addCustomer("", "", githubCustomer.getName(), githubCustomer.getToken(), githubCustomer.getAccountId(), 0);
         } else {
             //更新token
             Customer customer = customerMapper.findByAccountId(githubCustomer.getAccountId());
@@ -84,13 +85,15 @@ public class CustomerService {
         return customerMapper.findByToken(token);
     }
 
-    float queryBalance(BigInteger cu_id){
+    float queryBalance(BigInteger cu_id) {
         return customerMapper.queryBalance(cu_id);
     }
-    public int updateBalance(BigInteger cu_id,float balance){
-        return customerMapper.updateBalance(cu_id,balance);
+
+    public int updateBalance(BigInteger cu_id, float balance) {
+        return customerMapper.updateBalance(cu_id, balance);
     }
-    public void addGithubCustomer( GithubCustomer githubCustomer){
-        githubCustomerMapper.addGithubCustomer(githubCustomer.getAccountId(),githubCustomer.getName(),githubCustomer.getToken());
+
+    public void addGithubCustomer(GithubCustomer githubCustomer) {
+        githubCustomerMapper.addGithubCustomer(githubCustomer.getAccountId(), githubCustomer.getName(), githubCustomer.getToken());
     }
 }

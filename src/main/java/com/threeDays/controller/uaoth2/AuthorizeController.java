@@ -28,8 +28,7 @@ public class AuthorizeController {
     private GithubProvider githubProvider;
     @Autowired
     private CustomerService customerService;
-    @Autowired
-    private GithubCustomerMapper githubCustomerMapper;
+
     @Value("S{github.client.id}")
     private String clientId;
     @Value("S{github.client.secret}")
@@ -60,7 +59,7 @@ public class AuthorizeController {
             githubCustomer.setToken(token);
             githubCustomer.setAccountId(String.valueOf(githubUser.getId()));
             githubCustomer.setName(githubUser.getName());
-            githubCustomerMapper.addGithubCustomer(githubCustomer);
+            customerService.addGithubCustomer(githubCustomer);
             customerService.mergeCustomer(githubCustomer);//合并生成数据库中customer，返回customerId
             httpServletResponse.addCookie(new Cookie("token", token));//借助token，cookie维持登陆验证是否登陆成功
             //httpServletRequest.getSession().setAttribute("githubUser", githubUser);//th:if="${session.githubUser！=null}"

@@ -23,20 +23,20 @@ public class GoodsService {
     BigGoodsMapper bigGoodsMapper;
     @Autowired
     LittleGoodsMapper littleGoodsMapper;
-    public Goods getGoods(BigInteger bigGoodsId){
-        Goods goods=new Goods();
-        BigGoods bigGoods=bigGoodsMapper.findBigGoodsById(bigGoodsId);
+    public Goods getGoods(BigInteger bigGoodsId) {
+        Goods goods = new Goods();
+        BigGoods bigGoods = bigGoodsMapper.findBigGoodsById(bigGoodsId);
         goods.setBrand(bigGoodsMapper.getBigGoods(bigGoodsId).getBrand());
-        List<LittleGoods> littleGoods= littleGoodsMapper.LittleGoods(bigGoodsId);
+        List<LittleGoods> littleGoods = littleGoodsMapper.LittleGoods(bigGoodsId);
         goods.setBigGoodsId(bigGoodsId);
         goods.setLittleGoodsList(littleGoods);
-        Float minPrice=littleGoodsMapper.minPrice(bigGoodsId,bigGoods.getSellerId());
-        if(minPrice==null)
-            minPrice=0f;
+        Float minPrice = littleGoodsMapper.minPrice(bigGoodsId, bigGoods.getSellerId());
+        if (minPrice == null)
+            minPrice = 0f;
         goods.setMinPrice(minPrice);
-        Float maxPrice=littleGoodsMapper.maxPrice(bigGoodsId,bigGoods.getSellerId());
-        if(maxPrice==null)
-            maxPrice=0f;
+        Float maxPrice = littleGoodsMapper.maxPrice(bigGoodsId, bigGoods.getSellerId());
+        if (maxPrice == null)
+            maxPrice = 0f;
         goods.setMaxPrice(maxPrice);
         goods.setName(bigGoods.getGoodsName());
         return goods;
@@ -50,23 +50,39 @@ public class GoodsService {
         return goodsList;
 
     }
+
     //生成n个随机数
-    /*public  List<BigGoods> randomSet(int min, int max, int n, List<BigGoods> bigGoodsList, HashSet<BigInteger> set) {
-        if (n > (max - min + 1) || max < min) {
-            return null;
-        }
+    private void randomSet(int min, int max, int n, List<BigGoods> bigGoodsList, HashSet<BigInteger> set) {
         for (int i = 0; i < n; i++) {
             // 调用Math.random()方法
             int num = (int) (Math.random() * (max - min)) + min;
-            set.add(BigInteger.valueOf(num));// 将不同的数存入HashSet中
-            bigGoodsList.add(bigGoodsMapper.findBigGoodsById(BigInteger.valueOf(num)));
+            if (bigGoodsMapper.findBigGoodsById(BigInteger.valueOf(num)) != null) {
+                set.add(BigInteger.valueOf(num));// 将不同的数存入HashSet中
+                bigGoodsList.add(bigGoodsMapper.findBigGoodsById(BigInteger.valueOf(num)));
+            }
         }
         int setSize = set.size();
         // 如果存入的数小于指定生成的个数，则调用递归再生成剩余个数的随机数，如此循环，直到达到指定大小
         if (setSize < n) {
-            randomSet(min, max, n - setSize,bigGoodsList,set);// 递归
-        }else
-            return bigGoodsList;
-    }*/
+            randomSet(min, max, n - setSize, bigGoodsList, set);// 递归
+        }
+    }
 
+    public List<Goods> getGoodsList(List<Goods> goods) {
+        HashSet<BigInteger> set = new HashSet<>();
+        List<BigGoods> bigGoodsList = new ArrayList<>();
+        int min = 1;
+        int max = 8;
+        if (bigGoodsMapper.getMinId() != null) {
+            min = bigGoodsMapper.getMinId().intValue();
+        }
+        if (bigGoodsMapper.getMaxId() != null) {
+            max = bigGoodsMapper.getMaxId().intValue();
+        }
+        randomSet(min, max, 8, bigGoodsList, set);
+        for (BigGoods bigGoods : bigGoodsList) {
+            goods.add(getGoods(bigGoods.getBigGoodsId()));
+        }
+        return goods;
+    }
 }

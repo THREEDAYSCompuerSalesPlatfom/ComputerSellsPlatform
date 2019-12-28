@@ -6,7 +6,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=9; IE=8; IE=7; IE=EDGE">
     <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7"/>
-    <title>个人注册</title>
+    <title>卖家注册</title>
 
 
     <link rel="stylesheet" type="text/css" th:href="@{~/css/webbase.css}"/>
@@ -29,7 +29,7 @@
     </div>-->
     <!--register-->
     <div class="registerArea">
-        <h3>注册新用户<span class="go">我有账号，去<a th:href="@{~/selogin}" target="_blank">登陆</a></span></h3>
+        <h3>成为卖家<span class="go">我有账号，去<a th:href="@{~/selogin}" target="_blank">登陆</a></span></h3>
         <div class="info">
 			<h4 th:if="${errormsg}!=null" th:text="${errormsg}"></h4>
             <form class="sui-form form-horizontal" th:action="@{~/sellerregesiter/submit}" id="seregeiter" method="post" onsubmit="checkForm()">

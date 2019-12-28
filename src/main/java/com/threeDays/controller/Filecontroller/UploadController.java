@@ -5,10 +5,7 @@ import com.threeDays.service.BigGoodsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
@@ -29,6 +26,64 @@ public class UploadController {
     @Autowired
     private BigGoodsService bigGoodsService;
 
+    @PostMapping("/text/uploadText")
+    @ResponseBody
+    public String uploadText(@RequestParam("goodsid") BigInteger goods_id,
+                             @RequestParam("file") MultipartFile file, Model model, HttpServletRequest request) {
+        //1. 接受上传的文件  @RequestParam("file") MultipartFile file
+        try {
+            //2.根据时间戳创建新的文件名，这样即便是第二次上传相同名称的文件，也不会把第一次的文件覆盖了
+            //同时辅以sellerid为文件名，以&分割
+            String fileName = "description";
+            //3.通过req.getServletContext().getRealPath("") 获取当前项目的真实路径，然后拼接前面的文件名
+            String destFileName = parentDir + goods_id + File.separator + fileName;
+            //4.第一次运行的时候，这个文件所在的目录往往是不存在的，这里需要创建一下目录（创建到了webapp下uploaded文件夹下）
+            File destFile = new File(destFileName);
+            System.out.println(destFileName);
+            if (!destFile.getParentFile().exists()) {
+                destFile.getParentFile().mkdirs();
+            }
+            //5.把浏览器上传的文件复制到希望的位置
+            file.transferTo(destFile);
+            //6.把文件名放在model里，以便后续显示用
+            model.addAttribute("fileName", fileName);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+            return "上传失败," + e.getMessage();
+        } catch (IOException e) {
+            e.printStackTrace();
+            return "上传失败," + e.getMessage();
+        }
+
+        return "success";
+    }
+
+    @RequestMapping(value = "/text/getText", method = RequestMethod.GET)
+    public String getText(@RequestParam("goodsid") BigInteger goods_id, HttpServletResponse response) {
+        FileInputStream fis = null;
+        response.setContentType("text/plain");
+        StringBuffer out = new StringBuffer();
+        try {
+            String destFileName = parentDir + goods_id + File.separator + "description";
+            File file = new File(destFileName);
+            fis = new FileInputStream(file);
+            byte[] b = new byte[fis.available()];
+            fis.read(b);
+            out.append(new String(b));
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (fis != null) {
+                try {
+                    fis.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return out.toString();
+    }
+
     /**
      * 上传首页展示图(这方法用一次过后再用功能为更新首页图)
      */
@@ -41,6 +96,39 @@ public class UploadController {
             //2.根据时间戳创建新的文件名，这样即便是第二次上传相同名称的文件，也不会把第一次的文件覆盖了
             //同时辅以sellerid为文件名，以&分割
             String fileName = "index";
+            //3.通过req.getServletContext().getRealPath("") 获取当前项目的真实路径，然后拼接前面的文件名
+            String destFileName = parentDir + goods_id + File.separator + fileName;
+            System.out.println(destFileName);
+            //4.第一次运行的时候，这个文件所在的目录往往是不存在的，这里需要创建一下目录（创建到了webapp下uploaded文件夹下）
+            File destFile = new File(destFileName);
+            if (!destFile.getParentFile().exists()) {
+                destFile.getParentFile().mkdirs();
+            }
+            //5.把浏览器上传的文件复制到希望的位置
+            file.transferTo(destFile);
+            //6.把文件名放在model里，以便后续显示用
+            m.addAttribute("fileName", fileName);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+            return "上传失败," + e.getMessage();
+        } catch (IOException e) {
+            e.printStackTrace();
+            return "上传失败," + e.getMessage();
+        }
+
+        return "success";
+    }
+
+    //上传缩略图
+    @PostMapping("/image/uploadShow")
+    @ResponseBody
+    public String uploadShow(@RequestParam("goodsid") BigInteger goods_id,
+                             @RequestParam("file") MultipartFile file, Model m, HttpServletRequest request) {
+        //1. 接受上传的文件  @RequestParam("file") MultipartFile file
+        try {
+            //2.根据时间戳创建新的文件名，这样即便是第二次上传相同名称的文件，也不会把第一次的文件覆盖了
+            //同时辅以sellerid为文件名，以&分割
+            String fileName = "show";
             //3.通过req.getServletContext().getRealPath("") 获取当前项目的真实路径，然后拼接前面的文件名
             String destFileName = parentDir + goods_id + File.separator + fileName;
             System.out.println(destFileName);
@@ -94,6 +182,34 @@ public class UploadController {
         }
     }
 
+    //获取缩略图
+    @RequestMapping(value = "/image/getShowImage")
+    public void getShowImage(@RequestParam("goodsid") BigInteger goods_id, HttpServletResponse response) {
+        FileInputStream fis = null;
+        response.setContentType("image/gif");
+        try {
+            OutputStream out = response.getOutputStream();
+            // String destFileName="D:"+File.separator+File.separator+"goods"+File.separator+goods_id+File.separator+"index";
+            String destFileName = parentDir + goods_id + File.separator + "show";
+            File file = new File(destFileName);
+            fis = new FileInputStream(file);
+            byte[] b = new byte[fis.available()];
+            fis.read(b);
+            out.write(b);
+            out.flush();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (fis != null) {
+                try {
+                    fis.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
     /**
      * 前端用表单上传图片
      * <form action="upload" method="post" enctype="multipart/form-data">
@@ -105,13 +221,13 @@ public class UploadController {
      */
     @PostMapping("/image/upload") // 等价于 @RequestMapping(value = "/upload", method = RequestMethod.POST)
     @ResponseBody
-    public String upload(@RequestParam("goodsid") BigInteger goods_id, @RequestParam("file") MultipartFile file, Model m, HttpServletRequest request) {//1. 接受上传的文件  @RequestParam("file") MultipartFile file
+    public String upload(@RequestParam("goodsid") BigInteger goods_id, @RequestParam("file") MultipartFile file, Model m) {//1. 接受上传的文件  @RequestParam("file") MultipartFile file
         try {
             //2.根据时间戳创建新的文件名，这样即便是第二次上传相同名称的文件，也不会把第一次的文件覆盖了
             //同时辅以sellerid为文件名，以&分割
             String fileName = System.currentTimeMillis() + "&" + bigGoodsService.getBigGoods(goods_id).getSellerId();
             //3.通过req.getServletContext().getRealPath("") 获取当前项目的真实路径，然后拼接前面的文件名
-            String destFileName = parentDir + goods_id + File.separator;
+            String destFileName = parentDir + goods_id + File.separator + fileName;
             //String destFileName = request.getServletContext().getRealPath("") + "goods" + File.separator + goods_id + File.separator + fileName;
             System.out.println(destFileName);
             //4.第一次运行的时候，这个文件所在的目录往往是不存在的，这里需要创建一下目录（创建到了webapp下uploaded文件夹下）
@@ -140,11 +256,7 @@ public class UploadController {
      */
     @PostMapping("/image/AllImageNames") // 等价于 @RequestMapping(value = "/upload", method = RequestMethod.POST)
     @ResponseBody
-    public String[] AllImageNames(@RequestParam("goodsid") BigInteger goods_id, HttpServletRequest request) {
-        BigInteger seller_id = (BigInteger) request.getSession().getAttribute("Seller_id");
-//        if(bigGoodsService.getBigGoods(goods_id).getSellerId().equals(seller_id)){
-//            return null;
-//        }
+    public String[] AllImageNames(@RequestParam("goodsid") BigInteger goods_id) {
         String destFileName = parentDir + goods_id + File.separator;
         File file = new File(destFileName);
         return file.list();
@@ -154,7 +266,7 @@ public class UploadController {
      * 输入商品id和图片名字获得图片
      */
     @RequestMapping(value = "/image/get")
-    public void getImage(@RequestParam("goodsid") BigInteger goods_id, @RequestParam("filename") String name, HttpServletRequest request, HttpServletResponse response) {
+    public void getImage(@RequestParam("goodsid") BigInteger goods_id, @RequestParam("filename") String name, HttpServletResponse response) {
         FileInputStream fis = null;
         response.setContentType("image/gif");
         try {

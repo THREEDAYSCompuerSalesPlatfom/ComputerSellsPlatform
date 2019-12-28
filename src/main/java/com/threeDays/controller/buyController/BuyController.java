@@ -1,6 +1,8 @@
 package com.threeDays.controller.buyController;
 
+import com.threeDays.POJO.BigGoods;
 import com.threeDays.POJO.Customer;
+import com.threeDays.POJO.Goods;
 import com.threeDays.POJO.LittleGoods;
 import com.threeDays.service.*;
 import org.apache.ibatis.annotations.Param;
@@ -15,6 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import javax.servlet.http.HttpServletRequest;
 import java.math.BigInteger;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 
@@ -34,7 +37,14 @@ public class BuyController {
     CustomerService customerService;
     @Autowired
     OrderService orderService;
-
+    @Autowired
+    GoodsService goodsService;
+    @RequestMapping("/product")
+    public String product(Model model, BigInteger bigGoodsId, HttpServletRequest httpServletRequest){
+        Goods goods=goodsService.getGoods(bigGoodsId);
+        httpServletRequest.getSession().setAttribute("Goods",goods);
+        return "product.html";
+    }
     @RequestMapping("/directBuy")
     public String buyLittleGoods(Model model, @RequestParam("LittleGoodsId") BigInteger littleGoodsId,
                                  HttpServletRequest httpServletRequest) {
@@ -48,11 +58,13 @@ public class BuyController {
             customer.setBalance(money-price);
             Map<BigInteger,Integer> littleGoodsMap=new HashMap<>();
             littleGoodsMap.put(littleGoodsId,1);
+            List<LittleGoods> littleGoodsList=cartService.getSellerLittleGoods(customer.getCustomerId());
             model.addAttribute("littleGoodsId", littleGoodsId);
             model.addAttribute("sellerId", littleGoods.getSellerId());
             model.addAttribute("sellerName", sellerservice.findSellerById(littleGoods.getSellerId()).getSeller_name());
             model.addAttribute("customerId", customer.getCustomerId());
             model.addAttribute("customerName", customer.getCu_Name());
+            model.addAttribute("number",littleGoodsList.size());
             orderService.CreateNewOrder(customer.getCustomerId(),littleGoodsMap);
             return "order";
         }

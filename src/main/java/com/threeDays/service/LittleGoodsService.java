@@ -23,6 +23,12 @@ public class LittleGoodsService {
         return littleGoodsMapper.findAll();
     }
 
+    public BigInteger getLittleGoodsId(String edition,
+                                       BigInteger bigGoodsId) {
+        BigInteger sellerId=bigGoodsMapper.getSellerIdById(bigGoodsId);
+        return littleGoodsMapper.getLittleGoodsId(edition, bigGoodsId, sellerId);
+    }
+
     /**
      * 根据详细商品id返回sellerid
      * 不存在返回null
@@ -84,17 +90,19 @@ public class LittleGoodsService {
 //    public void updateLittleGoods(String edition, BigInteger sellerId, BigInteger bigGoodsId) {
 //        littleGoodsMapper.updateEdition(edition, sellerId, bigGoodsId);
 //    }
+
     /**
      * 修改某个配置
      * 成功返回1
      * 错误返回0
-     * */
-    public int updateLittleGoods(String oldEdition,String newEdition, BigInteger sellerId, BigInteger bigGoodsId){
-       BigInteger littleGoodsId=littleGoodsMapper.getLittleGoodsId(oldEdition,bigGoodsId,sellerId);
-        return littleGoodsMapper.updateEdition(newEdition,littleGoodsId);
+     */
+    public int updateLittleGoods(String oldEdition, String newEdition, BigInteger sellerId, BigInteger bigGoodsId) {
+        BigInteger littleGoodsId = littleGoodsMapper.getLittleGoodsId(oldEdition, bigGoodsId, sellerId);
+        return littleGoodsMapper.updateEdition(newEdition, littleGoodsId);
     }
-    public int updateLittleGoods(String newEdition,BigInteger littleGoodsId){
-        return littleGoodsMapper.updateEdition(newEdition,littleGoodsId);
+
+    public int updateLittleGoods(String newEdition, BigInteger littleGoodsId) {
+        return littleGoodsMapper.updateEdition(newEdition, littleGoodsId);
     }
 
     //获取某个商品价格范围

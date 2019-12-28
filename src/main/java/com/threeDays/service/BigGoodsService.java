@@ -99,7 +99,7 @@ public class BigGoodsService {
         List<BigInteger> sellerId = bigGoodsMapper.getSellerId(goodsName);
         return sellerId;
     }
-    //借助商品名称寻找店家ID
+    //借助商品Id寻找店家ID
     public BigInteger getSellerId(BigInteger bigGoodsId) {
         BigInteger sellerId=bigGoodsMapper.getSellerIdById(bigGoodsId);
         return sellerId;

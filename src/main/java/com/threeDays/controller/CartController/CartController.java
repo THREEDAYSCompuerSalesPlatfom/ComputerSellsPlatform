@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 import javax.servlet.http.HttpServletRequest;
 import java.math.BigInteger;
@@ -30,18 +31,19 @@ public class CartController {
     @Autowired
     LittleGoodsService littleGoodsService;
 
+
     @RequestMapping("/addToCart")
     public String addToCart(HttpServletRequest httpServletRequest,
                             @RequestParam("littleGoodsId") BigInteger littleGoodsId,
                             @RequestParam(value = "littleGoodsNum", defaultValue = "1") int littleGoodsNum) {
-        Customer customer=(Customer) httpServletRequest.getSession().getAttribute("customer");
+        Customer customer = (Customer) httpServletRequest.getSession().getAttribute("customer");
         cartService.addNewLittleGoods(customer.getCustomerId(), littleGoodsId, littleGoodsNum);
         return "bigGoods";
     }
 
     @RequestMapping("/getCart")
     public String getCart(Model model, HttpServletRequest httpServletRequest) {
-        Customer customer=(Customer) httpServletRequest.getSession().getAttribute("customer");
+        Customer customer = (Customer) httpServletRequest.getSession().getAttribute("customer");
         System.out.println(customer.getCustomerId());
         List<LittleGoods> sellerLittleGoods = cartService.getSellerLittleGoods(customer.getCustomerId());
         /*List<BigInteger> sellerIdList = new ArrayList<>();
@@ -53,27 +55,29 @@ public class CartController {
         model.addAttribute("sellerLittleGoods", sellerLittleGoods);
         return "cart";
     }
+
     @RequestMapping("/updateLittleGoods")
-    public String changeCart( HttpServletRequest httpServletRequest,
+    public String changeCart(HttpServletRequest httpServletRequest,
                              @RequestParam("littleGoods") BigInteger oldLittleGoodsId,
                              @RequestParam("edition") String newEdition,
-                             @RequestParam(value = "bigGoodsId") BigInteger bigGoodsId){
-        List<LittleGoods>littleGoods= littleGoodsService.findLittleGoods(bigGoodsId);
-        for(LittleGoods littleGoods1:littleGoods){
-           if(littleGoods1.getEdition().equals(newEdition)){
-               BigInteger newLittleGoodsId=littleGoods1.getLittleGoodsId();
-               Customer customer=(Customer) httpServletRequest.getSession().getAttribute("customer");
-               cartService.changeEdition(customer.getCustomerId(),oldLittleGoodsId,newLittleGoodsId);
-           }
+                             @RequestParam(value = "bigGoodsId") BigInteger bigGoodsId) {
+        List<LittleGoods> littleGoods = littleGoodsService.findLittleGoods(bigGoodsId);
+        for (LittleGoods littleGoods1 : littleGoods) {
+            if (littleGoods1.getEdition().equals(newEdition)) {
+                BigInteger newLittleGoodsId = littleGoods1.getLittleGoodsId();
+                Customer customer = (Customer) httpServletRequest.getSession().getAttribute("customer");
+                cartService.changeEdition(customer.getCustomerId(), oldLittleGoodsId, newLittleGoodsId);
+            }
         }
         return "redirect:/cart";
     }
+
     @RequestMapping("/deleteLittleGoods")
-    public String deleteLittleGoods( HttpServletRequest httpServletRequest,   @RequestParam("littleGoods") BigInteger LittleGoodsId){
-        Customer customer=(Customer) httpServletRequest.getSession().getAttribute("customer");
-        List<BigInteger> littleGoodsId=new ArrayList<>();
+    public String deleteLittleGoods(HttpServletRequest httpServletRequest, @RequestParam("littleGoods") BigInteger LittleGoodsId) {
+        Customer customer = (Customer) httpServletRequest.getSession().getAttribute("customer");
+        List<BigInteger> littleGoodsId = new ArrayList<>();
         littleGoodsId.add(LittleGoodsId);
-        cartService.deleteLittleGoods(customer.getCustomerId(),littleGoodsId);
+        cartService.deleteLittleGoods(customer.getCustomerId(), littleGoodsId);
         return "redirect:/cart";
     }
 }

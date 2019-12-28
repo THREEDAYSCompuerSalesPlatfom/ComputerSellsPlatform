@@ -51,10 +51,10 @@
         from biggoods
         where goods_name = #{goodsName}
     </select>
-    <select id="getSellerIdById" resultMap="BigGoodsMap">
+    <select id="getSellerIdById" resultType="java.math.BigInteger">
         select seller_id
         from biggoods
-        where  biggoods_id= #{bigGoodsId}
+        where biggoods_id = #{bigGoodsId}
     </select>
     <select id="getBigGoods" resultMap="BigGoodsMap">
         select *
@@ -77,6 +77,17 @@
         where seller_id = #{sellerId}
     </select>
     <select id="searchGoods" parameterType="java.lang.String" resultType="java.math.BigInteger">
-        select biggoods_id from biggoods where goods_name like #{name}
+        select biggoods_id
+        from biggoods
+        where goods_name like #{name}
+    </select>
+    <select id="getMinId" resultMap="BigGoodsMap">
+        select min(biggoods_id)
+        from biggoods
+    </select>
+
+    <select id="getMaxId" resultMap="BigGoodsMap">
+        select max(biggoods_id)
+        from biggoods
     </select>
 </mapper>

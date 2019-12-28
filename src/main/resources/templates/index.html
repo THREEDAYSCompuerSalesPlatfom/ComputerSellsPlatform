@@ -212,79 +212,31 @@
             <div class="col-lg-12">
                 <div class="heading"><h2>SPECIAL PRODUCTS</h2></div>
                 <div class="products">
-                    <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-                        <div class="product">
-                            <div class="image"><a href="product.html"><img src="images/iphone.png"/></a></div>
-                            <div class="buttons">
-                                <a class="btn cart" href="#"><span class="glyphicon glyphicon-shopping-cart"></span></a>
-                                <a class="btn wishlist" href="#"><span class="glyphicon glyphicon-heart"></span></a>
-                                <a class="btn compare" href="#"><span class="glyphicon glyphicon-transfer"></span></a>
-                            </div>
-                            <div class="caption">
-                                <div class="name"><h3><a href="product.html">Aliquam erat volutpat</a></h3></div>
-                                <div class="price">$122<span>$98</span></div>
-                                <div class="rating"><span class="glyphicon glyphicon-star"></span><span
-                                        class="glyphicon glyphicon-star"></span><span
-                                        class="glyphicon glyphicon-star"></span><span
-                                        class="glyphicon glyphicon-star"></span><span
-                                        class="glyphicon glyphicon-star-empty"></span></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-                        <div class="product">
-                            <div class="image"><a href="product.html"><img src="images/galaxy-s4.jpg"/></a></div>
-                            <div class="buttons">
-                                <a class="btn cart" href="#"><span class="glyphicon glyphicon-shopping-cart"></span></a>
-                                <a class="btn wishlist" href="#"><span class="glyphicon glyphicon-heart"></span></a>
-                                <a class="btn compare" href="#"><span class="glyphicon glyphicon-transfer"></span></a>
-                            </div>
-                            <div class="caption">
-                                <div class="name"><h3><a href="product.html">Aliquam erat volutpat</a></h3></div>
-                                <div class="price">$122<span>$98</span></div>
-                                <div class="rating"><span class="glyphicon glyphicon-star"></span><span
-                                        class="glyphicon glyphicon-star"></span><span
-                                        class="glyphicon glyphicon-star"></span><span
-                                        class="glyphicon glyphicon-star-empty"></span><span
-                                        class="glyphicon glyphicon-star-empty"></span></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-                        <div class="product">
-                            <div class="image"><a href="product.html"><img src="images/galaxy-note.jpg"/></a></div>
-                            <div class="buttons">
-                                <a class="btn cart" href="#"><span class="glyphicon glyphicon-shopping-cart"></span></a>
-                                <a class="btn wishlist" href="#"><span class="glyphicon glyphicon-heart"></span></a>
-                                <a class="btn compare" href="#"><span class="glyphicon glyphicon-transfer"></span></a>
-                            </div>
-                            <div class="caption">
-                                <div class="name"><h3><a href="product.html">Aliquam erat volutpat</a></h3></div>
-                                <div class="price">$122<span>$98</span></div>
-                                <div class="rating"><span class="glyphicon glyphicon-star"></span><span
-                                        class="glyphicon glyphicon-star"></span><span
-                                        class="glyphicon glyphicon-star-empty"></span><span
-                                        class="glyphicon glyphicon-star-empty"></span><span
-                                        class="glyphicon glyphicon-star-empty"></span></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-                        <div class="product">
-                            <div class="image"><a href="product.html"><img src="images/Z1.png"/></a></div>
-                            <div class="buttons">
-                                <a class="btn cart" href="#"><span class="glyphicon glyphicon-shopping-cart"></span></a>
-                                <a class="btn wishlist" href="#"><span class="glyphicon glyphicon-heart"></span></a>
-                                <a class="btn compare" href="#"><span class="glyphicon glyphicon-transfer"></span></a>
-                            </div>
-                            <div class="caption">
-                                <div class="name"><h3><a href="product.html">Aliquam erat volutpat</a></h3></div>
-                                <div class="price">$122<span>$98</span></div>
-                                <div class="rating"><span class="glyphicon glyphicon-star"></span><span
-                                        class="glyphicon glyphicon-star"></span><span
-                                        class="glyphicon glyphicon-star"></span><span
-                                        class="glyphicon glyphicon-star"></span><span
-                                        class="glyphicon glyphicon-star"></span></div>
+                    <div th:each="Goods,userStat:${GoodsList1}">
+                        <div class="col-lg-4 col-md-4 col-xs-12">
+                            <div class="product">
+                                <div class="image"><a th:href="${'/bigGoods?bigGoodsId='+Goods.getBigGoodsId()}"><img
+                                        th:text="@{/image/getIxdexImage(goodsid=${Goods.getBigGoodsId()})}"/></a>
+                                </div>
+                                <div class="buttons">
+                                    <a class="btn cart" href="#"><span
+                                            class="glyphicon glyphicon-shopping-cart"></span></a>
+                                    <a class="btn wishlist" href="#"><span
+                                            class="glyphicon glyphicon-heart"></span></a>
+                                    <a class="btn compare" href="#"><span
+                                            class="glyphicon glyphicon-transfer"></span></a>
+                                </div>
+                                <div class="caption">
+                                    <div class="name"><h3><a href="product.html" th:text="${Goods.getName()}">Aliquam
+                                        erat volutpat</a></h3>
+                                    </div>
+                                    <div class="price" th:text="'prize: '+${Goods.getMinPrice()}"> no prize</div>
+                                    <div class="rating"><span class="glyphicon glyphicon-star"></span><span
+                                            class="glyphicon glyphicon-star"></span><span
+                                            class="glyphicon glyphicon-star-empty"></span><span
+                                            class="glyphicon glyphicon-star-empty"></span><span
+                                            class="glyphicon glyphicon-star-empty"></span></div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -305,79 +257,31 @@
             <div class="col-lg-12">
                 <div class="heading"><h2>FEATURED PRODUCTS</h2></div>
                 <div class="products">
-                    <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-                        <div class="product">
-                            <div class="image"><a href="product.html"><img src="images/iphone.png"/></a></div>
-                            <div class="buttons">
-                                <a class="btn cart" href="#"><span class="glyphicon glyphicon-shopping-cart"></span></a>
-                                <a class="btn wishlist" href="#"><span class="glyphicon glyphicon-heart"></span></a>
-                                <a class="btn compare" href="#"><span class="glyphicon glyphicon-transfer"></span></a>
-                            </div>
-                            <div class="caption">
-                                <div class="name"><h3><a href="product.html">Aliquam erat volutpat</a></h3></div>
-                                <div class="price">$122<span>$98</span></div>
-                                <div class="rating"><span class="glyphicon glyphicon-star"></span><span
-                                        class="glyphicon glyphicon-star"></span><span
-                                        class="glyphicon glyphicon-star"></span><span
-                                        class="glyphicon glyphicon-star"></span><span
-                                        class="glyphicon glyphicon-star-empty"></span></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-                        <div class="product">
-                            <div class="image"><a href="product.html"><img src="images/galaxy-s4.jpg"/></a></div>
-                            <div class="buttons">
-                                <a class="btn cart" href="#"><span class="glyphicon glyphicon-shopping-cart"></span></a>
-                                <a class="btn wishlist" href="#"><span class="glyphicon glyphicon-heart"></span></a>
-                                <a class="btn compare" href="#"><span class="glyphicon glyphicon-transfer"></span></a>
-                            </div>
-                            <div class="caption">
-                                <div class="name"><h3><a href="product.html">Aliquam erat volutpat</a></h3></div>
-                                <div class="price">$122<span>$98</span></div>
-                                <div class="rating"><span class="glyphicon glyphicon-star"></span><span
-                                        class="glyphicon glyphicon-star"></span><span
-                                        class="glyphicon glyphicon-star"></span><span
-                                        class="glyphicon glyphicon-star-empty"></span><span
-                                        class="glyphicon glyphicon-star-empty"></span></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-                        <div class="product">
-                            <div class="image"><a href="product.html"><img src="images/galaxy-note.jpg"/></a></div>
-                            <div class="buttons">
-                                <a class="btn cart" href="#"><span class="glyphicon glyphicon-shopping-cart"></span></a>
-                                <a class="btn wishlist" href="#"><span class="glyphicon glyphicon-heart"></span></a>
-                                <a class="btn compare" href="#"><span class="glyphicon glyphicon-transfer"></span></a>
-                            </div>
-                            <div class="caption">
-                                <div class="name"><h3><a href="product.html">Aliquam erat volutpat</a></h3></div>
-                                <div class="price">$122<span>$98</span></div>
-                                <div class="rating"><span class="glyphicon glyphicon-star"></span><span
-                                        class="glyphicon glyphicon-star"></span><span
-                                        class="glyphicon glyphicon-star-empty"></span><span
-                                        class="glyphicon glyphicon-star-empty"></span><span
-                                        class="glyphicon glyphicon-star-empty"></span></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-                        <div class="product">
-                            <div class="image"><a href="product.html"><img src="images/Z1.png"/></a></div>
-                            <div class="buttons">
-                                <a class="btn cart" href="#"><span class="glyphicon glyphicon-shopping-cart"></span></a>
-                                <a class="btn wishlist" href="#"><span class="glyphicon glyphicon-heart"></span></a>
-                                <a class="btn compare" href="#"><span class="glyphicon glyphicon-transfer"></span></a>
-                            </div>
-                            <div class="caption">
-                                <div class="name"><h3><a href="product.html">Aliquam erat volutpat</a></h3></div>
-                                <div class="price">$122<span>$98</span></div>
-                                <div class="rating"><span class="glyphicon glyphicon-star"></span><span
-                                        class="glyphicon glyphicon-star"></span><span
-                                        class="glyphicon glyphicon-star"></span><span
-                                        class="glyphicon glyphicon-star"></span><span
-                                        class="glyphicon glyphicon-star"></span></div>
+                    <div th:each="Goods,userStat:${GoodsList2}">
+                        <div class="col-lg-4 col-md-4 col-xs-12">
+                            <div class="product">
+                                <div class="image"><a th:href="${'/bigGoods?bigGoodsId='+Goods.getBigGoodsId()}"><img
+                                        th:src="@{/image/getIxdexImage(goodsid=${Goods.getBigGoodsId()})}"/></a>
+                                </div>
+                                <div class="buttons">
+                                    <a class="btn cart" href="#"><span
+                                            class="glyphicon glyphicon-shopping-cart"></span></a>
+                                    <a class="btn wishlist" href="#"><span
+                                            class="glyphicon glyphicon-heart"></span></a>
+                                    <a class="btn compare" href="#"><span
+                                            class="glyphicon glyphicon-transfer"></span></a>
+                                </div>
+                                <div class="caption">
+                                    <div class="name"><h3><a href="product.html" th:text="${Goods.getName()}">Aliquam
+                                        erat volutpat</a></h3>
+                                    </div>
+                                    <div class="price" th:text="'prize: '+${Goods.getMinPrice()}"> no prize</div>
+                                    <div class="rating"><span class="glyphicon glyphicon-star"></span><span
+                                            class="glyphicon glyphicon-star"></span><span
+                                            class="glyphicon glyphicon-star-empty"></span><span
+                                            class="glyphicon glyphicon-star-empty"></span><span
+                                            class="glyphicon glyphicon-star-empty"></span></div>
+                                </div>
                             </div>
                         </div>
                     </div>

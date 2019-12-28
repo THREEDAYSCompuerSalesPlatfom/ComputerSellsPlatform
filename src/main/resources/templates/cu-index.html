@@ -49,10 +49,11 @@
 				<div class="shortcut">
 					<ul class="fl">
 						<li class="f-item">threedays欢迎您！</li>
-						<li class="f-item">请<a href="login.html" target="_blank">登录</a>　<span><a href="register.html" target="_blank">免费注册</a></span></li>
+						<li class="f-item" th:if="${session.customer}==null">请<a href="login.html" target="_blank">登录</a>　<span><a href="register.html" target="_blank">免费注册</a></span></li>
+                        <li class="f-item" th:if="${session.customer}!=null" th:text="${session.customer.getCu_Name()}"></li>
 					</ul>
 					<ul class="fr">
-						<li class="f-item"><a href="cu-cart.html" target="_blank">我的购物车</a></li>
+						<li class="f-item"><a th:href="@{~/getCart}" target="_blank">我的购物车</a></li>
 						<li class="f-item space"></li>
 						<li class="f-item"><a href="cu-index.html" target="_blank">我的中心</a></li>
 					</ul>
@@ -84,7 +85,7 @@
 						<div class="fr shopcar">
 							<div class="show-shopcar" id="shopcar">
 								<span class="car"></span>
-								<a class="sui-btn btn-default btn-xlarge" href="cu-cart.html" target="_blank">
+								<a class="sui-btn btn-default btn-xlarge" th:href="@{~/getCart}" target="_blank">
 							
 									<span>我的购物车</span>
 									<i class="shopnum">0</i>
@@ -117,7 +118,7 @@
                     <div class="person-info">
                         <div class="person-photo"><img src="img/_/photo.png" alt=""></div>
                         <div class="person-account">
-                            <span class="name">{{loginName}}</span>
+                            <span class="name" th:text="${session.customer.getCu_Name()}">{{loginName}}</span>
                             <span class="safe"><a href="logout/cas">退出登录 </a></span>
                         </div>
                         <div class="clearfix"></div>

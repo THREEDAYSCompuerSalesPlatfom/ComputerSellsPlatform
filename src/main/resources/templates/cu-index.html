@@ -171,11 +171,11 @@
                                         <label th:text="${Goods.getDate()}+${Goods.getOrderId()}+${Goods.getSeller().getSeller_name()}">时间+订单号+卖家</label>
                                     </div>
                                     <table class="sui-table table-bordered order-datatable">
-                                        <tbody th:object="${Goods.getShowGoods()}">
+                                        <tbody >
                                         <tr th:each="show,Stat:${Goods.getShowGoods()}">
                                             <td width="35%">
                                                 <!--"${'/bigGoods?bigGoodsId='+Goods.getBigGoodsId()}"-->
-                                                <div class="typographic"><img src="img/goods.png"/>
+                                                <div class="typographic"><img th:src="@{/image/getIxdexImage(goodsid=${show.getBigGoods().getBigGoodsId()})}"/>
                                                     <a th:href="${'/bigGoods?bigGoodsId='+show.getBigGoods().getBigGoodsId()}"
                                                        class="block-text" th:text="${show.getBigGoods().getGoodsName()}">商品名1</a>
                                                     <span class="guige" th:text="${show.getLittlegoods().getEdition()}">规格1</span>

@@ -33,8 +33,9 @@ public class cuOrderGoodsService {
     public List<cuOrderGoods> getAll(BigInteger customerId) {
         List<BigInteger> orderIdList = orderMapper.findOrderIdByCustomer(customerId);
         List<cuOrderGoods> cuOrderGoodsList = new ArrayList<>();
-        List<ShowGoods> showGoods = new ArrayList<>();
+
         for (BigInteger orderId : orderIdList) {
+            List<ShowGoods> showGoods = new ArrayList<>();
             float allPrize = 0;
             List<BigInteger> littleGoodsIdList = orderService.findGoodsIdByOrderId(orderId);
             for (BigInteger i : littleGoodsIdList) {

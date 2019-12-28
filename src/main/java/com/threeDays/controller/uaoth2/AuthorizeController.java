@@ -41,8 +41,8 @@ public class AuthorizeController {
                            @RequestParam(name = "state") String state,
                            HttpServletResponse httpServletResponse) {
         AccessTokenDto accessTokenDto = new AccessTokenDto();
-        //accessTokenDto.setClient_id("3d0fc83ea1af95ebd2fd");
-        //accessTokenDto.setClient_secret("a6368413a6c23a164517aae4bad6d9ed846776c3");
+        //accessTokenDto.setClient_id("");
+        //accessTokenDto.setClient_secret("");
         //accessTokenDto.setRedirect_url("http://localhost:8080/callback");
         accessTokenDto.setClient_id(clientId);
         accessTokenDto.setClient_secret(clientSecret);
@@ -57,7 +57,8 @@ public class AuthorizeController {
             GithubCustomer githubCustomer = new GithubCustomer();
             String token = UUID.randomUUID().toString();
             githubCustomer.setToken(token);
-            githubCustomer.setAccountId(String.valueOf(githubUser.getId()));
+            githubCustomer.setAccountId(String.valueOf
+                    (githubUser.getId()));
             githubCustomer.setName(githubUser.getName());
             customerService.addGithubCustomer(githubCustomer);
             customerService.mergeCustomer(githubCustomer);//合并生成数据库中customer，返回customerId

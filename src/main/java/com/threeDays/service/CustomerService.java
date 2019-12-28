@@ -25,6 +25,9 @@ public class CustomerService {
     @Autowired
     private CustomerPasswordMapper customerPasswordMapper;
 
+    @Autowired
+    private GithubCustomerMapper githubCustomerMapper;
+
     //test
     public List<Customer> getAllCustomer() {
         return customerMapper.findAll();
@@ -86,5 +89,8 @@ public class CustomerService {
     }
     public int updateBalance(BigInteger cu_id,float balance){
         return customerMapper.updateBalance(cu_id,balance);
+    }
+    public void addGithubCustomer( GithubCustomer githubCustomer){
+        githubCustomerMapper.addGithubCustomer(githubCustomer.getAccountId(),githubCustomer.getName(),githubCustomer.getToken());
     }
 }

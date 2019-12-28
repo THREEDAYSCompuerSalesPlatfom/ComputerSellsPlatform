@@ -21,6 +21,7 @@ public class loginOut {
         for (Cookie cookie : cookies) {
             if (cookie.getName().equals("token")) {
                 cookie.setValue(null);
+
             }
         }
         return "redirect:/index";

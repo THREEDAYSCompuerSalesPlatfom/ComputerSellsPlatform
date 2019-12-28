@@ -1,86 +1,85 @@
 <!DOCTYPE html>
-<html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
 
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=9; IE=8; IE=7; IE=EDGE">
-    <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" />
+    <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7"/>
     <title>我的订单</title>
-     <link rel="icon" href="assets/img/favicon.ico">
+    <link rel="icon" href="assets/img/favicon.ico">
 
-    <link rel="stylesheet" type="text/css" href="css/webbase.css" />
-    <link rel="stylesheet" type="text/css" href="css/pages-seckillOrder.css" />
-    
-   
-    
+    <link rel="stylesheet" type="text/css" href="css/webbase.css"/>
+    <link rel="stylesheet" type="text/css" href="css/pages-seckillOrder.css"/>
+
 </head>
 
 <body>
-    <!-- 头部栏位 -->
-    <!--页面顶部-->
+<!-- 头部栏位 -->
+<!--页面顶部-->
 <div id="nav-bottom">
-	<!--顶部-->
-	<div class="nav-top">
-		<div class="top">
-			<div class="py-container">
-				<div class="shortcut">
-					<ul class="fl">
-						<li class="f-item">threedays欢迎您！</li>
-						<li class="f-item">请<a href="login.html" target="_blank">登录</a>　<span><a href="register.html" target="_blank">免费注册</a></span></li>
-					</ul>
-					<ul class="fr">
-						<li class="f-item"><a href="cu-cart.html" target="_blank">我的购物车</a></li>
-						<li class="f-item space"></li>
-						<li class="f-item"><a href="cu-index.html" target="_blank">我的中心</a></li>
-					</ul>
-				</div>
-			</div>
-		
-</div>
-		<!--头部-->
-	<!--头部-->
-		<div class="header">
-			<div class="py-container">
-				<div class="yui3-g Logo">
-					<div class="yui3-u Left logoArea">
-						<a class="logo-bd" title="三天" href="index.html" target="_blank"></a>
-					</div>
-					<div class="yui3-u Center searchArea">
-						<!--<div class="search">
-							<form action="" class="sui-form form-inline">
-								<div class="input-append">
-									<input type="text" id="autocomplete" type="text" class="input-error input-xxlarge" />
-									<button class="sui-btn btn-xlarge btn-danger" type="button">搜索</button>
-								</div>
-							</form>
-						</div>-->
-						
-					</div>
-					<div class="yui3-u Right shopArea">
-						<div class="fr shopcar">
-							<div class="show-shopcar" id="shopcar">
-								<span class="car"></span>
-								<a class="sui-btn btn-default btn-xlarge" href="cu-cart.html" target="_blank">
-							
-									<span>我的购物车</span>
-									<i class="shopnum">0</i>
-								</a>
-							</div>
-						</div>
-					</div>
-				</div>
+    <!--顶部-->
+    <div class="nav-top">
+        <div class="top">
+            <div class="py-container">
+                <div class="shortcut">
+                    <ul class="fl">
+                        <li class="f-item">threedays欢迎您！</li>
+                        <!--<li class="f-item">请<a href="login.html" target="_blank">登录</a>　<span><a href="register.html" target="_blank">免费注册</a></span></li>-->
+                    </ul>
+                    <ul class="fr">
+                        <li class="f-item"><a th:href="@{~/getCart}" target="_blank">我的购物车</a></li>
+                        <li class="f-item space"></li>
+                        <li class="f-item"><a target="_blank" th:href="@{~/cu-index}">我的中心</a></li>
+                    </ul>
+                </div>
+            </div>
 
-				
-			</div>
-		</div>
-</div>
+        </div>
+        <!--头部-->
+        <!--头部-->
+        <div class="header">
+            <div class="py-container">
+                <div class="yui3-g Logo">
+                    <div class="yui3-u Left logoArea">
+                        <a class="logo-bd" title="三天" href="index.html" target="_blank"></a>
+                    </div>
+                    <div class="yui3-u Center searchArea">
+                        <!--<div class="search">
+                            <form action="" class="sui-form form-inline">
+                                <div class="input-append">
+                                    <input type="text" id="autocomplete" type="text" class="input-error input-xxlarge" />
+                                    <button class="sui-btn btn-xlarge btn-danger" type="button">搜索</button>
+                                </div>
+                            </form>
+                        </div>-->
 
-<script type="text/javascript" src="js/plugins/jquery/jquery.min.js"></script>
+                    </div>
+                    <div class="yui3-u Right shopArea">
+                        <div class="fr shopcar">
+                            <div class="show-shopcar" id="shopcar">
+                                <span class="car"></span>
+                                <a class="sui-btn btn-default btn-xlarge" href="cu-cart.html" target="_blank">
 
-<script type="text/javascript" src="js/plugins/jquery.easing/jquery.easing.min.js"></script>
-<script type="text/javascript" src="js/plugins/sui/sui.min.js"></script>
-<script type="text/javascript" src="js/plugins/jquery-placeholder/jquery.placeholder.min.js"></script>
-<script type="text/javascript" src="js/widget/nav.js"></script>
+                                    <span>我的购物车</span>
+                                    <i class="shopnum">0</i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+
+    <script type="text/javascript" src="js/plugins/jquery/jquery.min.js"></script>
+
+    <script type="text/javascript" src="js/plugins/jquery.easing/jquery.easing.min.js"></script>
+    <script type="text/javascript" src="js/plugins/sui/sui.min.js"></script>
+    <script type="text/javascript" src="js/plugins/jquery-placeholder/jquery.placeholder.min.js"></script>
+    <script type="text/javascript" src="js/widget/nav.js"></script>
 
     <!--header-->
     <div id="account">
@@ -98,86 +97,100 @@
                         <div class="clearfix"></div>
                     </div>
                     <div class="list-items">
-                      
+
                         <dl>
-							<dt><i>·</i> 订单中心</dt>
-							<dd ><a href="cu-index.html"  class="list-active" >我的订单</a></dd>
-					
-						</dl>
-						<dl>
-							<dt><i>·</i> 设置</dt>
-							<dd><a href="cu-setting-info.html">个人信息</a></dd>
-						</dl>
+                            <dt><i>·</i> 订单中心</dt>
+                            <dd><a href="cu-index.html" class="list-active" th:href="@{~/cu-index}">我的订单</a></dd>
+
+                        </dl>
+                        <dl>
+                            <dt><i>·</i> 设置</dt>
+                            <dd><a href="cu-setting-info.html">个人信息</a></dd>
+                        </dl>
                     </div>
                 </div>
                 <!--右侧主内容-->
-        <!--右侧主内容-->
+                <!--右侧主内容-->
                 <div class="yui3-u-5-6">
                     <div class="body">
                         <div class="order-detail">
                             <h4>订单详情</h4>
-                            
+
                             <div class="order-state">
-                                <p>当前订单状态：<span class="red">已确认收货</span></p>
+                                <p>当前订单状态：<p>当前订单状态：
+                                <span class="red" th:if="${cuOrderGoods.getStatus() eq 0}">卖家待发货</span>
+                                <span class="red" th:if="${cuOrderGoods.getStatus() eq 1}">卖家已发货</span>
+                                <span class="red" th:if="${cuOrderGoods.getStatus() eq 2}">买家确认收获</span>
+                                <span class="red" th:if="${cuOrderGoods.getStatus() eq 3}">退货申请中</span>
+                                <span class="red" th:if="${cuOrderGoods.getStatus() eq 4}">卖家同意退货</span>
+                                <span class="red" th:if="${cuOrderGoods.getStatus() eq 5}">卖家拒绝退货</span>
+                                <span class="red" th:if="${cuOrderGoods.getStatus() eq 6}">买家已经退货</span>
+                            </p>
+                                </p>
                                 <p><a href="物流查询" target="_blank">物流查看</a></p>
-                           <p><a href="cu-comment.html" class="sui-btn btn-info">立即评价</a>
-                           	&emsp;<a href="cu-aftersale.html" class="sui-btn btn-info">申请维修</a>
-                           	&emsp;<a href="cu-back.html" class="sui-btn btn-info">我要退货</a></p>
-                               </div>
-                      
-                        <div class="order-info">
-                            <h5>订单信息</h5>
-                            <p>收货地址：HHUC  </p>
-                            <p>订单单号：178789758976986</p>
-                            <p>下单时间：2017-06-04 09：03：03</p>
-                            <p>支付方式：余额</p>
-                            <p>发货时间：201707-06-06 09：03：03</p>
-                             <p>物流单号：178789</p>
-                        </div>
-                        <div class="order-goods">
-                            <table class="sui-table">
+                                <p><a th:href="${'/cuComment?cuOrderGoods='+${cuOrderGoods}}" class="sui-btn btn-info">立即评价</a>
+                                    &emsp;<a href="cu-aftersale.html" class="sui-btn btn-info">申请维修</a>
+                                    &emsp;<a href="cu-back.html" class="sui-btn btn-info"
+                                             th:href="${'/cuBack?cuOrderGoods='+${cuOrderGoods}}">我要退货</a></p>
+                            </div>
+
+                            <div class="order-info">
+                                <h5>订单信息</h5>
+                                <p th:text="'收货地址：'+${session.user.getCu_Address()}">HHUC </p>
+                                <p th:text="'订单单号：'+${cuOrderGoods.getOrderId()}">178789758976986</p>
+                                <p th:text="'下单时间：'+${cuOrderGoods.getDate()}">2017-06-04 09：03：03</p>
+                                <p>支付方式：余额</p>
+                                <p>发货时间：201707-06-06 09：03：03</p>
+                                <p>物流单号：178789</p>
+                            </div>
+                            <div class="order-goods">
+                                <table class="sui-table">
                                     <thead>
-                                        <th class="center" >商品</th>
-                                        <th class="center" >价格</th>
-                                        <th class="center" >数量</th>
-                                        <th class="center" >状态</th>
-                                    </thead>                                   
-                             
-                                <tbody>                               
+                                    <th class="center">商品</th>
+                                    <th class="center">价格</th>
+                                    <th class="center">数量</th>
+                                    <th class="center">状态</th>
+                                    </thead>
+
+                                    <tbody>
                                     <tr>
-                                        <td colspan="5">订单编号：787587819591509</td>
+                                        <td colspan="5" th:text="'订单编号：'+${cuOrderGoods.getOrderId()}">787587819591509
+                                        </td>
                                     </tr>
-                                    <tr>
+                                    <tr th:each="show,Stat:${cuOrderGoods.getShowGoods()}">
                                         <td>
-                                            <div class="typographic"><img src="img/goods.png" />
-                                                    <span>华硕笔记本华硕笔记本华硕笔记本华硕笔记本华硕笔记本</span>
-                                                    <span class="guige">规格独显</span>
-                                                </div>
+                                            <div class="typographic"><img src="img/goods.png"/>
+                                                <span th:text="${show.getBigGoods().getGoodsName()}">华硕笔记本华硕笔记本华硕笔记本华硕笔记本华硕笔记本</span>
+                                                <span class="guige"
+                                                      th:text="${show.getLittlegoods().getEdition()}">规格独显</span>
+                                            </div>
                                         </td>
                                         <td>
                                             <ul class="unstyled">
-                                                   	
-                                                    <li>¥4299.00</li>											
-                                                </ul>
+
+                                                <li th:text="${show.getLittlegoods().getGoodsPrice()}">¥4299.00</li>
+                                            </ul>
                                         </td>
-                                        <td>1</td>
-                                        <td>交易成功</td>
+                                        <td th:text="${show.getNumber()}">1</td>
+                                        <td th:text="${cuOrderGoods.getStatus()}">交易成功</td>
                                     </tr>
-                                </tbody>
-                            </table>
-                            <div class="order-price">
-                                <p>商品总金额：¥4299.00</p>
-                               
-                                <h4 class="red">实际支付：¥4299.00</h4>
+                                    </tbody>
+                                </table>
+                                <div class="order-price">
+                                    <p th:text="'商品总金额：'+${cuOrderGoods.getAllPrize()}">¥4299.00</p>
+
+                                    <h4 class="red" th:text="'实际支付：'+${cuOrderGoods.getAllPrize()}"></h4>
+                                </div>
+                                <div class="clearfix"></div>
                             </div>
-                            <div class="clearfix"></div>
+                            <!--猜你喜欢-->
                         </div>
-                        <!--猜你喜欢-->
-                 
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <!-- 底部栏位 -->
+</div>
+</body>
+<!-- 底部栏位 -->
 </html>

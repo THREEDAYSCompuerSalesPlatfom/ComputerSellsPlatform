@@ -171,7 +171,7 @@
                                         <label th:text="${Goods.getDate()}+${Goods.getOrderId()}+${Goods.getSeller().getSeller_name()}">时间+订单号+卖家</label>
                                     </div>
                                     <table class="sui-table table-bordered order-datatable">
-                                        <tbody >
+                                        <tbody th:object="${Goods.getShowGoods()}">
                                         <tr th:each="show,Stat:${Goods.getShowGoods()}">
                                             <td width="35%">
                                                 <!--"${'/bigGoods?bigGoodsId='+Goods.getBigGoodsId()}"-->

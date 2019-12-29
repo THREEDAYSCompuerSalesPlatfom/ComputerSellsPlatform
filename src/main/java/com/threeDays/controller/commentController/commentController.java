@@ -20,7 +20,7 @@ public class commentController {
     public String orderDetail(@RequestParam("cuOrderGoods") cuOrderGoods cuOrderGoods, Model model) {
         model.addAttribute("cuOrderGoods", cuOrderGoods);
 
-        return "git";
+        return "orderDetail";
     }
 
     @RequestMapping("/cuComment")

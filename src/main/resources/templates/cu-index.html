@@ -110,7 +110,7 @@
                         <div class="person-photo"><img src="img/_/photo.png" alt=""></div>
                         <div class="person-account">
                             <span class="name" th:text="${session.customer.getCu_Name()}">{{loginName}}</span>
-                            <span class="safe"><a href="logout/cas">退出登录 </a></span>
+                            <span class="safe"><a th:href="@{~/user/loginOut}">退出登录 </a></span>
                         </div>
                         <div class="clearfix"></div>
                     </div>

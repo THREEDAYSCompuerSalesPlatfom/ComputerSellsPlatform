@@ -26,9 +26,11 @@
                 <div class="shortcut">
                     <ul class="fl">
                         <li class="f-item">threedays欢迎您！</li>
-                        <li class="f-item">请<a href="login.html" target="_blank">登录</a>　<span><a href="register.html"
-                                                                                                 target="_blank">免费注册</a></span>
-                        </li>
+                        <li class="f-item" th:if="${session.customer}==null">请<a href="login.html"
+                                                                                 target="_blank">登录</a>　<span><a
+                                href="register.html" target="_blank">免费注册</a></span></li>
+                        <li class="f-item" th:if="${session.customer}!=null"
+                            th:text="${session.customer.getCu_Name()}"></li>
                     </ul>
                     <ul class="fr">
                         <li class="f-item"><a th:href="@{~/getCart}" target="_blank">我的购物车</a></li>

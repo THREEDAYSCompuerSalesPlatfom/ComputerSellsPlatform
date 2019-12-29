@@ -95,6 +95,11 @@
         from cart
         where cu_id = #{customerId}
     </select>
+    <delete id="clearCart">
+        delete
+        from cart
+        where cu_id = #{customerId}
+    </delete>
 
 
 </mapper>

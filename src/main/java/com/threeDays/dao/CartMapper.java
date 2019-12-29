@@ -61,8 +61,7 @@ public interface CartMapper {
 
     //查询用户所有商品Id
     List<LittleGoods> getAllLittleGoods(@Param("customerId") BigInteger customerId);
-
-
-
+    //清空购物车
+    int clearCart (@Param("customerId") BigInteger customerId);
 
 }

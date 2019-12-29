@@ -186,7 +186,8 @@
                                     <li th:text="${goods.getBigGoodsId()}" class="ID">ID: 0122222</li>
                                 </ul>
                             </div>
-                            <div class="price"><p th:text="'price:'+${goods.getMinPrice()}+'-'+${goods.getMaxPrice()}" class="price">price</p>
+                            <div class="price"><p th:text="'price:'+${goods.getMinPrice()}+'-'+${goods.getMaxPrice()}"
+                                                  class="price">price</p>
                                 <span>$98</span></div>
                             <div class="options">
                                 EDITION OPTIONS
@@ -282,7 +283,10 @@
                                         <div class="name"><h3><a href="product.html" th:text="${Goods.getName()}">Aliquam
                                             erat volutpat</a></h3>
                                         </div>
-                                        <div class="price" th:text="'price: '+${Goods.getMinPrice()}+'-'+${Goods.getMaxPrice()}"> no prize</div>
+                                        <div class="price"
+                                             th:text="'price: '+${Goods.getMinPrice()}+'-'+${Goods.getMaxPrice()}"> no
+                                            prize
+                                        </div>
                                         <div class="rating"><span class="glyphicon glyphicon-star"></span><span
                                                 class="glyphicon glyphicon-star"></span><span
                                                 class="glyphicon glyphicon-star-empty"></span><span
@@ -352,7 +356,9 @@
                             <div class="wrapper">
                                 <h5><a th:href="${'/bigGoods?bigGoodsId='+goods1.getBigGoodsId()}"
                                        th:text="${goods3.getName()}">name</a></h5>
-                                <div class="price" th:text="'price:'+${goods1.getMinPrice()}+'-'+${goods1.getMaxPrice()}">prize</div>
+                                <div class="price"
+                                     th:text="'price:'+${goods1.getMinPrice()}+'-'+${goods1.getMaxPrice()}">prize
+                                </div>
                                 <div class="rating"><span class="glyphicon glyphicon-star"></span><span
                                         class="glyphicon glyphicon-star"></span><span
                                         class="glyphicon glyphicon-star"></span><span
@@ -366,7 +372,9 @@
                             <div class="wrapper">
                                 <h5><a th:href="${'/bigGoods?bigGoodsId='+goods2.getBigGoodsId()}"
                                        th:text="${goods3.getName()}">name</a></h5>
-                                <div class="price" th:text="'price:'+${goods2.getMinPrice()}+'-'+${goods2.getMaxPrice()}">prize</div>
+                                <div class="price"
+                                     th:text="'price:'+${goods2.getMinPrice()}+'-'+${goods2.getMaxPrice()}">prize
+                                </div>
                                 <div class="rating"><span class="glyphicon glyphicon-star"></span><span
                                         class="glyphicon glyphicon-star"></span><span
                                         class="glyphicon glyphicon-star"></span><span
@@ -380,7 +388,9 @@
                             <div class="wrapper">
                                 <h5><a th:href="${'/bigGoods?bigGoodsId='+goods3.getBigGoodsId()}"
                                        th:text="${goods3.getName()}">name</a></h5>
-                                <div class="price" th:text="'price:'+${goods3.getMinPrice()}+'-'+${goods3.getMaxPrice()}">prize</div>
+                                <div class="price"
+                                     th:text="'price:'+${goods3.getMinPrice()}+'-'+${goods3.getMaxPrice()}">prize
+                                </div>
                                 <div class="rating"><span class="glyphicon glyphicon-star"></span><span
                                         class="glyphicon glyphicon-star"></span><span
                                         class="glyphicon glyphicon-star"></span><span
@@ -483,7 +493,7 @@
     function choose() {
         var edition = $(".Choose").find("option:selected").text();
         var bigGoodsId = $(".ID").html();
-        if(edition=="----Select Brand----"){
+        if (edition == "----Select Brand----") {
             $(".price").html("price:[[${goods.getMinPrice()}]]-[[${goods.getMaxPrice()}]]");
         }
         $.ajax({
@@ -492,31 +502,36 @@
             contentType: "application/json; charset=utf-8",
             success: function (data) {
                 if (null != data) {
-                   // alert(data);
-                    $(".price").html('$'+data);
+                    // alert(data);
+                    $(".price").html('$' + data);
                 }
             }
         });
     }
 
     function addgoods() {
-        if (confirm("你确认要添加进购物车吗？")) {
-            var edition = $(".Choose").find("option:selected").text();
-            var bigGoodsId = $(".ID").html();
-            var num = document.getElementById('qty').value;
-           // alert(bigGoodsId + "!!" + num);
-            if (edition == "----Select Brand----") {
-                alert("请选择型号");
-            } else {
-                $.ajax({
-                    type: "get",
-                    url: "/addToCart?edition=" + edition + "&bigGoodsId=" + bigGoodsId + "&littleGoodsNum=" + num,
-                    contentType: "application/json; charset=utf-8",
-                    success: function (string) {
-                        alert(string);
-                        window.location.reload();
-                    }
-                });
+        if ("[[${session.customer}]]" == "") {
+            alert("请先登陆");
+            return;
+        } else {
+            if (confirm("你确认要添加进购物车吗？")) {
+                var edition = $(".Choose").find("option:selected").text();
+                var bigGoodsId = $(".ID").html();
+                var num = document.getElementById('qty').value;
+                //alert(bigGoodsId + "!!" + num + "!!" + edition);
+                if (edition == "----Select Brand----") {
+                    alert("请选择型号");
+                } else {
+                    $.ajax({
+                        type: "get",
+                        url: "/addToCart?edition=" + edition + "&bigGoodsId=" + bigGoodsId + "&littleGoodsNum=" + num,
+                        contentType: "application/json; charset=utf-8",
+                        success: function (string) {
+                            alert(string);
+                            window.location.reload();
+                        }
+                    });
+                }
             }
         }
     }

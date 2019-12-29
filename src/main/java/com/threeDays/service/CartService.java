@@ -169,5 +169,10 @@ public class CartService {
         }*/
         return littleGoods;
     }
-
+    public Integer  clearCart(BigInteger customerId){
+        if(cartMapper.clearCart(customerId)!=0){
+            return 1;
+        }else
+            return  0;
+    }
 }

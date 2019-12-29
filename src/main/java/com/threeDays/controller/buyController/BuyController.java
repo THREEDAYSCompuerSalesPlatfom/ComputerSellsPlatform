@@ -37,6 +37,8 @@ public class BuyController {
     @Autowired
     GoodsService goodsService;
 
+
+
     @RequestMapping("/product")
     public String product(Model model, BigInteger bigGoodsId, HttpServletRequest httpServletRequest){
         Goods goods=goodsService.getGoods(bigGoodsId);
@@ -104,6 +106,7 @@ public class BuyController {
 
         }
         orderService.CreateNewOrder(cuid,Cartmap);
+        cartService.clearCart(cuid);
         return "/index";
     }
 

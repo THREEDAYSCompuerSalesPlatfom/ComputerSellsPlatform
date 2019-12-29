@@ -92,8 +92,8 @@ $(function(){
                     <div class="person-info">
                         <div class="person-photo"><img src="img/_/photo.png" alt=""></div>
                         <div class="person-account">
-                            <span class="name">{{loginName}}</span>
-                            <span class="safe"><a href="logout/cas">退出登录 </a></span>
+                            <span class="name" th:text="${session.customer.getCu_Name()}">{{loginName}}</span>
+                            <span class="safe"><a th:href="@{~/user/loginOut}">退出登录 </a></span>
                         </div>
                         <div class="clearfix"></div>
                     </div>
@@ -121,22 +121,22 @@ $(function(){
                             <div id="one" class="tab-pane active">
                                 <form id="form-msg" class="sui-form form-horizontal" th:action="@{/Setting}">
                                     <div class="control-group">
-                                        <label  class="control-label" th:text="${session.customer.getCu_Name()}">昵称：</label><!--for="inputName"-->
+                                        <label  class="control-label" >昵称：</label><!--for="inputName"-->
                                         <div class="controls">
-                                            <input  name="name" placeholder="昵称">
+                                            <input  name="name" th:placeholder="${session.customer.getCu_Name()}">
                                         </div>
                                     </div>
                                     <div class="control-group">
-                                        <label th:text="${session.customer.getCu_Telephone()}" class="control-label">联系方式：</label>
+                                        <label  class="control-label">联系方式：</label>
                                         <div class="controls">
-                                            <input  name="tel" placeholder="联系方式">
+                                            <input  name="tel" th:placeholder="${session.customer.getCu_Telephone()}">
                                         </div>
                                     </div>
                                     
                                     <div class="control-group">
-                                        <label th:text="${session.user.getCu_Address()}" class="control-label">地址：</label>
+                                        <label  class="control-label">地址：</label>
                                         <div class="controls">
-                                            <input  name="address" placeholder="地址">
+                                            <input  name="address" th:placeholder="${session.customer.getCu_Address()}" >
                                         </div>
                                     </div>
                                     <p>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;<button type="submit" class="btn bg-olive btn-x"  ><i class="fa fa-trash-o"></i> 提交</button></p>

@@ -50,6 +50,7 @@ public class CartController {
         if (cartService.addNewLittleGoods(customer.getCustomerId(), littleGoodsId, Integer.parseInt(littleGoodsNum)) == 1) {
             List<CartGoods> cartGoodsList = cartGoodsService.findCartGoodsByCuid(customer.getCustomerId());
             httpServletRequest.getSession().setAttribute("cartNum", cartGoodsList.size());
+            //httpServletResponse.sendRedirect("/addToCart");
             return "success";
         } else {
             return "fail";

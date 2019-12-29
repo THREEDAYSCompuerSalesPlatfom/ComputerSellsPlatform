@@ -41,7 +41,7 @@
 <body>
 <!-- 头部栏位 -->
 <!--页面顶部-->
-<div id="nav-bottom">
+<body id="nav-bottom">
     <!--顶部-->
     <div class="nav-top">
         <div class="top">
@@ -123,7 +123,7 @@
                         </dl>
                         <dl>
                             <dt><i>·</i> 设置</dt>
-                            <dd><a th:href="${'/cuSetting?cuOrderGoods='+${cuOrderGoods}}">个人信息</a></dd>
+                            <dd><a th:href="@{~/cuSetting}">个人信息</a></dd>
                         </dl>
                     </div>
                 </div>
@@ -182,7 +182,8 @@
                                             </td>
                                             <td width="5%" class="center" th:text="${show.getNumber()}">数量1</td>
                                             <td width="8%" class="center">
-                                                <li><a class="btn" th:href="@{/changeStatus(order_id=${Goods.getOrderId()})}"
+                                                <li><a class="btn"
+                                                       th:href="@{/changeStatus(order_id=${Goods.getOrderId()})}"
                                                        th:if="${Goods.getStatus() ne 3}">退货/退款</a></li>
                                             </td>
                                             <td width="10%" class="center" th:if="${Stat.index}==0"
@@ -216,7 +217,7 @@
                                                 <ul class="unstyled">
                                                     <li th:if="${Goods.getStatus() eq 2}">已确认收货</a></li>
                                                     <button type="button" class="btn bg-olive btn-x" title="确认收货"
-                                                            onclick='confirm("你确认收货吗？")'
+                                                            th:onclick='changestatus()'
                                                             th:if="${Goods.getStatus() ne 2}"><i
                                                             class="fa fa-trash-o"></i> 确认收货
                                                     </button>
@@ -225,6 +226,7 @@
                                         </tr>
                                         </tbody>
                                     </table>
+                                    <p th:text="${Goods.getOrderId()}" id="data" type="hidden"></p>
                                 </div>
                             </div>
                         </div>
@@ -234,6 +236,28 @@
             </div>
         </div>
     </div>
+
+</body>
+<script type="text/javascript">
+
+    function changestatus() {
+        if(confirm("sure?")){
+           // var s=document.getElementById("id");
+            $.ajax({
+                type: "get",
+                url: "[[@{~/changeStatus}]]?order_id="+$("#data").val(),
+                contentType: "application/json; charset=utf-8",
+                success: function (string) {
+                    alert(string);
+                    window.location.reload();
+                }
+            });
+        }
+
+
+    }
+</script>
+</body>
 
 </html>
    

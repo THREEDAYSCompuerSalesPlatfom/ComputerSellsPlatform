@@ -13,7 +13,7 @@ public interface OrderMapper {
     int insertComment(@Param("order_id") BigInteger order_id, @Param("comment") String comment);//插入买家评价，成功1，失败0
     int insertReply(@Param("order_id")BigInteger order_id,@Param("reply")String reply);//插入卖家回复，成功1，失败0
     int deleteOrder(BigInteger order_id);//删除订单，成功1，失败0
-    int changeStatus(@Param("order_id") BigInteger order_id,@Param("order_status") int order_status);//变更订单状态
+    int changeStatus(@Param("order_id") BigInteger order_id,@Param("order_status") Integer order_status);//变更订单状态
     int updatePrize(@Param("order_id")BigInteger order_id,@Param("prize")float prize);
     List<Order> findOrderByStatusANDSeller(int order_status,BigInteger seller_id);
     List<BigInteger> findOrderIdByCustomer(@Param("cu_id")BigInteger cu_id);

@@ -20,7 +20,7 @@
     <delete id="deleteOrder" parameterType="java.math.BigInteger">
         delete from [order] where order_id=#{order_id}
     </delete>
-    <update id="changeStatus">
+    <update id="changeStatus" >
         update [order] SET order_status=#{order_status} where order_id=#{order_id}
     </update>
     <update id="updatePrize">

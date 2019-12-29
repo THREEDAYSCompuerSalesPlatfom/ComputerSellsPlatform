@@ -22,6 +22,7 @@ import java.math.BigInteger;
  */
 @Controller
 public class UploadController {
+
     String parentDir = "D:" + File.separator + File.separator + "goods" + File.separator;//图片储存的目录
     @Autowired
     private BigGoodsService bigGoodsService;
@@ -91,6 +92,12 @@ public class UploadController {
     @ResponseBody
     public String uploadindex(@RequestParam("goodsid") BigInteger goods_id,
                               @RequestParam("file") MultipartFile file, Model m, HttpServletRequest request) {
+        if(goods_id==null){
+            return "不存在此商品";
+        }
+        if(bigGoodsService.getBigGoods(goods_id)==null)
+            return "不存在此商品";
+
         //1. 接受上传的文件  @RequestParam("file") MultipartFile file
         try {
             //2.根据时间戳创建新的文件名，这样即便是第二次上传相同名称的文件，也不会把第一次的文件覆盖了
@@ -124,6 +131,11 @@ public class UploadController {
     @ResponseBody
     public String uploadShow(@RequestParam("goodsid") BigInteger goods_id,
                              @RequestParam("file") MultipartFile file, Model m, HttpServletRequest request) {
+        if(goods_id==null){
+            return "不存在此商品";
+        }
+        if(bigGoodsService.getBigGoods(goods_id)==null)
+            return "不存在此商品";
         //1. 接受上传的文件  @RequestParam("file") MultipartFile file
         try {
             //2.根据时间戳创建新的文件名，这样即便是第二次上传相同名称的文件，也不会把第一次的文件覆盖了
@@ -222,6 +234,11 @@ public class UploadController {
     @PostMapping("/image/upload") // 等价于 @RequestMapping(value = "/upload", method = RequestMethod.POST)
     @ResponseBody
     public String upload(@RequestParam("goodsid") BigInteger goods_id, @RequestParam("file") MultipartFile file, Model m) {//1. 接受上传的文件  @RequestParam("file") MultipartFile file
+        if(goods_id==null){
+            return "不存在此商品";
+        }
+        if(bigGoodsService.getBigGoods(goods_id)==null)
+            return "不存在此商品";
         try {
             //2.根据时间戳创建新的文件名，这样即便是第二次上传相同名称的文件，也不会把第一次的文件覆盖了
             //同时辅以sellerid为文件名，以&分割

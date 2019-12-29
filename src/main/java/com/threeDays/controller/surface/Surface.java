@@ -45,5 +45,9 @@ public class Surface {
     public String goToSellerLogin() {
         return "/account";
     }
+    @RequestMapping("/contact")
+    public String contact() {
+        return "/contact";
+    }
 }
 

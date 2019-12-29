@@ -55,7 +55,7 @@
             </div>
             <div class="col-xs-6">
                 <ul class="top-link">
-                    <li><a href="/index" th:if="${session.user} != null" th:text="${session.user.getCu_Name()}"><span
+                    <li><a href="/cuIndex" th:if="${session.user} != null" th:text="${session.user.getCu_Name()}"><span
                             class="glyphicon glyphicon-user"></span> My Account</a></li>
                     <li><a href="/account" th:if="${session.user} == null"><span
                             class="glyphicon glyphicon-user"></span> My Account</a></li>

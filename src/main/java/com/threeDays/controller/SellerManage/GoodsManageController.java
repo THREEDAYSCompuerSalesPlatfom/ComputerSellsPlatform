@@ -171,6 +171,8 @@ public class GoodsManageController {
         BigInteger seller_id = (BigInteger) request.getSession().getAttribute("Seller_id");
         if (name == null || brand == null || edtion == null || prize == null)
             return goods(request, model);
+        if (name .equals("") || brand.equals("") || edtion.equals("") || prize .equals(""))
+            return goods(request, model);
         goodsService.newgoods(biggoodsid, name, brand, edtion, Float.parseFloat(prize), seller_id);
         return goods(request, model);
     }

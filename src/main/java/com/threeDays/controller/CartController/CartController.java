@@ -60,8 +60,9 @@ public class CartController {
     @RequestMapping("/getCart")
     public String getCart(Model model, HttpServletRequest httpServletRequest) {
         Customer customer = (Customer) httpServletRequest.getSession().getAttribute("customer");
+        Customer customer1 = (Customer) httpServletRequest.getSession().getAttribute("user");
         System.out.println("cascascc" + customer.getCustomerId());
-        if (customer == null)
+        if (customer == null||customer1==null)
             return "account";
 
         List<CartGoods> cartGoodsList = cartGoodsService.findCartGoodsByCuid(customer.getCustomerId());

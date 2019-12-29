@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.math.BigInteger;
 import java.util.ArrayList;
@@ -36,6 +37,7 @@ public class LittleGoodsController {
         return "littleGoods";
     }
     @RequestMapping("/getPrice")
+    @ResponseBody
     public float getPrice(@RequestParam("bigGoodsId")BigInteger bigGoodsId,
                            @RequestParam("edition")String edition){
        return littleGoodsService.findLittleGoodsById(littleGoodsService.getLittleGoodsId(edition,bigGoodsId)).getGoodsPrice();

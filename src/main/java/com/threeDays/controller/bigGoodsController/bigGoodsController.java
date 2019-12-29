@@ -64,8 +64,10 @@ public class bigGoodsController {
         System.out.println(sellerId);
         Float minPrice = littleGoodsService.minPrice(bigGoodsId, sellerId);
         minPrice=(minPrice==null)?0:minPrice;
+        System.out.println("minPrice:"+minPrice);
         Float maxPrice = littleGoodsService.maxPrice(bigGoodsId, sellerId);
-        maxPrice=(maxPrice==null)?0:minPrice;
+        maxPrice=(maxPrice==null)?0:maxPrice;
+        System.out.println("maxPrice:"+maxPrice);
         BigGoods bigGoods = bigGoodsService.getBigGoods(bigGoodsId);
         List<String> edition = littleGoodsService.getEdition(bigGoodsId);
         List<Goods> goodsList = new ArrayList<>();

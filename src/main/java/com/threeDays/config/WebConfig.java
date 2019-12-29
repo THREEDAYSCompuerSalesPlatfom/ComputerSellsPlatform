@@ -114,7 +114,7 @@ public class WebConfig implements WebMvcConfigurer {
         sellerexcludePatterns.add("/sellerregesiter");
         sellerexcludePatterns.add("/sellerregesiter/submit");
         sellerexcludePatterns.add("/sellerregesiter/isNameExist");
-        registry.addInterceptor(sellerssessionInterceptor).excludePathPatterns(sellerexcludePatterns).addPathPatterns(sellerpatterns);
+        //registry.addInterceptor(sellerssessionInterceptor).excludePathPatterns(sellerexcludePatterns).addPathPatterns(sellerpatterns);
     }
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {

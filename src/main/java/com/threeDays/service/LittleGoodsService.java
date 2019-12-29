@@ -123,6 +123,7 @@ public class LittleGoodsService {
 
     //获取某个商品价格范围
     public Float minPrice(BigInteger bigGoodsId, BigInteger sellerId) {
+        System.out.println("service min price :"+ littleGoodsMapper.minPrice(bigGoodsId, sellerId));
         return littleGoodsMapper.minPrice(bigGoodsId, sellerId);
     }
 

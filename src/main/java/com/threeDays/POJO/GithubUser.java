@@ -8,7 +8,7 @@ import java.math.BigInteger;
  **/
 public class GithubUser {
     private String name;//姓名
-    private BigInteger Id;//Id
+    private BigInteger id;//Id
     private String bio;//描述
 
     public String getName() {
@@ -20,11 +20,11 @@ public class GithubUser {
     }
 
     public BigInteger getId() {
-        return Id;
+        return id;
     }
 
     public void setId(BigInteger id) {
-        Id = id;
+        this.id = id;
     }
 
     public String getBio() {

@@ -3,11 +3,11 @@
 <mapper namespace="com.threeDays.dao.GithubCustomerMapper">
     <resultMap type="com.threeDays.POJO.GithubCustomer" id="GitCustomerMap">
         <id property="id" column="id" javaType="java.math.BigInteger"/>
-        <result property="accountId" column="accountId" javaType="java.math.BigInteger"/>
+        <result property="accountId" column="accountId" javaType="java.lang.String"/>
         <result property="name" column="git_name" javaType="java.lang.String"/>
         <result property="token" column="token" javaType="java.lang.String"/>
     </resultMap>
-    <insert id="addGithubCustomer" parameterType="com.threeDays.POJO.GithubCustomer" useGeneratedKeys="true"
+    <insert id="addGithubCustomer" parameterType="com.threeDays.POJO.GithubCustomer"  useGeneratedKeys="true"
             keyProperty="id">
         insert into gitcustomer (accountId, git_name, token)
         values (#{accountId}, #{name}, #{token})

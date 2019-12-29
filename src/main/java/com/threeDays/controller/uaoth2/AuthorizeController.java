@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.Cookie;
@@ -36,17 +37,17 @@ public class AuthorizeController {
     @Value("S{github.Redirect.url}")
     private String RedirectUrl;
 
-    @RequestMapping("/callback")
+    @RequestMapping(value = "/callback",method = RequestMethod.GET)
     public String callback(@RequestParam(name = "code") String code,
                            @RequestParam(name = "state") String state,
                            HttpServletResponse httpServletResponse) {
         AccessTokenDto accessTokenDto = new AccessTokenDto();
-        //accessTokenDto.setClient_id("");
-        //accessTokenDto.setClient_secret("");
-        //accessTokenDto.setRedirect_url("http://localhost:8080/callback");
+        /*accessTokenDto.setClient_id("id:3d0fc83ea1af95ebd2fd");
+        accessTokenDto.setClient_secret("d4121d67fa1b77c7fb4b1cf7fd633aeb5f257995");
+        accessTokenDto.setRedirect_url("http://localhost:8080/callback");*/
+        accessTokenDto.setCode(code);
         accessTokenDto.setClient_id(clientId);
         accessTokenDto.setClient_secret(clientSecret);
-        accessTokenDto.setCode(code);
         accessTokenDto.setRedirect_url(RedirectUrl);
         accessTokenDto.setState(state);
         githubProvider.getAccessToken(accessTokenDto);
@@ -59,10 +60,11 @@ public class AuthorizeController {
             githubCustomer.setToken(token);
             githubCustomer.setAccountId(String.valueOf
                     (githubUser.getId()));
+            System.out.println("success");
             githubCustomer.setName(githubUser.getName());
             customerService.addGithubCustomer(githubCustomer);
             customerService.mergeCustomer(githubCustomer);//合并生成数据库中customer，返回customerId
-            httpServletResponse.addCookie(new Cookie("token", token));//借助token，cookie维持登陆验证是否登陆成功
+         //   httpServletResponse.addCookie(new Cookie("token", token));//借助token，cookie维持登陆验证是否登陆成功
             //httpServletRequest.getSession().setAttribute("githubUser", githubUser);//th:if="${session.githubUser！=null}"
             return "redirect:/index";
         } else {
@@ -72,17 +74,3 @@ public class AuthorizeController {
 
     }
 }
-/*
- * HttpServletRequest httpServletRequest
- * Cookie [] cookies=httpServletRequest.getCookie()
- * for(Cookie cookie:cookies){
- * if(cookie.getName.equal("token")){
- *  String token =cookie.getValue();
- * Customer customer=Customer.findByToken(token)
- * if(customer!=null){
- * httpServletRequest.getSession().setAttribute("customer", customer);
- * }
- *  break;
- * }
- *}
- * */

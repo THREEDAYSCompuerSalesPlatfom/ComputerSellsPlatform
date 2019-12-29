@@ -78,6 +78,22 @@ public class CartController {
         return "cart";
     }
 
+    @RequestMapping("plus")
+    public String plus(BigInteger littlegoodsid,HttpServletRequest request,Model model,HttpServletRequest httpServletRequest){
+        Customer customer=(Customer) request.getSession().getAttribute("customer");
+        cartService.addNewLittleGoods(customer.getCustomerId(),littlegoodsid,1);
+        List<CartGoods> cartGoodsList=cartGoodsService.findCartGoodsByCuid(customer.getCustomerId());
+        httpServletRequest.getSession().setAttribute("cartNum",cartGoodsList.size());
+        return getCart(model,request);
+    }
+    @RequestMapping("minus")
+    public String minus(BigInteger littlegoodsid,HttpServletRequest request,Model model,HttpServletRequest httpServletRequest){
+        Customer customer=(Customer) request.getSession().getAttribute("customer");
+        cartService.removeLittleGoods(customer.getCustomerId(),littlegoodsid);
+        List<CartGoods> cartGoodsList=cartGoodsService.findCartGoodsByCuid(customer.getCustomerId());
+        httpServletRequest.getSession().setAttribute("cartNum",cartGoodsList.size());
+        return getCart(model,request);
+    }
     @RequestMapping("/updateLittleGoods")
     public String changeCart(HttpServletRequest httpServletRequest,
                              @RequestParam("littleGoods") BigInteger oldLittleGoodsId,

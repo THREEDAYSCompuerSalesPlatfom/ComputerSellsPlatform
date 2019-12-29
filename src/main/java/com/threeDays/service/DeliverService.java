@@ -33,17 +33,25 @@ public class DeliverService {
         if (express.equals("")) {
             return "物流单号不能为空";
         }
-        BigInteger seller_id = littlegoodsService.findSellerById(orderService.findSellerByOrderId(order_id));//zwx mmp!
+
+        BigInteger seller_id = orderService.findSellerByOrderId(order_id);
         if (seller_id == null) {
             return "未知错误，可能order所对的详细商品或者seller已经不存在";
         }
         System.out.println(seller_id);
-        if (deliverMapper.insertExpress(order_id, express, seller_id) == 0) {
-            return "插入失败，数据库错误";
-        } else {
+        if(deliverMapper.findDeliverByOrderId(order_id)!=null){
+            deliverMapper.updateExpress(order_id,express);
+        }else {
+            if (deliverMapper.insertExpress(order_id, express, seller_id) == 0) {
+                return "插入失败，数据库错误";
+            } else {
+                orderService.changeStatus(order_id, 1);//更改订单状态为卖家已经发货
+                return "加入成功";
+            }
+        }
             orderService.changeStatus(order_id, 1);//更改订单状态为卖家已经发货
             return "加入成功";
-        }
+
     }
 
     /**

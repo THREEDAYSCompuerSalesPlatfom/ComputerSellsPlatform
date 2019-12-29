@@ -1,5 +1,6 @@
 package com.threeDays.service;
 
+import com.threeDays.POJO.AfterSales;
 import com.threeDays.POJO.BigGoods;
 import com.threeDays.POJO.Order;
 import com.threeDays.POJO.Ordergoods;
@@ -30,6 +31,8 @@ public class OrderService {
     private Sellerservice sellerservice;
     @Autowired
     private DeliverMapper deliverMapper;
+    @Autowired
+    private  AfterSalesService afterSalesService;
 
     /**
      * 根据order_id返回Order对象
@@ -130,8 +133,9 @@ public class OrderService {
                 ordergoodsMapper.deleteOrderGoods(order_id);//删除已经插入的Ordergoods
                 return new BigInteger("-1");
             }
-            deliverMapper.insertExpress(order.getOrder_id(), null, findSellerByOrderId(order_id));
+
         }
+        deliverMapper.insertExpress(order.getOrder_id(), null, findSellerByOrderId(order_id));
         orderMapper.updatePrize(order_id, prize);
 
 
@@ -231,6 +235,14 @@ public class OrderService {
         if (orderMapper.changeStatus(order_id, order_status) == 0) {
             return "失败，数据库错误";
         } else {
+
+            if(order_status==3){
+                AfterSales afterSales=new AfterSales();
+                afterSales.setAfter_status(0);
+                afterSales.setOrder_id(order_id);
+                afterSales.setSeller_id(findSellerByOrderId(order_id));
+                afterSalesService.insertAfterSales(afterSales);
+            }
             return "更改成功";
         }
     }

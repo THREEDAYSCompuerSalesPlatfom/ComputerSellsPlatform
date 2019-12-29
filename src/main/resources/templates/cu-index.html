@@ -196,19 +196,19 @@
                                                 th:rowspan="${Stat.size}">
                                                 <ul class="unstyled">
                                                     <li>状态</li>
-                                                    <li><p href="orderDetail.html" class="btn"
+                                                    <li><p th:href="@{~/orderDetail(cuOrderGoods=${cuOrderGoods})}" class="btn"
                                                            th:if="${Goods.getStatus() eq 0}">卖家待发货 </p></li>
-                                                    <li><p href="orderDetail.html" class="btn"
+                                                    <li><p th:href="@{~/orderDetail(cuOrderGoods=${cuOrderGoods})}" class="btn"
                                                            th:if="${Goods.getStatus() eq 1}">卖家已发货 </p></li>
-                                                    <li><p href="orderDetail.html" class="btn"
+                                                    <li><p th:href="@{~/orderDetail(cuOrderGoods=${cuOrderGoods})}" class="btn"
                                                            th:if="${Goods.getStatus() eq 2}">买家确认收获 </p></li>
-                                                    <li><p href="orderDetail.html" class="btn"
+                                                    <li><p th:href="@{~/orderDetail(cuOrderGoods=${cuOrderGoods})}" class="btn"
                                                            th:if="${Goods.getStatus() eq 3}">退货申请中 </p></li>
-                                                    <li><p href="orderDetail.html" class="btn"
+                                                    <li><p th:href="@{~/orderDetail(cuOrderGoods=${cuOrderGoods})}" class="btn"
                                                            th:if="${Goods.getStatus() eq 4}">卖家同意退货 </p></li>
-                                                    <li><p href="orderDetail.html" class="btn"
+                                                    <li><p th:href="@{~/orderDetail(cuOrderGoods=${cuOrderGoods})}" class="btn"
                                                            th:if="${Goods.getStatus() eq 5}">卖家拒绝退货 </p></li>
-                                                    <li><p href="orderDetail.html" class="btn"
+                                                    <li><p th:href="@{~/orderDetail(cuOrderGoods=${cuOrderGoods})}" class="btn"
                                                            th:if="${Goods.getStatus() eq 5}">订单详情 </p></li>
                                                 </ul>
                                             </td>

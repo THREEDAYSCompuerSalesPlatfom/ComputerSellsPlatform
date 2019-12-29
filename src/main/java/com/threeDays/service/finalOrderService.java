@@ -35,6 +35,11 @@ public class finalOrderService {
         BigInteger cuid = order.getCu_id();
         Customer customer = customerMapper.getCustomer(cuid);
         Deliver deliver = deliverService.findDeliverById(orderid);
+        if(deliver==null){
+            String s=deliverService.insertExpress(orderid,null);
+            System.out.println(s);
+            deliver=deliverService.findDeliverById(orderid);
+        }
 
         Ordergoods[] ordergoods = ordergoodsMapper.findOrderGoodsByOrderId(orderid);
         List<FinalDeliver> finalDelivers = new ArrayList<>();

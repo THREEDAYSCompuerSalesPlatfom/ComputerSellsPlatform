@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import java.math.BigInteger;
 import java.util.*;
 
-@Controller
+//@Controller
 public class YTAtestController {
     @Autowired
     private YTATestservice testservice;

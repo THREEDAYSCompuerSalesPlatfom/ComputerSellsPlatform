@@ -85,8 +85,9 @@ public class bigGoodsController {
                 }
             }
         }
-        String  description=new UploadController().getText(bigGoodsId,httpServletResponse);
+        String  description=uploadController.getText(bigGoodsId,httpServletResponse);
         model.addAttribute("description",description);
+        System.out.println(description);
         List<Goods> goodsList1 = goodsList.subList(0, 3);
         Goods goods1 = goodsList.get(3);
         Goods goods2 = goodsList.get(4);

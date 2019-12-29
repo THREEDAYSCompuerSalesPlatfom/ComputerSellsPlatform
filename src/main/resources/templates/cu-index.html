@@ -78,8 +78,8 @@
                                 <span class="car"></span>
                                 <a class="sui-btn btn-default btn-xlarge" th:href="@{~/getCart}" target="_blank">
 
-                                   <!-- <span>我的购物车</span>
-                                    <i class="shopnum">0</i>-->
+                                    <span>我的购物车</span>
+                                    <i class="shopnum">0</i>
                                 </a>
                             </div>
                         </div>
@@ -110,7 +110,7 @@
                         <div class="person-photo"><img src="img/_/photo.png" alt=""></div>
                         <div class="person-account">
                             <span class="name" th:text="${session.customer.getCu_Name()}">{{loginName}}</span>
-                            <span class="safe"><a th:href="@{/user/loginOut}">退出登录 </a></span>
+                            <span class="safe"><a href="logout/cas">退出登录 </a></span>
                         </div>
                         <div class="clearfix"></div>
                     </div>
@@ -118,12 +118,12 @@
 
                         <dl>
                             <dt><i>·</i> 订单中心</dt>
-                            <dd><a href="cu-index.html" class="list-active">我的订单</a></dd>
+                            <dd>我的订单</dd>
 
                         </dl>
                         <dl>
                             <dt><i>·</i> 设置</dt>
-                            <dd><a href="cu-setting-info.html">个人信息</a></dd>
+                            <dd><a th:href="${'/cuSetting?cuOrderGoods='+${cuOrderGoods}}">个人信息</a></dd>
                         </dl>
                     </div>
                 </div>
@@ -148,12 +148,18 @@
                         <div class="order-detail">
                             <div class="orders">
                                 <div class="choose-order">
+                                    <!--<div class="sui-pagination pagination-large top-pages">
+                                        <ul>
+                                            <li class="prev disabled"><a href="#">上一页</a></li>
+
+                                            <li class="next"><a href="#">下一页</a></li>
+                                        </ul>
+                                    </div>-->
                                 </div>
                                 <div th:each="Goods,userStat:${cuOrderGoods}">
                                     <!--order1-->
                                     <div class="choose-title">
-                                        <label th:text="${Goods.getDate()}+${Goods.getOrderId()}+${Goods.getSeller().getSeller_name()}"
-                                        th:href="${'/orderDetail?cuOrderGoods='+Goods}">时间+订单号+卖家</label>
+                                        <label th:text="${Goods.getDate()}+${Goods.getOrderId()}+${Goods.getSeller().getSeller_name()}">时间+订单号+卖家</label>
                                     </div>
                                     <table class="sui-table table-bordered order-datatable">
                                         <tbody th:object="${Goods.getShowGoods()}">
@@ -161,7 +167,7 @@
                                             <td width="35%">
                                                 <!--"${'/bigGoods?bigGoodsId='+Goods.getBigGoodsId()}"-->
                                                 <div class="typographic"><img
-                                                        th:src="@{/image/getShowImage(goodsid=${show.getBigGoods().getBigGoodsId()})}"/>
+                                                        th:src="@{/image/getIxdexImage(goodsid=${show.getBigGoods().getBigGoodsId()})}"/>
                                                     <a th:href="${'/bigGoods?bigGoodsId='+show.getBigGoods().getBigGoodsId()}"
                                                        class="block-text"
                                                        th:text="${show.getBigGoods().getGoodsName()}">商品名1</a>
@@ -176,7 +182,8 @@
                                             </td>
                                             <td width="5%" class="center" th:text="${show.getNumber()}">数量1</td>
                                             <td width="8%" class="center">
-                                                <li><a class="btn" th:href="@{/cuBack}">退货/退款</a></li>
+                                                <li><a class="btn" th:href="@{/changeStatus(order_id=${Goods.getOrderId()})}"
+                                                       th:if="${Goods.getStatus() ne 3}">退货/退款</a></li>
                                             </td>
                                             <td width="10%" class="center" th:if="${Stat.index}==0"
                                                 th:rowspan="${Stat.size}">
@@ -201,7 +208,7 @@
                                                     <li><p href="orderDetail.html" class="btn"
                                                            th:if="${Goods.getStatus() eq 5}">卖家拒绝退货 </p></li>
                                                     <li><p href="orderDetail.html" class="btn"
-                                                           th:if="${Goods.getStatus() eq 6}">买家已经退货 </p></li>
+                                                           th:if="${Goods.getStatus() eq 5}">订单详情 </p></li>
                                                 </ul>
                                             </td>
                                             <td width="10%" class="center" th:if="${Stat.index}==0"
@@ -220,7 +227,6 @@
                                     </table>
                                 </div>
                             </div>
-
                         </div>
 
                     </div>

@@ -34,6 +34,8 @@ public class bigGoodsController {
     GoodsService goodsService;
     @Autowired
     CartService cartService;
+    @Autowired
+    UploadController uploadController;
     @RequestMapping("/cartNum")
     public String cartNum(Model model, HttpServletRequest httpServletRequest){
         Customer customer = (Customer) httpServletRequest.getSession().getAttribute("customer");
@@ -69,7 +71,10 @@ public class bigGoodsController {
         List<Goods> goodsList = new ArrayList<>();
         goodsService.getGoodsList(goodsList);
         Goods goods = goodsService.getGoods(bigGoodsId);
-        String[] imgName = new UploadController().AllImageNames(bigGoodsId);
+        String[] imgName = uploadController.AllImageNames(bigGoodsId);
+        if(imgName==null){
+            model.addAttribute("error","图片文件不存在");
+        }
         List<String> Name = new ArrayList<>();
         int j = 0;
         for (int i = 0; i < imgName.length; i++) {
@@ -82,7 +87,6 @@ public class bigGoodsController {
         }
         String  description=new UploadController().getText(bigGoodsId,httpServletResponse);
         model.addAttribute("description",description);
-        System.out.println(description);
         List<Goods> goodsList1 = goodsList.subList(0, 3);
         Goods goods1 = goodsList.get(3);
         Goods goods2 = goodsList.get(4);

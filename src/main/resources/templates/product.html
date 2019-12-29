@@ -182,14 +182,15 @@
                             <div class="info">
                                 <ul>
                                     <li th:text="'BRAND:'+${bigGoods.getBrand()}"></li>
-                                    <li th:text="'ID:'+${goods.getBigGoodsId()}" class="ID">ID: 0122222</li>
+                                    <h6>ID:</h6>
+                                    <li th:text="${goods.getBigGoodsId()}" class="ID">ID: 0122222</li>
                                 </ul>
                             </div>
                             <div class="price"><p th:text="'$'+${goods.getMinPrice()}" class="price">price</p>
                                 <span>$98</span></div>
                             <div class="options">
                                 EDITION OPTIONS
-                                <select  name="choseEdition" id="choseEdition" class="Choose" onchange="choose()">
+                                <select name="choseEdition" id="choseEdition" class="Choose" onchange="choose()">
                                     <option value="" selected>----Select Brand----</option>
                                     <option th:each="edition:${edition}"
                                             th:text="${edition}"></option>
@@ -200,9 +201,9 @@
                                     class="glyphicon glyphicon-star"></span><span
                                     class="glyphicon glyphicon-star"></span><span
                                     class="glyphicon glyphicon-star-empty"></span></div>
-                            <div class="well"><label class="qty">Qty: </label>
-                                <input class="form-inline quantity" type="text" value="1">
-                                <button type="button" class="btn bg-olive btn-x"  title="删除" onclick='addgoods()'><i
+                            <div class="well"><label>Qty: </label>
+                                <input class="form-inline quantity" type="text" name="qty" id="qty" value="1">
+                                <button type="button" class="btn bg-olive btn-x" title="删除" onclick='addgoods()'><i
                                         class="fa fa-trash-o"></i> ADD
                                 </button>
                             </div>
@@ -484,7 +485,7 @@
         var bigGoodsId = $(".ID").innerHTML;
         $.ajax({
             type: "get",
-            url: "/getPrice?edition" + edition + "&bigGoodsId=" + bigGoodsId,
+            url: "/getPrice?edition=" + edition + "&bigGoodsId=" + bigGoodsId,
             contentType: "application/json; charset=utf-8",
             success: function (data) {
                 if (null != data) {
@@ -498,19 +499,23 @@
     function addgoods() {
         if (confirm("你确认要添加进购物车吗？")) {
             var edition = $(".Choose").find("option:selected").text();
-            var bigGoodsId = $(".ID").innerHTML;
-            var num = $(".qty").innerHTML;
-            $.ajax({
-                type: "get",
-                url: "/addToCart?edition=" + edition + "&bigGoodsId=" + bigGoodsId + "&littleGoodsNum=" + num,
-                contentType: "application/json; charset=utf-8",
-                success: function (string) {
-                    alert(string);
-                    window.location.reload();
-                }
-            });
+            var bigGoodsId = $(".ID").html();
+            var num = document.getElementById('qty').value;
+            alert(bigGoodsId + "!!" + num);
+            if (edition == "----Select Brand----") {
+                alert("请选择型号");
+            } else {
+                $.ajax({
+                    type: "get",
+                    url: "/addToCart?edition=" + edition + "&bigGoodsId=" + bigGoodsId + "&littleGoodsNum=" + num,
+                    contentType: "application/json; charset=utf-8",
+                    success: function (string) {
+                        alert(string);
+                        window.location.reload();
+                    }
+                });
+            }
         }
-
     }
 </script>
 </body>

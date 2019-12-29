@@ -85,4 +85,11 @@
         from littleGoods
         where littlegoods_id = #{littleGoodId}
     </select>
+    <select id="getLittleGoodsId" resultType="java.math.BigInteger">
+        select littlegoods_id
+        from littleGoods
+        where edition = #{edition}
+          and biggoods_id = #{bigGoodsId}
+          and seller_id = #{sellerId}
+    </select>
 </mapper>

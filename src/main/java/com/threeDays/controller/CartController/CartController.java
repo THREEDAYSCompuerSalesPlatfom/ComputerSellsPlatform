@@ -13,6 +13,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 import javax.servlet.http.HttpServletRequest;
@@ -37,18 +38,20 @@ public class CartController {
     CartGoodsService cartGoodsService;
 
 
-        @RequestMapping("/addToCart")
+    @GetMapping("/addToCart")
+    @ResponseBody
     public String addToCart(HttpServletRequest httpServletRequest,
-                            @RequestParam("edition")String edition,
-                            @RequestParam("bigGoodsId") BigInteger bigGoodsId,
-                            @RequestParam(value = "littleGoodsNum", defaultValue = "1") int littleGoodsNum) {
+                            @RequestParam("edition") String edition,
+                            @RequestParam("bigGoodsId") String bigGoodsId,
+                            @RequestParam(value = "littleGoodsNum", defaultValue = "1") String littleGoodsNum) {
+        System.out.println("edition" + edition + "bigGoodsId" + bigGoodsId + "littlteGoodsNum" + littleGoodsNum);
         Customer customer = (Customer) httpServletRequest.getSession().getAttribute("customer");
-        BigInteger littleGoodsId =littleGoodsService.getLittleGoodsId(edition,bigGoodsId);
-        if(cartService.addNewLittleGoods(customer.getCustomerId(), littleGoodsId, littleGoodsNum)==1) {
-            List<CartGoods> cartGoodsList=cartGoodsService.findCartGoodsByCuid(customer.getCustomerId());
-            httpServletRequest.getSession().setAttribute("cartNum",cartGoodsList.size());
+        BigInteger littleGoodsId = littleGoodsService.getLittleGoodsId(edition, new BigInteger(bigGoodsId));
+        if (cartService.addNewLittleGoods(customer.getCustomerId(), littleGoodsId, Integer.parseInt(littleGoodsNum)) == 1) {
+            List<CartGoods> cartGoodsList = cartGoodsService.findCartGoodsByCuid(customer.getCustomerId());
+            httpServletRequest.getSession().setAttribute("cartNum", cartGoodsList.size());
             return "success";
-        }else{
+        } else {
             return "fail";
         }
     }
@@ -56,22 +59,22 @@ public class CartController {
     @RequestMapping("/getCart")
     public String getCart(Model model, HttpServletRequest httpServletRequest) {
         Customer customer = (Customer) httpServletRequest.getSession().getAttribute("customer");
-        System.out.println("cascascc"+customer.getCustomerId());
-        if(customer==null)
+        System.out.println("cascascc" + customer.getCustomerId());
+        if (customer == null)
             return "account";
 
-        List<CartGoods> cartGoodsList=cartGoodsService.findCartGoodsByCuid(customer.getCustomerId());
-        float total=0;
-        for(CartGoods cartGoods:cartGoodsList){
-            total=total+cartGoods.getPrize()*cartGoods.getNum();
+        List<CartGoods> cartGoodsList = cartGoodsService.findCartGoodsByCuid(customer.getCustomerId());
+        float total = 0;
+        for (CartGoods cartGoods : cartGoodsList) {
+            total = total + cartGoods.getPrize() * cartGoods.getNum();
         }
-        float deliveryCharges=20;
-        float totalprize=total+deliveryCharges;
-        httpServletRequest.getSession().setAttribute("cartNum",cartGoodsList.size());
+        float deliveryCharges = 20;
+        float totalprize = total + deliveryCharges;
+        httpServletRequest.getSession().setAttribute("cartNum", cartGoodsList.size());
         model.addAttribute("cartGoodsList", cartGoodsList);
-        model.addAttribute("total",total);
-        model.addAttribute("deliveryCharges",deliveryCharges);
-        model.addAttribute("totalprize",totalprize);
+        model.addAttribute("total", total);
+        model.addAttribute("deliveryCharges", deliveryCharges);
+        model.addAttribute("totalprize", totalprize);
         return "cart";
     }
 
@@ -99,24 +102,26 @@ public class CartController {
         cartService.deleteLittleGoods(customer.getCustomerId(), littleGoodsId);
         return "redirect:/cart";
     }
+
     @GetMapping("/updateNum")
-    public  String updateNum(BigInteger littlegoodsid,int num,HttpServletRequest httpServletRequest,Model model){
-        System.out.println(littlegoodsid+"   "+num);
-        Customer customer=(Customer) httpServletRequest.getSession().getAttribute("customer");
-        cartService.addNewLittleGoods(customer.getCustomerId(),littlegoodsid,num);
-        List<CartGoods> cartGoodsList=cartGoodsService.findCartGoodsByCuid(customer.getCustomerId());
-        httpServletRequest.getSession().setAttribute("cartNum",cartGoodsList.size());
-        return getCart(model,httpServletRequest);
+    public String updateNum(BigInteger littlegoodsid, int num, HttpServletRequest httpServletRequest, Model model) {
+        System.out.println(littlegoodsid + "   " + num);
+        Customer customer = (Customer) httpServletRequest.getSession().getAttribute("customer");
+        cartService.addNewLittleGoods(customer.getCustomerId(), littlegoodsid, num);
+        List<CartGoods> cartGoodsList = cartGoodsService.findCartGoodsByCuid(customer.getCustomerId());
+        httpServletRequest.getSession().setAttribute("cartNum", cartGoodsList.size());
+        return getCart(model, httpServletRequest);
     }
+
     @GetMapping("/deleteLittleGoods")
-    public String deleteLittleGoods( Model model,HttpServletRequest httpServletRequest,   @RequestParam("littleGoods") BigInteger LittleGoodsId){
-        Customer customer=(Customer) httpServletRequest.getSession().getAttribute("customer");
-        List<BigInteger> littleGoodsId=new ArrayList<>();
+    public String deleteLittleGoods(Model model, HttpServletRequest httpServletRequest, @RequestParam("littleGoods") BigInteger LittleGoodsId) {
+        Customer customer = (Customer) httpServletRequest.getSession().getAttribute("customer");
+        List<BigInteger> littleGoodsId = new ArrayList<>();
         littleGoodsId.add(LittleGoodsId);
-        cartService.deleteLittleGoods(customer.getCustomerId(),littleGoodsId);
-        List<CartGoods> cartGoodsList=cartGoodsService.findCartGoodsByCuid(customer.getCustomerId());
-        httpServletRequest.getSession().setAttribute("cartNum",cartGoodsList.size());
-        return getCart(model,httpServletRequest);
+        cartService.deleteLittleGoods(customer.getCustomerId(), littleGoodsId);
+        List<CartGoods> cartGoodsList = cartGoodsService.findCartGoodsByCuid(customer.getCustomerId());
+        httpServletRequest.getSession().setAttribute("cartNum", cartGoodsList.size());
+        return getCart(model, httpServletRequest);
     }
 }
 

@@ -29,6 +29,7 @@ public class LittleGoodsService {
     public BigInteger getLittleGoodsId(String edition,
                                        BigInteger bigGoodsId) {
         BigInteger sellerId=bigGoodsMapper.getSellerIdById(bigGoodsId);
+        System.out.println( "sellerId : "+sellerId);
         return littleGoodsMapper.getLittleGoodsId(edition, bigGoodsId, sellerId);
     }
 

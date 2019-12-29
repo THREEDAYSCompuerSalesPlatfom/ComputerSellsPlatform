@@ -21,7 +21,7 @@ public class SignUp {
     @Autowired
     CustomerService customerService;
 
-    @PostMapping("/SignUp")
+        @PostMapping("/SignUp")
     public String SignUp(@RequestParam("cu_Telephone") String cu_Telephone,
                          @RequestParam("cu_Address") String cu_Address,
                          @RequestParam("cu_Name") String cu_Name,

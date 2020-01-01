@@ -34,6 +34,20 @@
     <script th:src="@{~/js/html5shiv.js}"></script>
     <script th:src="@{~/js/respond.min.js}"></script>
     <![endif]-->
+    <script type="text/javascript">
+        function checkpassword() {
+            var password = document.getElementById("password").value;
+            var repassword = document.getElementById("repassword").value;
+            if (password == repassword) {
+                document.getElementById("submit").disabled = false;
+            } else {
+                alert('两次输入不一致');
+                document.getElementById("submit").disabled = true;
+            }
+        }
+
+    </script>
+
 </head>
 
 <body>
@@ -192,7 +206,7 @@
                 <a href="https://github.com/login/oauth/authorize?client_id=3d0fc83ea1af95ebd2fd&redirect_uri=http://localhost:8080/callback&scope=user&state=1"><img
                         src="images/github.jpg">Github登录
                 </a>
-                <a  th:href="@{~/selogin}"><h2>卖家登陆</h2></a>
+                <a th:href="@{~/selogin}"><h2>卖家登陆</h2></a>
             </div>
             <div class="col-md-6">
                 <div class="heading">
@@ -223,12 +237,13 @@
                     <div class="form-group">
                         <input type="password" class="form-control" placeholder="Retype Password :"
                                name="customerPassWord2" id="repassword"
-                               required>
+                               required
+                        onkeyup="checkpassword()">
                     </div>
                     <div class="form-group">
                         <input name="agree" id="agree" type="checkbox"> I agree to your website.
                     </div>
-                    <button type="submit" class="btn btn-1">Create</button>
+                    <button type="submit" class="btn btn-1" id="submit">Create</button>
                 </form>
 
             </div>

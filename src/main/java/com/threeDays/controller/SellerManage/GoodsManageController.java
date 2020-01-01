@@ -5,6 +5,7 @@ import com.threeDays.service.BigGoodsService;
 import com.threeDays.service.GoodsService;
 import com.threeDays.service.LittleGoodsService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.*;
 import java.math.BigInteger;
 import java.util.List;
 import java.util.Map;
@@ -173,7 +175,55 @@ public class GoodsManageController {
             return goods(request, model);
         if (name .equals("") || brand.equals("") || edtion.equals("") || prize .equals(""))
             return goods(request, model);
-        goodsService.newgoods(biggoodsid, name, brand, edtion, Float.parseFloat(prize), seller_id);
+        BigInteger newbiggoodsid=goodsService.newgoods(biggoodsid, name, brand, edtion, Float.parseFloat(prize), seller_id);
+System.out.println("newssss"+newbiggoodsid);
+        if(!newbiggoodsid.equals(1)){
+            File file;
+            InputStream in = null;
+            OutputStream out = null;
+
+            try {
+                ClassPathResource classPathResource = new ClassPathResource("");
+                file = classPathResource.getFile();
+                if(file.exists())
+                    System.out.println("no picture");
+
+                String fileName = "index";
+                //3.通过req.getServletContext().getRealPath("") 获取当前项目的真实路径，然后拼接前面的文件名
+                String parentDir = "D:" + File.separator + File.separator + "goods" + File.separator;//图片储存的目录
+                String destFileName = parentDir + newbiggoodsid + File.separator + fileName;
+                File outfile=new File(destFileName);
+                if (!outfile.getParentFile().exists()) {
+                    outfile.getParentFile().mkdirs();
+                }
+
+                File infile=new File(parentDir + "nopicture.jpg");
+                if(infile.exists()){
+                    System.out.println("in exist");
+                }
+                in = new FileInputStream(infile);
+                //  in=this.getClass().getResourceAsStream("/static/img/nopicture.jpg");
+                out = new FileOutputStream(outfile);
+
+                byte[] bytes = new byte[1024];
+                int len = -1;
+                while ((len = in.read(bytes)) != -1){
+                    out.write(bytes, 0, len);
+                    out.flush();
+                }
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }finally {
+                try {
+                    if(in != null) in.close();
+                    if(out != null) out.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
         return goods(request, model);
     }
 }

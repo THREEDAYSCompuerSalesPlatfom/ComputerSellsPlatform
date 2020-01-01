@@ -6,9 +6,11 @@ import com.threeDays.POJO.LittleGoods;
 import com.threeDays.dao.BigGoodsMapper;
 import com.threeDays.dao.LittleGoodsMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.io.*;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -28,6 +30,8 @@ public class GoodsService {
     BigGoodsService bigGoodsService;
     @Autowired
     LittleGoodsService littleGoodsService;
+    @Autowired
+    uploadservice uploadservice;
 
     public Goods getGoods(BigInteger bigGoodsId) {
         Goods goods = new Goods();
@@ -93,14 +97,16 @@ public class GoodsService {
         return goods;
     }
 
-    public int newgoods(BigInteger biggoodsid, String name, String brand, String edtion, float prize, BigInteger seller_id) {
-        if (biggoodsid!=null||bigGoodsService.getBigGoods(biggoodsid) != null) {//大商品存在
+    public BigInteger newgoods(BigInteger biggoodsid, String name, String brand, String edtion, float prize, BigInteger seller_id) {
+        if (biggoodsid != null || bigGoodsService.getBigGoods(biggoodsid) != null) {//大商品存在
             littleGoodsService.addNewLittleGoods(biggoodsid, edtion, seller_id, prize);
-            return 1;
+            return new BigInteger("1");
         } else {//大商品不存在
             BigInteger newbiggoodsid = bigGoodsService.createNewBigGoods(name, seller_id, brand);
+
             littleGoodsService.addNewLittleGoods(newbiggoodsid, edtion, seller_id, prize);
-            return 2;
+
+            return  newbiggoodsid;
 
         }
     }

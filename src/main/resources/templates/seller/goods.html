@@ -110,26 +110,26 @@
 
                         <tr>
                             <td>商品ID</td>
-                            <td><input name="biggoodsid" class="form-control" placeholder="商品ID(可以留空)"></td>
+                            <td><input id="newgoodsid" name="biggoodsid" class="form-control" placeholder="商品ID(可以留空)"></td>
                         </tr>
                         <tr>
                             <td>商品名称</td>
-                            <td><input name="name" class="form-control" placeholder="商品名称"></td>
+                            <td><input id="goodsname" name="name" class="form-control" placeholder="商品名称"></td>
                         </tr>
 
                         <tr>
                             <td>商品品牌</td>
-                            <td><input name="brand" class="form-control" placeholder="商品品牌"></td>
+                            <td><input id="goodsbrand" name="brand" class="form-control" placeholder="商品品牌"></td>
                         </tr>
 
                         <tr>
                             <td>版本</td>
-                            <td><input name="edtion" class="form-control" placeholder="版本"></td>
+                            <td><input id="goodsedtion" name="edtion" class="form-control" placeholder="版本"></td>
                         </tr>
 
                         <tr>
                             <td>商品价格</td>
-                            <td><input name="prize" class="form-control" placeholder="商品价格"></td>
+                            <td><input id="goodsprize" name="prize" class="form-control" placeholder="商品价格"></td>
                         </tr>
 
                     </table>
@@ -231,26 +231,70 @@
         }
         return url ;
     }
+    var indexfileflag=false;
+    var otherfileflag=true;
     $('#indexfile').change(function() {
         var eImg=$('#indeximg');
         eImg.attr('src', getObjectURL($(this)[0].files[0]));
         $(this).after(eImg);
+        indexfileflag=true;
     });
     $('#otherfile').change(function() {
         var eImg=$('#otherfileimg');
         eImg.attr('src', getObjectURL($(this)[0].files[0]));
         $(this).after(eImg);
+        otherfileflag=true;
     });
 
     function uploadindeximg() {
+        var goods_id=document.getElementById("goods_id").value;
+        alert(goods_id);
+        if(goods_id==""){
+            alert("输入id");
+            return;
+        }
+        if(indexfileflag==false){
+            alert("没输入图片");
+            return;
+        }
+
+
         document.getElementById("indeximgs").submit();
+        alert("成功");
       //  document.getElementById("indeximg").src=window.URL.createObjectURL( document.getElementById("indexfile"));
     }
     function uploadotherimg() {
+        var goods_id=document.getElementById("goods_id1").value;
+        if(goods_id==""){
+            alert("输入id");
+            return;
+        }
+        if(otherfileflag==false){
+            alert("没输入图片");
+            return;
+        }
         document.getElementById("othersimgs").submit();
+        alert("成功");
         //  document.getElementById("indeximg").src=window.URL.createObjectURL( document.getElementById("indexfile"));
     }
     function insertgoods() {
+        var goodid=document.getElementById("newgoodsid").value;
+        var goodname=document.getElementById("goodsname").value;
+        var goodsbrand=document.getElementById("goodsbrand").value;
+        var goodsedtion=document.getElementById("goodsedtion").value;
+        var goodsedtion=document.getElementById("goodsedtion").value;
+        var goodsprize=document.getElementById("goodsprize").value;
+        if(goodid!="" && goodsedtion==""){
+            alert("输入id时，版本不可为空")
+            return;
+        }
+        if(goodid=="" && (goodname=="" ||goodsbrand==""||goodsedtion=="" ||goodsedtion==""||goodsprize=="")){
+            alert("未输入id时，其他信息不可为空")
+            return;
+        }
+
+
+
         if (confirm("确定加入吗？")) {
             document.getElementById("goods").submit();
         }

@@ -236,7 +236,7 @@
                             <td th:text="${totalprize}">400.00</td>
                         </tr>
                     </table>
-                    <center><a th:href="@{~/buyByCart1}" class="btn btn-1">Checkout</a></center>
+                    <center><a th:href="@{~/buyByCart1}" class="btn btn-1" onclick="successbuy()">Checkout</a></center>
                 </div>
             </div>
         </div>
@@ -305,5 +305,11 @@
     </div>
 </footer>
 </body>
+<script type="text/javascript">
+    function successbuy() {
+        alert("购买成功");
+
+    }
+</script>
 
 </html>

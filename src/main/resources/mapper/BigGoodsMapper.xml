@@ -81,13 +81,17 @@
         from biggoods
         where goods_name like #{name}
     </select>
-    <select id="getMinId" resultMap="BigGoodsMap">
+    <select id="getMinId" resultType="java.math.BigInteger">
         select min(biggoods_id)
         from biggoods
     </select>
 
-    <select id="getMaxId" resultMap="BigGoodsMap">
+    <select id="getMaxId" resultType="java.math.BigInteger">
         select max(biggoods_id)
+        from biggoods
+    </select>
+    <select id="getNum" resultType="int">
+        select count(*)
         from biggoods
     </select>
 </mapper>

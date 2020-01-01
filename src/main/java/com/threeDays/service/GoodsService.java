@@ -12,9 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.io.*;
 import java.math.BigInteger;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
+import java.util.*;
 
 /**
  * @ClassNameGoodsService
@@ -78,19 +76,33 @@ public class GoodsService {
             randomSet(min, max, n - setSize, bigGoodsList, set);// 递归
         }
     }
+    public void randomArray(int min ,int max,int n,List<BigGoods>bigGoodsList){
+        for(int i=0;i<n;i++){
+            int num = new Random().nextInt(max-min+1)+min;
+            System.out.println("min"+min+"max"+ min+"num"+num);
+            if (bigGoodsMapper.findBigGoodsById(BigInteger.valueOf(num)) != null) {
+                bigGoodsList.add(bigGoodsMapper.findBigGoodsById(BigInteger.valueOf(num)));
+            }
+        }
+    }
 
     public List<Goods> getGoodsList(List<Goods> goods) {
         HashSet<BigInteger> set = new HashSet<>();
         List<BigGoods> bigGoodsList = new ArrayList<>();
-        int min = 1;
-        int max = 8;
+        int num=bigGoodsMapper.getNum();
+        int min=0;
+        int max=0;
         if (bigGoodsMapper.getMinId() != null) {
             min = bigGoodsMapper.getMinId().intValue();
+            System.out.println("bigIntegerMin"+bigGoodsMapper.getMinId());
         }
         if (bigGoodsMapper.getMaxId() != null) {
             max = bigGoodsMapper.getMaxId().intValue();
+        }if(num>7){
+            randomSet(min, max, 8, bigGoodsList, set);
+        }else{
+            randomArray(min, max, 8, bigGoodsList);
         }
-        randomSet(min, max, 8, bigGoodsList, set);
         for (BigGoods bigGoods : bigGoodsList) {
             goods.add(getGoods(bigGoods.getBigGoodsId()));
         }
@@ -98,7 +110,7 @@ public class GoodsService {
     }
 
     public BigInteger newgoods(BigInteger biggoodsid, String name, String brand, String edtion, float prize, BigInteger seller_id) {
-        if (biggoodsid != null || bigGoodsService.getBigGoods(biggoodsid) != null) {//大商品存在
+        if (biggoodsid != null && bigGoodsService.getBigGoods(biggoodsid) != null) {//大商品存在
             littleGoodsService.addNewLittleGoods(biggoodsid, edtion, seller_id, prize);
             return new BigInteger("1");
         } else {//大商品不存在

@@ -213,7 +213,7 @@
                     <h2>New User ? Create An Account.</h2>
                 </div>
                 <div class="panel-body">
-                    <a th:if="${session.user} != null" th:text="${session.user.getCustomerId()}"></a>
+                    <a th:if="${session.user} != null" th:text="'更新成功,你的用户id是:'+${session.user.getCustomerId()}"></a>
                 </div>
                 <form name="form2" id="ff2" method="post" action="/SignUp">
                     <div class="form-group">
@@ -241,7 +241,7 @@
                         onkeyup="checkpassword()">
                     </div>
                     <div class="form-group">
-                        <input name="agree" id="agree" type="checkbox"> I agree to your website.
+                        <input name="agree" id="agree" type="checkbox" placeholder="确认协议" required> I agree to your website.
                     </div>
                     <button type="submit" class="btn btn-1" id="submit">Create</button>
                 </form>

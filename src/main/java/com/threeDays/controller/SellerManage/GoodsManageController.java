@@ -171,10 +171,10 @@ public class GoodsManageController {
     public String newgoods(BigInteger biggoodsid, String name, String brand, String edtion, String prize, HttpServletRequest request, Model model) {
         System.out.println("newgoods start");
         BigInteger seller_id = (BigInteger) request.getSession().getAttribute("Seller_id");
-        if (name == null || brand == null || edtion == null || prize == null)
-            return goods(request, model);
-        if (name .equals("") || brand.equals("") || edtion.equals("") || prize .equals(""))
-            return goods(request, model);
+//        if(biggoodsid==null&&name.equals(""))
+//            return goods(request, model);
+//        if (edtion.equals("") || prize .equals(""))
+//            return goods(request, model);
         BigInteger newbiggoodsid=goodsService.newgoods(biggoodsid, name, brand, edtion, Float.parseFloat(prize), seller_id);
 System.out.println("newssss"+newbiggoodsid);
         if(!newbiggoodsid.equals(1)){

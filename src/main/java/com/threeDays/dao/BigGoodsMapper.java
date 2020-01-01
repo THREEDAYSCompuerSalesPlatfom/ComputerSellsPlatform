@@ -11,7 +11,7 @@ import java.util.List;
 public interface BigGoodsMapper {
     //test
     List<BigGoods> findAll();
-
+    int getNum();
     /**
      * 增加一类商品,，参数中主键id可以为null
      */

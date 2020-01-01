@@ -36,19 +36,19 @@
 							<h4 th:if="${errormsg}!=null" th:text="${errormsg}"></h4>
 							<form class="sui-form" method="post" th:action="@{~/selogin/submit}" id="loginForm">
 								<div class="input-prepend"><span class="add-on loginname"></span>
-									<input  name="name" type="text" placeholder="用户名" class="span2 input-xfat">
+									<input  name="name" type="text" placeholder="用户名" class="span2 input-xfat" required>
 								</div>
 								<div class="input-prepend"><span class="add-on loginpwd"></span>
-									<input  name="password" type="password" placeholder="请输入密码" class="span2 input-xfat">
+									<input  name="password" type="password" placeholder="请输入密码" class="span2 input-xfat" required>
 								</div>
 								<div class="input-prepend"><span class="add-on loginname"></span>
-									<input  name="verCode" type="text" placeholder="验证码" class="span2 input-xfat">
+									<input  name="verCode" type="text" placeholder="请输入验证码" required class="span2 input-xfat">
 								</div>
 								<div>
 									<img th:src="@{~/cap}"/></img>
 								</div>
 								<div class="logined">
-									<input button class="sui-btn btn-block btn-xlarge btn-danger" type="submit" target="_blank"></inputbutton>
+									<input button class="sui-btn btn-block btn-xlarge btn-danger" type="submit" target="_blank" ></inputbutton>
 								</div>
 							</form>
 							<a th:href="@{~/sellerregesiter}">注册成为商家</a>

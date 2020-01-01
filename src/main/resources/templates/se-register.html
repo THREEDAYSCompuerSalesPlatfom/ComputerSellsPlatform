@@ -144,10 +144,14 @@
     }
 
     function checkForm() {
-        if ($("password1").val() != $("password2").val) {
-            $("password2").val("密码不同");
+        var password1=document.getElementById("password1").value;
+        var password2=document.getElementById("password2").value;
+        if (password1!=password2) {
+         //   $("password2").val("密码不同");
+            alert("两次密码不同");
             return false;
         }
+        alert("注册成功，进入管理界面");
         return true;
     }
 </script>

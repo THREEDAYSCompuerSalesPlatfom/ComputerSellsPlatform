@@ -18,6 +18,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.UnsupportedEncodingException;
 import java.math.BigInteger;
 import java.util.List;
 import java.util.Map;
@@ -68,7 +70,11 @@ public class DeliverManageController {
      */
     @GetMapping("/DeliverManage/insertExpress")
     @ResponseBody
-    public String insertExpress(BigInteger order_id, String express, HttpServletRequest request,Model model) {
+    public String insertExpress(BigInteger order_id, String express, HttpServletResponse response,HttpServletRequest request, Model model) throws UnsupportedEncodingException {
+        response.setContentType("text/html;charset=utf-8");
+        response.setCharacterEncoding("utf-8");
+
+
 
          return deliverService.insertExpress(order_id, express);
     }
@@ -103,7 +109,11 @@ public class DeliverManageController {
      */
     @GetMapping("/DeliverManage/insertReply")
     @ResponseBody
-    public String insertReply(BigInteger order_id, String reply,HttpServletRequest request,Model model) {
+    public String insertReply(BigInteger order_id, String reply,HttpServletResponse response,HttpServletRequest request,Model model) throws UnsupportedEncodingException {
+        response.setContentType("text/html;charset=utf-8");
+        response.setCharacterEncoding("utf-8");
+        if(reply.equals(""))
+            return "未填写回复";
 
         return orderService.insertReply(order_id, reply);
     }

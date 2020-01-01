@@ -110,7 +110,7 @@ public class Sellerservice {
     /**
      * 查余额
      */
-    public float queryBalance(BigInteger seller_id) {
+    public Float queryBalance(BigInteger seller_id) {
         return sellerMapper.queryBalance(seller_id);
     }
 

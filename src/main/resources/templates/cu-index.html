@@ -182,9 +182,11 @@
                                             </td>
                                             <td width="5%" class="center" th:text="${show.getNumber()}">数量1</td>
                                             <td width="8%" class="center">
-                                                <li><a class="btn"
-                                                       th:href="@{/changeStatus(order_id=${Goods.getOrderId()})}"
-                                                       th:if="${Goods.getStatus() ne 3}">退货/退款</a></li>
+                                                <li th:if="${Goods.getStatus() eq 0 ||Goods.getStatus() eq 2}"><a class="btn"
+                                                       th:href="@{/changeStatus(order_id=${Goods.getOrderId()},status=3)}"
+                                                       >退货/退款</a></li>
+                                                <li th:if="${Goods.getStatus() eq 1||Goods.getStatus() eq 3 ||Goods.getStatus() eq 4||Goods.getStatus() eq 5}"><a class="btn"
+                                                       >无</a></li>
                                             </td>
                                             <td width="10%" class="center" th:if="${Stat.index}==0"
                                                 th:rowspan="${Stat.size}">
@@ -215,10 +217,11 @@
                                             <td width="10%" class="center" th:if="${Stat.index}==0"
                                                 th:rowspan="${Stat.size}">
                                                 <ul class="unstyled">
+                                                    <li th:if="${Goods.getStatus() eq 0}">无</a></li>
                                                     <li th:if="${Goods.getStatus() eq 2}">已确认收货</a></li>
                                                     <button type="button" class="btn bg-olive btn-x" title="确认收货"
-                                                            th:onclick='changestatus()'
-                                                            th:if="${Goods.getStatus() ne 2}"><i
+                                                            th:onclick='changestatus(2)'
+                                                            th:if="${Goods.getStatus() eq 1}"><i
                                                             class="fa fa-trash-o"></i> 确认收货
                                                     </button>
                                                 </ul>
@@ -240,12 +243,12 @@
 </body>
 <script type="text/javascript">
 
-    function changestatus() {
+    function changestatus(x) {
         if(confirm("sure?")){
            // var s=document.getElementById("id");
             $.ajax({
                 type: "get",
-                url: "[[@{~/changeStatus}]]?order_id="+$("#data").val(),
+                url: "[[@{~/changeStatus}]]?order_id="+$("#data").html()+"&status="+x,
                 contentType: "application/json; charset=utf-8",
                 success: function (string) {
                     alert(string);

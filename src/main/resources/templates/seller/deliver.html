@@ -153,7 +153,7 @@
         $.ajax({
             type: "get",
             url: "[[@{~/DeliverManage/insertExpress}]]?order_id=" + orderid+"&express="+express,
-            contentType: "application/json; charset=utf-8",
+            contentType: "text/html; charset=utf-8",
             success: function(string) {
                 alert(string);
                 window.location.reload();

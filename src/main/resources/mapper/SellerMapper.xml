@@ -13,7 +13,7 @@
     <update id="updateSeller" parameterType="com.threeDays.POJO.Seller">
         update seller SET seller_tel=#{seller_tel},seller_address=#{seller_address},seller_name=#{seller_name},balance=#{balance} where seller_id=#{seller_id}
     </update>
-    <select id="queryBalance" resultType="java.math.BigInteger">
+    <select id="queryBalance" resultType="java.lang.Float">
         select balance from seller where seller_id=#{seller_id}
     </select>
     <update id="updateBalance">

@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.math.BigInteger;
 import java.util.*;
 //https://blog.csdn.net/mar5342/article/details/85244669
@@ -42,8 +44,8 @@ public class orderController {
 
     @GetMapping("/changeStatus")
     @ResponseBody
-    public String changeStatus(BigInteger order_id, Model model) {
-        String s = orderService.changeStatus(order_id, new Integer(3));
+    public String changeStatus(BigInteger order_id, Integer status, Model model, HttpServletResponse response) throws IOException {
+        String s = orderService.changeStatus(order_id, status);
 //        List<cuOrderGoods> cuOrderGoodsList =(List<cuOrderGoods>) model.getAttribute("cuOrderGoods");
 //        Iterator<cuOrderGoods> i=cuOrderGoodsList.iterator();
 //        while(i.hasNext()){
@@ -54,6 +56,7 @@ public class orderController {
 //    }
 //        model.addAttribute("cuOrderGoods",cuOrderGoodsList);
         System.out.println(s);
+        response.sendRedirect("/cuIndex");
         return s;
     }
 }
